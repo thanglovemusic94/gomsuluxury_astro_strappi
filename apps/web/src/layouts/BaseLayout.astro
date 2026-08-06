@@ -27,7 +27,7 @@ const pageDescription =
 <html lang={locale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,7 +44,12 @@ const pageDescription =
     />
   </head>
   <body>
-    <SiteHeader locale={locale} brand={settings.siteName || copy.brand} items={menuItems} />
+    <SiteHeader
+      locale={locale}
+      brand={settings.siteName || copy.brand}
+      items={menuItems}
+      logo={settings.logo}
+    />
     <main>
       <slot />
     </main>

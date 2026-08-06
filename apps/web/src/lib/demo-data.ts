@@ -1,38 +1,44 @@
 import type { Locale } from '../i18n/ui';
 import type { EventItem, Menu, PageItem, Product, SiteSetting } from './types';
+import { demoImages, media } from './demo-images';
 
 export function demoSettings(locale: Locale): SiteSetting {
-  return locale === 'en'
-    ? {
-        siteName: 'Gom Su Luxury',
-        tagline: 'Handcrafted ceramics for refined living',
-        phone: '+84 90 123 4567',
-        email: 'hello@gomsuluxury.vn',
-        address: 'Binh Duong Ceramic Village, Vietnam',
-        zaloUrl: 'https://zalo.me/gomsuluxury',
-        facebookUrl: 'https://facebook.com/gomsuluxury',
-        instagramUrl: 'https://instagram.com/gomsuluxury',
-        defaultSeo: {
-          metaTitle: 'Gom Su Luxury | Handcrafted Ceramics',
-          metaDescription:
-            'Discover celadon vases, stoneware tableware and ceramic workshops from Gom Su Luxury.',
-        },
-      }
-    : {
-        siteName: 'Gốm Sứ Luxury',
-        tagline: 'Gốm thủ công cho không gian sống tinh tế',
-        phone: '+84 90 123 4567',
-        email: 'hello@gomsuluxury.vn',
-        address: 'Làng gốm Bình Dương, Việt Nam',
-        zaloUrl: 'https://zalo.me/gomsuluxury',
-        facebookUrl: 'https://facebook.com/gomsuluxury',
-        instagramUrl: 'https://instagram.com/gomsuluxury',
-        defaultSeo: {
-          metaTitle: 'Gốm Sứ Luxury | Gốm thủ công cao cấp',
-          metaDescription:
-            'Khám phá bình celadon, bàn ăn gốm đá và workshop làm gốm từ Gốm Sứ Luxury.',
-        },
-      };
+  const base =
+    locale === 'en'
+      ? {
+          siteName: 'Gom Su Luxury',
+          tagline: 'Handcrafted ceramics for refined living',
+          address: 'Binh Duong Ceramic Village, Vietnam',
+          defaultSeo: {
+            metaTitle: 'Gom Su Luxury | Handcrafted Ceramics',
+            metaDescription:
+              'Discover celadon vases, stoneware tableware and ceramic workshops from Gom Su Luxury.',
+            ogImage: media(demoImages.og, 'Gom Su Luxury ceramics', 1200, 630),
+          },
+        }
+      : {
+          siteName: 'Gốm Sứ Luxury',
+          tagline: 'Gốm thủ công cho không gian sống tinh tế',
+          address: 'Làng gốm Bình Dương, Việt Nam',
+          defaultSeo: {
+            metaTitle: 'Gốm Sứ Luxury | Gốm thủ công cao cấp',
+            metaDescription:
+              'Khám phá bình celadon, bàn ăn gốm đá và workshop làm gốm từ Gốm Sứ Luxury.',
+            ogImage: media(demoImages.og, 'Gốm Sứ Luxury', 1200, 630),
+          },
+        };
+
+  return {
+    ...base,
+    phone: '+84 90 123 4567',
+    email: 'hello@gomsuluxury.vn',
+    zaloUrl: 'https://zalo.me/gomsuluxury',
+    facebookUrl: 'https://facebook.com/gomsuluxury',
+    instagramUrl: 'https://instagram.com/gomsuluxury',
+    logo: media(demoImages.logo, base.siteName, 200, 200),
+    heroImage: media(demoImages.hero, locale === 'en' ? 'Studio ceramics' : 'Gốm trong xưởng', 2000, 1333),
+    craftImage: media(demoImages.craft, locale === 'en' ? 'Pottery wheel' : 'Bàn xoay gốm', 1400, 1050),
+  };
 }
 
 export function demoMenus(locale: Locale): Menu[] {
@@ -72,7 +78,10 @@ export function demoProducts(locale: Locale): Product[] {
       trackInventory: true,
       isHot: true,
       isFeatured: true,
-      images: [],
+      images: [
+        media(demoImages.vase, isEn ? 'Celadon lotus vase' : 'Bình sen men celadon'),
+        media(demoImages.vaseAlt, isEn ? 'Celadon vase detail' : 'Chi tiết bình celadon'),
+      ],
       attributeValues: [
         { name: isEn ? 'Glaze' : 'Men', value: 'Celadon' },
         { name: isEn ? 'Height' : 'Chiều cao', value: '32 cm' },
@@ -94,6 +103,7 @@ export function demoProducts(locale: Locale): Product[] {
           : 'Mua Bình sen men celadon — gốm đá thủ công với sắc men xanh ngọc.',
         focusKeyword: isEn ? 'celadon vase' : 'bình celadon',
         seoScore: 86,
+        ogImage: media(demoImages.vase, isEn ? 'Celadon vase' : 'Bình celadon', 1200, 630),
       },
     },
     {
@@ -110,6 +120,7 @@ export function demoProducts(locale: Locale): Product[] {
       sku: 'GSL-BOWL-04',
       stock: 28,
       isHot: true,
+      images: [media(demoImages.bowls, isEn ? 'Ink bowl set' : 'Bộ chén mực')],
       attributeValues: [
         { name: isEn ? 'Pieces' : 'Số lượng', value: '4' },
         { name: isEn ? 'Diameter' : 'Đường kính', value: '14 cm' },
@@ -120,6 +131,7 @@ export function demoProducts(locale: Locale): Product[] {
           ? 'Matte charcoal ceramic bowl set for refined everyday meals.'
           : 'Bộ chén gốm men mực cho bữa ăn tinh tế mỗi ngày.',
         seoScore: 78,
+        ogImage: media(demoImages.bowls, isEn ? 'Bowl set' : 'Bộ chén', 1200, 630),
       },
     },
     {
@@ -134,15 +146,15 @@ export function demoProducts(locale: Locale): Product[] {
       stock: 40,
       isHot: false,
       isFeatured: true,
-      attributeValues: [
-        { name: isEn ? 'Diameter' : 'Đường kính', value: '22 cm' },
-      ],
+      images: [media(demoImages.plate, isEn ? 'Copper rim plate' : 'Đĩa viền đồng')],
+      attributeValues: [{ name: isEn ? 'Diameter' : 'Đường kính', value: '22 cm' }],
       seo: {
         metaTitle: isEn ? 'Copper Rim Plate' : 'Đĩa viền đồng',
         metaDescription: isEn
           ? 'Porcelain dining plate with subtle copper accent.'
           : 'Đĩa sứ bàn ăn với điểm nhấn viền đồng tinh tế.',
         seoScore: 72,
+        ogImage: media(demoImages.plate, isEn ? 'Plate' : 'Đĩa', 1200, 630),
       },
     },
   ];
@@ -166,12 +178,14 @@ export function demoEvents(locale: Locale): EventItem[] {
       location: isEn ? 'Gom Su Studio, Binh Duong' : 'Xưởng Gốm Sứ Luxury, Bình Dương',
       registrationUrl: '#',
       isFeatured: true,
+      cover: media(demoImages.workshop, isEn ? 'Wheel throwing workshop' : 'Workshop bàn xoay', 1400, 900),
       seo: {
         metaTitle: isEn ? 'Weekend Wheel Throwing Workshop' : 'Workshop bàn xoay cuối tuần',
         metaDescription: isEn
           ? 'Join our beginner-friendly ceramic wheel throwing workshop.'
           : 'Tham gia workshop làm gốm bàn xoay dành cho người mới bắt đầu.',
         seoScore: 81,
+        ogImage: media(demoImages.workshop, 'Workshop', 1200, 630),
       },
     },
     {
@@ -184,12 +198,14 @@ export function demoEvents(locale: Locale): EventItem[] {
       startDate: '2026-10-03T18:30:00.000Z',
       location: isEn ? 'Showroom District 1' : 'Showroom Quận 1',
       isFeatured: true,
+      cover: media(demoImages.glazeNight, isEn ? 'Celadon evening' : 'Đêm men celadon', 1400, 900),
       seo: {
         metaTitle: isEn ? 'Celadon Glaze Evening' : 'Đêm men celadon',
         metaDescription: isEn
           ? 'An evening talk on celadon glaze traditions.'
           : 'Buổi tối trò chuyện về truyền thống men celadon.',
         seoScore: 74,
+        ogImage: media(demoImages.glazeNight, 'Celadon', 1200, 630),
       },
     },
   ];
@@ -209,6 +225,7 @@ export function demoPages(locale: Locale): PageItem[] {
         ? '<p>Gom Su Luxury collaborates with artisans in Binh Duong to create quiet, durable pieces for modern homes.</p>'
         : '<p>Gốm Sứ Luxury hợp tác cùng nghệ nhân Bình Dương để tạo những món gốm bền đẹp cho nhà ở hiện đại.</p>',
       template: 'about',
+      heroImage: media(demoImages.about, isEn ? 'About our studio' : 'Giới thiệu xưởng', 1400, 900),
       seo: {
         metaTitle: isEn ? 'About Gom Su Luxury' : 'Giới thiệu Gốm Sứ Luxury',
         metaDescription: isEn

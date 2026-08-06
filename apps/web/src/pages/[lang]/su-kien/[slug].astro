@@ -63,24 +63,33 @@ const jsonLd = {
   description={event.seo?.metaDescription || event.excerpt}
 >
   <article>
-    <header class="relative min-h-[52vh] overflow-hidden bg-ink text-porcelain">
-      <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink-soft to-celadon-deep"></div>
-      <div class="relative mx-auto flex min-h-[52vh] max-w-6xl flex-col justify-end px-5 pb-12 pt-24 md:px-8">
-        <p class="text-xs uppercase tracking-[0.2em] text-sand">{copy.events.title}</p>
-        <h1 class="mt-4 max-w-3xl font-display text-4xl font-semibold md:text-6xl">{event.title}</h1>
-        <p class="mt-4 max-w-2xl text-porcelain/75">{event.excerpt}</p>
+    <header class="relative min-h-[42vh] overflow-hidden bg-ink text-porcelain sm:min-h-[52vh]">
+      {event.cover?.url ? (
+        <img
+          src={event.cover.url}
+          alt={event.cover.alternativeText || event.title}
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink-soft to-celadon-deep"></div>
+      )}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20"></div>
+      <div class="relative mx-auto flex min-h-[42vh] max-w-6xl flex-col justify-end px-4 pb-10 pt-20 sm:min-h-[52vh] sm:px-5 sm:pb-12 sm:pt-24 md:px-8">
+        <p class="text-[10px] uppercase tracking-[0.2em] text-sand sm:text-xs">{copy.events.title}</p>
+        <h1 class="mt-3 max-w-3xl font-display text-3xl font-semibold sm:mt-4 sm:text-4xl md:text-6xl">{event.title}</h1>
+        <p class="mt-3 max-w-2xl text-sm text-porcelain/75 sm:mt-4 sm:text-base">{event.excerpt}</p>
       </div>
     </header>
 
-    <section class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_0.8fr] md:px-8">
+    <section class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:gap-10 sm:px-5 sm:py-14 md:grid-cols-[1.4fr_0.8fr] md:px-8">
       <div>
         {event.content ? (
-          <div class="prose prose-neutral max-w-none text-ink/80" set:html={event.content} />
+          <div class="prose prose-neutral max-w-none text-sm text-ink/80 sm:text-base" set:html={event.content} />
         ) : (
           <p class="text-ink/70">{event.excerpt}</p>
         )}
       </div>
-      <aside class="h-fit bg-mist/70 p-6">
+      <aside class="h-fit bg-mist/70 p-5 sm:p-6 md:sticky md:top-24">
         <p class="text-xs uppercase tracking-[0.16em] text-copper">{copy.events.when}</p>
         <p class="mt-2 text-sm font-medium">{formatDate(event.startDate, locale)}</p>
         {event.endDate && <p class="text-sm text-ink/60">→ {formatDate(event.endDate, locale)}</p>}
@@ -93,7 +102,7 @@ const jsonLd = {
         {event.registrationUrl && (
           <a
             href={event.registrationUrl}
-            class="mt-8 inline-block bg-ink px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain hover:bg-celadon-deep"
+            class="mt-8 inline-flex min-h-12 w-full items-center justify-center bg-ink px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain hover:bg-celadon-deep"
           >
             {copy.cta.register}
           </a>

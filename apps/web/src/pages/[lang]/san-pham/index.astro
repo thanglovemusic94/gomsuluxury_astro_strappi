@@ -28,11 +28,11 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
   title={`${copy.products.title} | ${settings.siteName}`}
   description={copy.products.subtitle}
 >
-  <section class="mx-auto max-w-6xl px-5 py-16 md:px-8">
-    <p class="text-xs uppercase tracking-[0.2em] text-copper">{copy.brand}</p>
-    <h1 class="mt-3 font-display text-4xl font-semibold md:text-5xl">{copy.products.title}</h1>
-    <p class="mt-4 max-w-2xl text-ink/65">{copy.products.subtitle}</p>
-    <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-16 md:px-8">
+    <p class="text-[10px] uppercase tracking-[0.2em] text-copper sm:text-xs">{copy.brand}</p>
+    <h1 class="mt-3 font-display text-3xl font-semibold sm:text-4xl md:text-5xl">{copy.products.title}</h1>
+    <p class="mt-4 max-w-2xl text-sm text-ink/65 sm:text-base">{copy.products.subtitle}</p>
+    <div class="mt-8 grid gap-6 sm:mt-12 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
       {products.map((product) => (
         <ProductCard product={product} locale={locale} />
       ))}

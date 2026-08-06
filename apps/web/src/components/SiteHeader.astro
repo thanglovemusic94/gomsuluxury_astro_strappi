@@ -1,15 +1,16 @@
 ---
 import type { Locale } from '../i18n/ui';
 import { locales, t } from '../i18n/ui';
-import type { MenuItem } from '../lib/types';
+import type { MenuItem, StrapiMedia } from '../lib/types';
 
 type Props = {
   locale: Locale;
   brand: string;
   items: MenuItem[];
+  logo?: StrapiMedia | null;
 };
 
-const { locale, brand, items } = Astro.props;
+const { locale, brand, items, logo } = Astro.props;
 const copy = t(locale);
 const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
 
@@ -23,13 +24,25 @@ function switchLocalePath(next: Locale) {
 }
 ---
 
-<header class="sticky top-0 z-40 border-b border-ink/10 bg-porcelain/80 backdrop-blur-md">
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4 md:px-8">
-    <a href={`/${locale}`} class="font-display text-xl font-700 tracking-tight text-ink md:text-2xl" style="font-weight:700">
-      {brand}
+<header class="sticky top-0 z-50 border-b border-ink/10 bg-porcelain/90 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 md:px-8">
+    <a
+      href={`/${locale}`}
+      class="flex min-w-0 items-center gap-2.5 font-display text-lg font-bold tracking-tight text-ink sm:gap-3 sm:text-xl md:text-2xl"
+    >
+      {logo?.url && (
+        <img
+          src={logo.url}
+          alt=""
+          width="36"
+          height="36"
+          class="h-8 w-8 shrink-0 rounded-full object-cover sm:h-9 sm:w-9"
+        />
+      )}
+      <span class="truncate">{brand}</span>
     </a>
 
-    <nav class="hidden items-center gap-7 md:flex" aria-label="Main">
+    <nav class="hidden items-center gap-6 lg:flex lg:gap-7" aria-label="Main">
       {sorted.map((item) => (
         <a
           href={item.url}
@@ -42,11 +55,11 @@ function switchLocalePath(next: Locale) {
       ))}
     </nav>
 
-    <div class="flex items-center gap-3">
+    <div class="flex shrink-0 items-center gap-2 sm:gap-3">
       <label class="sr-only" for="lang-switch">{copy.langLabel}</label>
       <select
         id="lang-switch"
-        class="rounded-none border border-ink/15 bg-transparent px-2 py-1 text-xs uppercase tracking-wider text-ink/80"
+        class="h-10 border border-ink/15 bg-transparent px-2 text-xs uppercase tracking-wider text-ink/80"
         onchange="window.location.href=this.value"
       >
         {locales.map((l) => (
@@ -55,12 +68,94 @@ function switchLocalePath(next: Locale) {
           </option>
         ))}
       </select>
+
       <a
         href={`/${locale}/san-pham`}
-        class="hidden bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain transition hover:bg-celadon-deep sm:inline-block"
+        class="hidden bg-ink px-3 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-porcelain transition hover:bg-celadon-deep sm:inline-block sm:px-4 sm:text-xs sm:tracking-[0.14em]"
       >
         {copy.cta.explore}
       </a>
+
+      <button
+        type="button"
+        id="menu-toggle"
+        class="inline-flex h-10 w-10 items-center justify-center border border-ink/15 text-ink lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label={copy.menuOpen}
+        data-label-open={copy.menuOpen}
+        data-label-close={copy.menuClose}
+      >
+        <span class="sr-only">{copy.menuOpen}</span>
+        <svg id="icon-open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+        <svg id="icon-close" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+      </button>
     </div>
   </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-ink/10 bg-porcelain lg:hidden"
+    hidden
+  >
+    <nav class="mx-auto flex max-w-6xl flex-col px-4 py-3 sm:px-5" aria-label="Mobile">
+      {sorted.map((item) => (
+        <a
+          href={item.url}
+          class="border-b border-ink/8 py-3.5 text-base font-medium text-ink/80 transition hover:text-celadon-deep"
+          target={item.openInNewTab ? '_blank' : undefined}
+          rel={item.openInNewTab ? 'noreferrer' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={`/${locale}/san-pham`}
+        class="mt-4 mb-2 inline-flex items-center justify-center bg-ink px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain"
+      >
+        {copy.cta.explore}
+      </a>
+    </nav>
+  </div>
 </header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  if (toggle && menu) {
+    const setOpen = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
+      if (label) toggle.setAttribute('aria-label', label);
+      menu.classList.toggle('hidden', !open);
+      menu.hidden = !open;
+      document.body.classList.toggle('overflow-hidden', open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+    };
+
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      setOpen(open);
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false);
+    });
+  }
+</script>

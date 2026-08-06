@@ -201,6 +201,7 @@ export async function getSiteSettings(locale: Locale): Promise<SiteSetting> {
   const data = await strapiFetch<{ data: any }>(`/site-setting?populate=*`, locale);
   if (!data?.data) return demoSettings(locale);
   const s = data.data.attributes ? data.data.attributes : data.data;
+  const demo = demoSettings(locale);
   return {
     siteName: s.siteName,
     tagline: s.tagline,
@@ -210,7 +211,15 @@ export async function getSiteSettings(locale: Locale): Promise<SiteSetting> {
     zaloUrl: s.zaloUrl,
     facebookUrl: s.facebookUrl,
     instagramUrl: s.instagramUrl,
-    defaultSeo: s.defaultSeo,
+    logo: normalizeMedia(s.logo) || demo.logo,
+    heroImage: normalizeMedia(s.heroImage) || demo.heroImage,
+    craftImage: normalizeMedia(s.craftImage) || demo.craftImage,
+    defaultSeo: s.defaultSeo
+      ? {
+          ...s.defaultSeo,
+          ogImage: normalizeMedia(s.defaultSeo.ogImage) || demo.defaultSeo?.ogImage,
+        }
+      : demo.defaultSeo,
   };
 }
 

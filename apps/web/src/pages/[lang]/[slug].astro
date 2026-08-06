@@ -39,11 +39,21 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
   title={page.seo?.metaTitle || page.title}
   description={page.seo?.metaDescription || page.excerpt}
 >
-  <section class="mx-auto max-w-3xl px-5 py-16 md:px-8">
-    <h1 class="font-display text-4xl font-semibold md:text-5xl">{page.title}</h1>
-    {page.excerpt && <p class="mt-4 text-lg text-ink/65">{page.excerpt}</p>}
+  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-5 sm:py-16 md:px-8">
+    {page.heroImage?.url && (
+      <div class="mb-8 overflow-hidden sm:mb-10">
+        <img
+          src={page.heroImage.url}
+          alt={page.heroImage.alternativeText || page.title}
+          class="aspect-[16/9] w-full object-cover"
+          loading="eager"
+        />
+      </div>
+    )}
+    <h1 class="font-display text-3xl font-semibold sm:text-4xl md:text-5xl">{page.title}</h1>
+    {page.excerpt && <p class="mt-4 text-base text-ink/65 sm:text-lg">{page.excerpt}</p>}
     {page.content && (
-      <div class="prose prose-neutral mt-10 max-w-none text-ink/80" set:html={page.content} />
+      <div class="prose prose-neutral mt-8 max-w-none text-sm text-ink/80 sm:mt-10 sm:text-base" set:html={page.content} />
     )}
   </section>
 </BaseLayout>

@@ -16,6 +16,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -25,10 +27,28 @@
       radial-gradient(ellipse 60% 40% at 100% 0%, rgba(168, 132, 79, 0.12), transparent),
       linear-gradient(180deg, #f3f6f4 0%, #eaf0ec 100%);
     min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  img,
+  video,
+  svg {
+    max-width: 100%;
+    height: auto;
   }
 
   ::selection {
     background: color-mix(in oklab, var(--color-celadon) 35%, white);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-delay-1,
+  .reveal-delay-2,
+  .reveal-delay-3,
+  .kenburns {
+    animation: none !important;
   }
 }
 

@@ -23,7 +23,7 @@ export default defineConfig({
     }),
   ],
   image: {
-    domains: ['localhost', '127.0.0.1'],
+    domains: ['localhost', '127.0.0.1', 'images.unsplash.com'],
     remotePatterns: [{ protocol: 'https' }, { protocol: 'http' }],
   },
   vite: {

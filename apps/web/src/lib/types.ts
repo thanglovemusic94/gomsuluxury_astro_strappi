@@ -95,5 +95,8 @@ export type SiteSetting = {
   zaloUrl?: string;
   facebookUrl?: string;
   instagramUrl?: string;
+  logo?: StrapiMedia | null;
+  heroImage?: StrapiMedia | null;
+  craftImage?: StrapiMedia | null;
   defaultSeo?: SeoFields;
 };

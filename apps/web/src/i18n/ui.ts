@@ -49,6 +49,8 @@ export const ui = {
       follow: 'Theo dõi',
     },
     langLabel: 'Ngôn ngữ',
+    menuOpen: 'Mở menu',
+    menuClose: 'Đóng menu',
   },
   en: {
     brand: 'Gom Su Luxury',
@@ -96,6 +98,8 @@ export const ui = {
       follow: 'Follow',
     },
     langLabel: 'Language',
+    menuOpen: 'Open menu',
+    menuClose: 'Close menu',
   },
 } as const;
 
