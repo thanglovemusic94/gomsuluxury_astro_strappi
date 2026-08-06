@@ -10,6 +10,7 @@
     "dev:cms": "npm run develop --workspace=cms",
     "build:web": "npm run build --workspace=web",
     "build:cms": "npm run build --workspace=cms",
+    "parity:home": "node scripts/parity-home.mjs",
     "docker:up": "docker compose up -d db cms",
     "docker:full": "docker compose --profile full up -d --build"
   },

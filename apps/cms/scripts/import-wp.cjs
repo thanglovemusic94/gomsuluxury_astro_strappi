@@ -161,11 +161,30 @@ async function clearSeeded(strapi) {
 
 async function ensureCategory(strapi, cat, imageId) {
   const slug = cat.slug || slugify(cat.name);
+  // Prefer the published row — linking products to draft category ids hides them in the public API.
+  const published = await strapi.documents('api::category.category').findMany({
+    filters: { slug: { $eq: slug } },
+    locale: 'vi',
+    status: 'published',
+  });
+  if (published?.[0]) return published[0];
+
   const existing = await strapi.documents('api::category.category').findMany({
     filters: { slug: { $eq: slug } },
     locale: 'vi',
   });
-  if (existing?.[0]) return existing[0];
+  if (existing?.[0]?.documentId) {
+    return strapi.documents('api::category.category').update({
+      documentId: existing[0].documentId,
+      locale: 'vi',
+      status: 'published',
+      data: {
+        name: cat.name,
+        description: stripHtml(cat.description || '').slice(0, 400) || undefined,
+        image: imageId || undefined,
+      },
+    });
+  }
 
   return strapi.documents('api::category.category').create({
     locale: 'vi',
@@ -221,18 +240,40 @@ async function fetchAllProducts(limit) {
   return items.slice(0, limit);
 }
 
+function resolveCategoryLinks(p, categoryMap) {
+  const catLinks = [];
+  for (const c of p.categories || []) {
+    const found = categoryMap.get(c.id) || categoryMap.get(c.slug);
+    if (found?.documentId) catLinks.push(found.documentId);
+  }
+  return [...new Set(catLinks)];
+}
+
 async function importProducts(strapi, categoryMap) {
   const products = await fetchAllProducts(PRODUCT_LIMIT);
   let i = 0;
   for (const p of products) {
     i += 1;
     const slug = p.slug || slugify(p.name);
+    const catLinks = resolveCategoryLinks(p, categoryMap);
     const existing = await strapi.documents('api::product.product').findMany({
       filters: { slug: { $eq: slug } },
       locale: 'vi',
+      status: 'published',
     });
     if (existing?.[0]) {
-      strapi.log.info(`[import] product exists ${slug}`);
+      // Re-bind categories so public API sees published category rows (not draft ids).
+      if (catLinks.length) {
+        await strapi.documents('api::product.product').update({
+          documentId: existing[0].documentId,
+          locale: 'vi',
+          status: 'published',
+          data: { categories: catLinks },
+        });
+        strapi.log.info(`[import] product categories synced ${slug} -> ${catLinks.length}`);
+      } else {
+        strapi.log.info(`[import] product exists ${slug}`);
+      }
       continue;
     }
 
@@ -243,12 +284,6 @@ async function importProducts(strapi, categoryMap) {
     for (const img of imgs) {
       const id = await uploadFromUrl(strapi, img.src, img.alt || p.name, `p-${p.id}-${img.id}`);
       if (id) imageIds.push(id);
-    }
-
-    const catLinks = [];
-    for (const c of p.categories || []) {
-      const found = categoryMap.get(c.id) || categoryMap.get(c.slug);
-      if (found?.documentId) catLinks.push(found.documentId);
     }
 
     const short = stripHtml(p.short_description || '').slice(0, 280);
@@ -601,8 +636,10 @@ async function main() {
       await importAboutPage(strapi);
       await importEvent(strapi);
     } else {
-      strapi.log.info(`[import] skip products (already have ${productCount}). Set FORCE_REIMPORT=1 to redo.`);
-      // still ensure menus/settings/pages/posts if missing
+      strapi.log.info(`[import] skip full product recreate (already have ${productCount}). Syncing category links…`);
+      // Still refresh category map + product↔category binds (idempotent, finite).
+      const categoryMap = await importCategories(strapi);
+      await importProducts(strapi, categoryMap);
       await importMenus(strapi);
       await importSiteSettings(strapi);
       await importAboutPage(strapi);

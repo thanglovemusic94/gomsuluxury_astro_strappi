@@ -13,7 +13,8 @@
     "strapi": "strapi",
     "upgrade": "npx @strapi/upgrade latest",
     "upgrade:dry": "npx @strapi/upgrade latest --dry",
-    "import:wp": "node scripts/import-wp.cjs"
+    "import:wp": "node scripts/import-wp.cjs",
+    "fix:category-links": "node scripts/fix-category-links.cjs"
   },
   "dependencies": {
     "@strapi/database": "5.51.2",

@@ -28,4 +28,15 @@ npm run develop
 
 - Chỉ tạo locale **vi** cho sản phẩm/bài viết (có thể Fill in from another locale trong Admin).
 - Ảnh được tối ưu (sharp) trước khi upload vào Media Library.
-- Chạy lại không `FORCE_REIMPORT` sẽ bỏ qua sản phẩm đã có, vẫn bổ sung settings/menu nếu thiếu.
+- Chạy lại không `FORCE_REIMPORT` sẽ **đồng bộ lại category links** (không xóa sản phẩm), vẫn bổ sung settings/menu/posts nếu thiếu.
+- Nếu API `/api/products?populate[categories]=true` trả về nhiều sản phẩm không có category: chạy `node scripts/fix-category-links.cjs` (sửa link nhầm bản draft).
+
+## Parity check (một lần, không loop)
+
+Từ root repo, web đang chạy ở `:4321`:
+
+```bash
+node scripts/parity-home.mjs
+```
+
+So landmarks trang chủ local với https://gomsuluxury.vn/ rồi thoát 0/1.

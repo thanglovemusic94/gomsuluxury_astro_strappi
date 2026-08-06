@@ -36,8 +36,9 @@ const rows = homeSections
   }))
   .filter((row) => row.items.length > 0);
 
-/** On gomsuluxury.vn, YouTube sits after Phụ Kiện and right above Khay Trà */
-const youtubeAfterSlug = 'phu-kien-ban-tra-gom-su-luxury';
+/** On gomsuluxury.vn: banner + YouTube sit after Phụ Kiện, immediately above Khay Trà */
+const youtubeBeforeSlug = 'khay-tra';
+const hasKhay = rows.some((r) => r.section.slug === youtubeBeforeSlug);
 ---
 
 <BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
@@ -45,6 +46,7 @@ const youtubeAfterSlug = 'phu-kien-ban-tra-gom-su-luxury';
 
   {rows.map((row) => (
     <>
+      {hasKhay && row.section.slug === youtubeBeforeSlug && <YoutubeRow locale={locale} />}
       <CategoryProductRow
         locale={locale}
         title={row.title}
@@ -52,9 +54,9 @@ const youtubeAfterSlug = 'phu-kien-ban-tra-gom-su-luxury';
         href={`/${locale}/san-pham?cat=${row.section.slug}`}
         viewMore={copy.cta.viewMore}
       />
-      {row.section.slug === youtubeAfterSlug && <YoutubeRow locale={locale} />}
     </>
   ))}
+  {!hasKhay && <YoutubeRow locale={locale} />}
 
   <TeaPromo locale={locale} />
 
