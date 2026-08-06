@@ -1,6 +1,7 @@
 ---
 import type { Locale } from '../../i18n/ui';
 import { t } from '../../i18n/ui';
+import SectionTitleBar from './SectionTitleBar.astro';
 
 type Props = {
   locale: Locale;
@@ -8,26 +9,21 @@ type Props = {
 
 const { locale } = Astro.props;
 const copy = t(locale);
+const href = `/${locale}/san-pham?cat=tra-shan-tuyet`;
 const teas = [
   { src: '/brand/tea/tea-1.jpg', alt: 'Trà Shan tuyết' },
   { src: '/brand/tea/tea-2.jpg', alt: 'Trà thượng hạng' },
   { src: '/brand/tea/tea-3.jpg', alt: 'Trà cổ thụ' },
   { src: '/brand/tea/tea-4.jpg', alt: 'Trà Bạch' },
 ];
-const href = `/${locale}/san-pham?cat=tra-shan-tuyet`;
 ---
 
-<section class="content-auto border-b border-ink/6">
-  <div class="mx-auto max-w-6xl section-pad py-10 sm:py-12 md:py-14">
-    <div class="flex items-end justify-between gap-4">
-      <h2 class="section-heading">{copy.home.sections.tra}</h2>
-      <a href={href} class="shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-brand hover:text-brand-deep">
-        {copy.cta.viewMore}
-      </a>
-    </div>
-    <div class="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:gap-4 lg:grid-cols-4">
+<section class="content-auto">
+  <SectionTitleBar title={copy.home.sections.tra} actionLabel={copy.cta.viewMore} actionHref={href} />
+  <div class="mx-auto max-w-6xl section-pad py-8 sm:py-10">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
       {teas.map((tea) => (
-        <a href={href} class="group relative block aspect-square overflow-hidden bg-mist">
+        <a href={href} class="product-shine group relative block aspect-square overflow-hidden bg-mist">
           <img
             src={tea.src}
             alt={tea.alt}

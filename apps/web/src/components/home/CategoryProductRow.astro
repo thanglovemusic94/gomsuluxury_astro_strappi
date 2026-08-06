@@ -3,6 +3,7 @@ import type { Locale } from '../../i18n/ui';
 import { t } from '../../i18n/ui';
 import type { CatalogItem } from '../../lib/home-sections';
 import { formatPrice } from '../../lib/format';
+import SectionTitleBar from './SectionTitleBar.astro';
 
 type Props = {
   locale: Locale;
@@ -17,16 +18,11 @@ const copy = t(locale);
 if (!items.length) return;
 ---
 
-<section class="home-product-row content-auto border-b border-ink/6">
-  <div class="mx-auto max-w-6xl section-pad py-10 sm:py-12 md:py-14">
-    <div class="flex items-end justify-between gap-4">
-      <h2 class="section-heading">{title}</h2>
-      <a href={href} class="shrink-0 text-xs font-semibold uppercase tracking-[0.14em] text-brand hover:text-brand-deep">
-        {viewMore || copy.cta.viewAll}
-      </a>
-    </div>
+<section class="home-product-row content-auto">
+  <SectionTitleBar title={title} actionLabel={viewMore || copy.cta.viewMore} actionHref={href} />
 
-    <div class="product-rail mt-6 sm:mt-8">
+  <div class="mx-auto max-w-6xl section-pad py-8 sm:py-10">
+    <div class="product-rail">
       {items.slice(0, 10).map((item) => {
         const price = item.price != null ? Number(item.price) : null;
         const compare = item.compareAtPrice != null ? Number(item.compareAtPrice) : null;
@@ -36,7 +32,7 @@ if (!items.length) return;
         return (
           <article class="product-rail__item">
             <a href={link} class="block">
-              <div class="relative aspect-square overflow-hidden bg-mist">
+              <div class="product-shine relative aspect-square overflow-hidden bg-mist">
                 <img
                   src={item.image}
                   alt={item.name}

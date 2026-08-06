@@ -31,12 +31,12 @@ export const ui = {
     brand: 'Gốm Sứ Luxury',
     tagline: 'Tự hào gốm Việt — vẻ đẹp thuần Việt, đẳng cấp toàn cầu',
     nav: {
-      home: 'Trang chủ',
-      products: 'Sản phẩm',
-      events: 'Sự kiện',
-      articles: 'Bài viết',
-      about: 'Giới thiệu',
-      contact: 'Liên hệ',
+      home: 'Trang Chủ',
+      products: 'Sản Phẩm',
+      events: 'Sự Kiện',
+      articles: 'Bài Viết',
+      about: 'Giới Thiệu',
+      contact: 'Liên Hệ',
     },
     cta: {
       explore: 'Khám phá bộ sưu tập',

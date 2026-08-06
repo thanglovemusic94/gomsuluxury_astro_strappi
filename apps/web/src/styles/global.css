@@ -63,6 +63,7 @@
   .kenburns,
   .js-reveal,
   .header-shine::after,
+  .product-shine::before,
   .hero-slider__track {
     animation: none !important;
     opacity: 1 !important;
@@ -87,6 +88,71 @@
     letter-spacing: 0.02em;
     color: var(--color-ink);
     line-height: 1.25;
+  }
+
+  .section-titlebar {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    background-color: var(--color-brand);
+    background-image:
+      linear-gradient(90deg, rgba(141, 28, 24, 0.72), rgba(188, 49, 42, 0.45) 55%, rgba(141, 28, 24, 0.35)),
+      url("/brand/header-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .section-titlebar__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-height: 52px;
+    padding: 0.85rem 1rem;
+    text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .section-titlebar__inner {
+      min-height: 58px;
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+
+  .section-titlebar__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .section-titlebar__action {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .section-titlebar__action:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 639px) {
+    .section-titlebar__action {
+      display: none;
+    }
   }
 
   .section-pad {
@@ -147,7 +213,9 @@
     box-shadow: 0 8px 28px rgba(80, 12, 10, 0.28);
   }
 
-  .site-header.header-shine {
+  .site-header.header-shine,
+  .section-titlebar.header-shine,
+  .footer-main.header-shine {
     overflow: hidden;
   }
 
@@ -155,16 +223,87 @@
     content: "";
     pointer-events: none;
     position: absolute;
-    inset: -20% -30%;
+    z-index: 2;
+    top: -40%;
+    bottom: -40%;
+    left: -40%;
+    width: 45%;
     background: linear-gradient(
       105deg,
-      transparent 38%,
-      rgba(255, 236, 190, 0.08) 46%,
-      rgba(255, 245, 220, 0.32) 50%,
-      rgba(255, 236, 190, 0.08) 54%,
-      transparent 62%
+      transparent 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 245, 220, 0.18) 47%,
+      rgba(255, 255, 255, 0.42) 50%,
+      rgba(255, 245, 220, 0.18) 53%,
+      rgba(255, 255, 255, 0) 65%,
+      transparent 100%
     );
-    animation: shine-sweep 6.5s ease-in-out infinite;
+    transform: skewX(-18deg) translateX(-120%);
+    animation: shine-sweep 4.8s ease-in-out infinite;
+  }
+
+  .header-catbar {
+    position: relative;
+    z-index: 3;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.12);
+  }
+
+  .header-cat-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 44px;
+    padding: 0.55rem 0.9rem;
+    background: rgba(0, 0, 0, 0.18);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .header-cat-list {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .header-cat-dropdown:hover .header-cat-list,
+    .header-cat-dropdown:focus-within .header-cat-list {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      z-index: 20;
+      min-width: 240px;
+      background: #fff;
+      color: var(--color-ink);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .header-cat-list a {
+      display: block;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      font-size: 0.9rem;
+    }
+
+    .header-cat-list a:hover {
+      background: rgba(188, 49, 42, 0.06);
+      color: var(--color-brand);
+    }
+  }
+
+  .header-cat-link {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
+  }
+
+  .header-cat-link:hover {
+    color: #fff;
   }
 
   .site-header .header-link {
@@ -326,6 +465,7 @@
 
   .product-badge {
     position: absolute;
+    z-index: 3;
     top: 0.5rem;
     left: 0.5rem;
     background: var(--color-brand);
@@ -342,35 +482,115 @@
     background: rgba(20, 16, 30, 0.72);
   }
 
+  .product-shine {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-shine::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: -75%;
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+  }
+
+  .product-shine:hover::before {
+    animation: product-shine 0.75s;
+  }
+
+  .youtube-card__frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #111;
+  }
+
+  .youtube-card__frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   .site-footer {
-    background-color: #1a1210;
-    background-image:
-      linear-gradient(180deg, rgba(26, 18, 16, 0.92), rgba(26, 18, 16, 0.96)),
-      url("/brand/nen-header1.jpg");
-    background-size: cover;
-    background-position: center top;
+    position: relative;
+    margin-top: 2rem;
+  }
+
+  .footer-waves {
+    line-height: 0;
+    background: transparent;
+  }
+
+  .footer-waves .waves {
+    display: block;
+    width: 100%;
+    height: 70px;
+  }
+
+  @media (min-width: 768px) {
+    .footer-waves .waves {
+      height: 90px;
+    }
   }
 
   .footer-main {
     position: relative;
+    background-color: var(--color-brand);
+    background-image:
+      linear-gradient(180deg, rgba(188, 49, 42, 0.88), rgba(143, 31, 26, 0.92)),
+      url("/brand/footer-wave.png");
+    background-size: cover;
+    background-position: center;
   }
 
   .footer-col-title {
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: none;
     color: #fff;
   }
 
+  .footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .footer-link-list a {
+    position: relative;
+    display: inline-block;
+    padding-left: 0.95rem;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.98rem;
+  }
+
+  .footer-link-list a::before {
+    content: "›";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-link-list a:hover {
+    color: #fff;
+  }
+
   .footer-bar {
-    background-color: var(--color-brand);
-    background-image:
-      linear-gradient(90deg, rgba(141, 28, 24, 0.35), rgba(188, 49, 42, 0.2)),
-      url("/brand/header-bg.jpg");
-    background-size: cover;
-    background-position: center;
+    background: #fff;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -531,16 +751,26 @@
 
 @keyframes shine-sweep {
   0%,
-  35% {
-    transform: translateX(-60%) skewX(-12deg);
+  18% {
+    transform: skewX(-18deg) translateX(-140%);
     opacity: 0;
   }
-  45% {
+  28% {
     opacity: 1;
   }
-  60%,
+  55% {
+    transform: skewX(-18deg) translateX(280%);
+    opacity: 0.85;
+  }
+  70%,
   100% {
-    transform: translateX(60%) skewX(-12deg);
+    transform: skewX(-18deg) translateX(320%);
     opacity: 0;
+  }
+}
+
+@keyframes product-shine {
+  100% {
+    left: 125%;
   }
 }

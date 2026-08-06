@@ -356,11 +356,11 @@ async function importMenus(strapi) {
       slug: 'header',
       location: 'header',
       items: [
-        { label: 'Trang chủ', url: '/vi', order: 1 },
-        { label: 'Sản phẩm', url: '/vi/san-pham', order: 2 },
-        { label: 'Sự kiện', url: '/vi/su-kien', order: 3 },
-        { label: 'Bài viết', url: '/vi/bai-viet', order: 4 },
-        { label: 'Giới thiệu', url: '/vi/gioi-thieu', order: 5 },
+        { label: 'Trang Chủ', url: '/vi', order: 1 },
+        { label: 'Sản Phẩm', url: '/vi/san-pham', order: 2 },
+        { label: 'Sự Kiện', url: '/vi/su-kien', order: 3 },
+        { label: 'Bài Viết', url: '/vi/bai-viet', order: 4 },
+        { label: 'Giới Thiệu', url: '/vi/gioi-thieu', order: 5 },
       ],
     },
   });

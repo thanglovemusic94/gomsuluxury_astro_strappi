@@ -33,88 +33,88 @@ const phone = settings.phone || '0837 571 758';
 const address = settings.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam Từ Liêm, Hà Nội';
 ---
 
-<footer class="site-footer mt-0 text-porcelain">
-  <div class="footer-main">
-    <div class="mx-auto grid max-w-6xl gap-10 section-pad py-12 sm:py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
-      <div>
+<footer class="site-footer mt-0 text-white">
+  <div class="footer-waves" aria-hidden="true">
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+      <defs>
+        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+      </defs>
+      <g class="parallax">
+        <use href="#gentle-wave" x="48" y="0" fill="#bc312a0f"></use>
+        <use href="#gentle-wave" x="48" y="3" fill="#bc312a24"></use>
+        <use href="#gentle-wave" x="48" y="5" fill="#bc312a3d"></use>
+        <use href="#gentle-wave" x="48" y="7" fill="#bc312a"></use>
+      </g>
+    </svg>
+  </div>
+
+  <div class="footer-main header-shine">
+    <div class="mx-auto grid max-w-6xl gap-10 section-pad py-12 sm:py-14 md:grid-cols-12 md:gap-8">
+      <div class="md:col-span-4">
         <img
           src="/brand/footer-logo.png"
           alt={settings.siteName || copy.brand}
-          class="h-14 w-auto max-w-[220px] object-contain sm:h-16"
-          width="220"
+          class="h-14 w-auto max-w-[240px] object-contain sm:h-[4.25rem]"
+          width="240"
           height="70"
           loading="lazy"
           decoding="async"
         />
-        <p class="mt-5 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.06em] text-white/90 sm:text-xs">
+        <h4 class="mt-5 text-center text-sm font-semibold uppercase leading-relaxed tracking-[0.04em] text-white sm:text-[15px]">
           {copy.footer.company}
-        </p>
-        <p class="mt-3 max-w-sm text-sm leading-relaxed text-white/70">{copy.footer.blurb}</p>
-        <div class="mt-5 space-y-1.5 text-sm text-white/75">
-          <p>{address}</p>
-          <p>
-            TEL:{' '}
-            <a class="text-white hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
-          </p>
-          <p class="text-white/55">{copy.footer.hours}</p>
-        </div>
-        {settings.facebookUrl || settings.instagramUrl || settings.zaloUrl ? (
-          <div class="mt-5 flex flex-wrap gap-4 text-sm">
-            {settings.facebookUrl && (
-              <a class="hover:text-sand" href={settings.facebookUrl} target="_blank" rel="noreferrer">Facebook</a>
-            )}
-            {settings.instagramUrl && (
-              <a class="hover:text-sand" href={settings.instagramUrl} target="_blank" rel="noreferrer">TikTok</a>
-            )}
-            {settings.zaloUrl && (
-              <a class="hover:text-sand" href={settings.zaloUrl} target="_blank" rel="noreferrer">Zalo</a>
-            )}
-          </div>
-        ) : (
-          <div class="mt-5 flex flex-wrap gap-4 text-sm">
-            <a class="hover:text-sand" href="https://www.facebook.com/gomsuluxury" target="_blank" rel="noreferrer">Facebook</a>
-            <a class="hover:text-sand" href="https://www.tiktok.com/@gomluxury" target="_blank" rel="noreferrer">@gomluxury</a>
-          </div>
-        )}
-      </div>
-
-      <div>
-        <p class="footer-col-title">{copy.footer.productsTitle}</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/75">
-          {productLinks.map((link) => (
-            <li>
-              <a class="transition hover:text-white" href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div>
-        <p class="footer-col-title">{copy.footer.policiesTitle}</p>
-        <ul class="mt-4 space-y-2.5 text-sm text-white/75">
-          {policyLinks.map((link) => (
-            <li>
-              <a class="transition hover:text-white" href={link.href}>{link.label}</a>
-            </li>
-          ))}
+        </h4>
+        <p class="mt-3 text-sm leading-relaxed text-white/85">{copy.footer.blurb}</p>
+        <ul class="mt-5 space-y-2 text-sm text-white/90">
+          <li>{address}</li>
+          <li>
+            <a class="hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>TEL: {phone}</a>
+          </li>
         </ul>
         <img
           src="/brand/footer-seal.png"
           alt=""
-          class="mt-8 h-20 w-auto object-contain opacity-90"
-          width="120"
-          height="120"
+          class="mt-6 h-16 w-auto object-contain sm:h-20"
+          width="140"
+          height="80"
           loading="lazy"
           decoding="async"
         />
+      </div>
+
+      <div class="md:col-span-4">
+        <p class="footer-col-title">{copy.footer.productsTitle}</p>
+        <ul class="footer-link-list mt-4">
+          {productLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="md:col-span-4">
+        <p class="footer-col-title">{copy.footer.policiesTitle}</p>
+        <ul class="footer-link-list mt-4">
+          {policyLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-6 flex flex-wrap gap-4 text-sm">
+          <a class="hover:text-sand" href={settings.facebookUrl || 'https://www.facebook.com/gomsuluxury'} target="_blank" rel="noreferrer">Facebook</a>
+          <a class="hover:text-sand" href={settings.instagramUrl || 'https://www.tiktok.com/@gomluxury'} target="_blank" rel="noreferrer">@gomluxury</a>
+          {settings.zaloUrl && (
+            <a class="hover:text-sand" href={settings.zaloUrl} target="_blank" rel="noreferrer">Zalo</a>
+          )}
+        </div>
       </div>
     </div>
   </div>
 
   <div class="footer-bar">
-    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-3 text-center text-xs text-white/85 sm:flex-row sm:px-5 md:px-8">
-      <p>Copyright {year} © <a class="hover:text-white" href={`/${locale}`}>gomsuluxury.vn</a></p>
-      <p class="text-white/60">{copy.footer.rights}</p>
+    <div class="mx-auto px-4 py-3 text-center text-sm text-ink/80 sm:px-5 md:px-8">
+      Copyright {year} © <strong>gomsuluxury.vn</strong>
     </div>
   </div>
 </footer>
