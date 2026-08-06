@@ -1,0 +1,64 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { t } from '../../i18n/ui';
+import { demoImages } from '../../lib/demo-images';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props;
+const copy = t(locale);
+
+const categories = [
+  {
+    key: 'amChen',
+    href: `/${locale}/san-pham`,
+    image: demoImages.catAmChen,
+  },
+  {
+    key: 'phuKien',
+    href: `/${locale}/san-pham`,
+    image: demoImages.catKhayTra,
+  },
+  {
+    key: 'tuong',
+    href: `/${locale}/san-pham`,
+    image: demoImages.catTuong,
+  },
+  {
+    key: 'huTra',
+    href: `/${locale}/san-pham`,
+    image: demoImages.catHuTra,
+  },
+] as const;
+---
+
+<section class="content-auto mx-auto max-w-6xl section-pad py-14 sm:py-16 md:py-20">
+  <div class="js-reveal">
+    <p class="eyebrow">{copy.home.collections}</p>
+    <h2 class="display-title mt-3 text-3xl sm:text-4xl md:text-5xl">{copy.home.collectionsTitle}</h2>
+  </div>
+  <div class="mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+    {categories.map((cat, i) => (
+      <a
+        href={cat.href}
+        class={`js-reveal group relative block aspect-[4/5] overflow-hidden bg-mist ${i === 1 ? 'js-reveal-delay-1' : i === 2 ? 'js-reveal-delay-2' : ''}`}
+      >
+        <img
+          src={cat.image}
+          alt={copy.home.categories[cat.key]}
+          class="h-full w-full object-cover transition duration-[900ms] group-hover:scale-[1.04]"
+          loading="lazy"
+          decoding="async"
+          width="800"
+          height="1000"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/75 via-ink/15 to-transparent"></div>
+        <span class="absolute inset-x-0 bottom-0 p-5 font-display text-xl text-porcelain sm:text-2xl">
+          {copy.home.categories[cat.key]}
+        </span>
+      </a>
+    ))}
+  </div>
+</section>

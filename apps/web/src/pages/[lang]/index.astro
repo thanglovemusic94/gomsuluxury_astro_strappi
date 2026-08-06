@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/home/Hero.astro';
+import CategoryStrip from '../../components/home/CategoryStrip.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
 import ProductCard from '../../components/product/ProductCard.astro';
 import EventCard from '../../components/event/EventCard.astro';
 import { isLocale, localePaths, t, type Locale } from '../../i18n/ui';
@@ -31,6 +33,8 @@ const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
 <BaseLayout locale={locale} settings={settings} menuItems={headerMenu} overlayHeader>
   <Hero locale={locale} image={settings.heroImage} />
 
+  <CategoryStrip locale={locale} />
+
   <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
     <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
@@ -43,7 +47,7 @@ const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
     </div>
     <div class="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
       {hotProducts.slice(0, 3).map((product, i) => (
-        <div class={`js-reveal js-reveal-delay-${Math.min(i + 1, 2)}`}>
+        <div class={`js-reveal ${i === 1 ? 'js-reveal-delay-1' : i === 2 ? 'js-reveal-delay-2' : ''}`}>
           <ProductCard product={product} locale={locale} />
         </div>
       ))}
@@ -72,6 +76,8 @@ const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
       </div>
     </div>
   </section>
+
+  <Testimonials locale={locale} />
 
   <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
     <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">

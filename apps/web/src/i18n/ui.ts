@@ -29,7 +29,7 @@ export const localeIntl: Record<Locale, string> = {
 export const ui = {
   vi: {
     brand: 'Gốm Sứ Luxury',
-    tagline: 'Nghệ thuật đất nung cho không gian sống tinh tế',
+    tagline: 'Tự hào gốm Việt — vẻ đẹp thuần Việt, đẳng cấp toàn cầu',
     nav: {
       home: 'Trang chủ',
       products: 'Sản phẩm',
@@ -43,20 +43,46 @@ export const ui = {
       viewAll: 'Xem tất cả',
       details: 'Xem chi tiết',
       register: 'Đăng ký tham dự',
-      contact: 'Tư vấn ngay',
+      contact: 'Tư vấn Zalo',
     },
     home: {
-      heroTitle: 'Gốm thủ công,\nlinh hồn không gian',
-      heroBody: 'Bộ sưu tập men celadon và đất nung thủ công — chọn lọc từng đường nét cho ngôi nhà của bạn.',
-      hot: 'Sản phẩm hot',
+      heroTitle: 'Tự hào\ngốm Việt',
+      heroBody:
+        'Tinh hoa gốm Bát Tràng — ấm chén, bàn trà và linh vật — hội tụ nghề cổ truyền với thiết kế đương đại.',
+      hot: 'Sản phẩm nổi bật',
       featuredEvents: 'Sự kiện nổi bật',
-      craft: 'Từ bàn xoay đến bàn ăn',
-      craftBody: 'Mỗi sản phẩm được nung ở nhiệt độ cao, giữ độ bền và sắc men sâu theo năm tháng.',
+      craft: 'Đất · nước · lửa · tay nghề',
+      craftBody:
+        'Mỗi sản phẩm là bản giao hưởng giữa đất, nước, lửa và đôi bàn tay nghệ nhân Việt.',
+      collections: 'Bộ sưu tập',
+      collectionsTitle: 'Chọn theo không gian trà',
+      categories: {
+        amChen: 'Ấm chén Bát Tràng',
+        phuKien: 'Phụ kiện bàn trà',
+        tuong: 'Tượng gốm linh vật',
+        huTra: 'Hũ trà',
+      },
+      testimonials: 'Khách hàng nói gì',
+      testimonialsTitle: 'Đánh giá từ người yêu gốm',
+      reviews: [
+        {
+          quote: 'Hàng ok, chất lượng tốt, mẫu mã đẹp, tư vấn nhiệt tình, giao hàng nhanh.',
+          author: 'Khách hàng',
+        },
+        {
+          quote: 'Shop rất tận tâm, chuyên nghiệp. Sản phẩm cái nào mình cũng ưng bụng.',
+          author: 'Khách hàng thân thiết',
+        },
+        {
+          quote: 'Đóng gói cẩn thận, giao nhanh, rất ưng cách phục vụ — sẽ ủng hộ tiếp.',
+          author: 'Khách hàng',
+        },
+      ],
     },
     products: {
       title: 'Sản phẩm',
-      subtitle: 'Bình, chén, đĩa và vật dụng trang trí thủ công',
-      hot: 'Hot',
+      subtitle: 'Ấm chén Bát Tràng, khay trà, hũ trà và tượng gốm linh vật',
+      hot: 'Nổi bật',
       stock: 'Còn hàng',
       outOfStock: 'Hết hàng',
       sku: 'Mã SP',
@@ -65,13 +91,13 @@ export const ui = {
     },
     events: {
       title: 'Sự kiện',
-      subtitle: 'Workshop, triển lãm và trải nghiệm làm gốm',
+      subtitle: 'Workshop, triển lãm và trải nghiệm trà · gốm',
       when: 'Thời gian',
       where: 'Địa điểm',
     },
     articles: {
       title: 'Bài viết',
-      subtitle: 'Câu chuyện nghề gốm, men và không gian sống',
+      subtitle: 'Câu chuyện nghề gốm Bát Tràng, men và bàn trà',
       by: 'Tác giả',
       related: 'Bài viết khác',
       readMore: 'Đọc tiếp',
@@ -81,6 +107,7 @@ export const ui = {
     footer: {
       rights: 'Tất cả quyền được bảo lưu.',
       follow: 'Theo dõi',
+      hours: '08:00 – 17:00',
     },
     langLabel: 'Ngôn ngữ',
     menuOpen: 'Mở menu',
@@ -88,7 +115,7 @@ export const ui = {
   },
   en: {
     brand: 'Gom Su Luxury',
-    tagline: 'Handcrafted ceramics for refined living spaces',
+    tagline: 'Proudly Vietnamese ceramics — heritage forms, contemporary calm',
     nav: {
       home: 'Home',
       products: 'Products',
@@ -102,20 +129,46 @@ export const ui = {
       viewAll: 'View all',
       details: 'View details',
       register: 'Register',
-      contact: 'Talk to us',
+      contact: 'Chat on Zalo',
     },
     home: {
-      heroTitle: 'Handcrafted clay,\nquiet luxury at home',
-      heroBody: 'A curated celadon and stoneware collection — tactile forms made for everyday ceremony.',
-      hot: 'Hot pieces',
+      heroTitle: 'Proudly\nVietnamese clay',
+      heroBody:
+        'Bat Trang tea sets, trays and guardian figurines — traditional craft with contemporary presence.',
+      hot: 'Featured pieces',
       featuredEvents: 'Featured events',
-      craft: 'From the wheel to your table',
-      craftBody: 'High-fired vessels with lasting glaze depth, shaped one piece at a time.',
+      craft: 'Earth · water · fire · craft',
+      craftBody:
+        'Each piece is a quiet dialogue between clay, water, fire and the artisan’s hand.',
+      collections: 'Collections',
+      collectionsTitle: 'Shop the tea table',
+      categories: {
+        amChen: 'Bat Trang tea sets',
+        phuKien: 'Tea accessories',
+        tuong: 'Guardian figurines',
+        huTra: 'Tea jars',
+      },
+      testimonials: 'From our guests',
+      testimonialsTitle: 'What collectors say',
+      reviews: [
+        {
+          quote: 'Great quality, beautiful forms, thoughtful advice and fast delivery.',
+          author: 'Customer',
+        },
+        {
+          quote: 'Attentive and professional. Every piece I chose felt right.',
+          author: 'Returning guest',
+        },
+        {
+          quote: 'Careful packaging and warm service — I’ll be back.',
+          author: 'Customer',
+        },
+      ],
     },
     products: {
       title: 'Products',
-      subtitle: 'Vases, bowls, plates and decorative objects',
-      hot: 'Hot',
+      subtitle: 'Bat Trang tea sets, trays, jars and ceramic figurines',
+      hot: 'Featured',
       stock: 'In stock',
       outOfStock: 'Sold out',
       sku: 'SKU',
@@ -124,13 +177,13 @@ export const ui = {
     },
     events: {
       title: 'Events',
-      subtitle: 'Workshops, exhibitions and clay experiences',
+      subtitle: 'Workshops, exhibitions and tea · clay experiences',
       when: 'When',
       where: 'Where',
     },
     articles: {
       title: 'Journal',
-      subtitle: 'Stories on craft, glaze and living with ceramics',
+      subtitle: 'Stories on Bat Trang craft, glaze and the tea table',
       by: 'Author',
       related: 'More stories',
       readMore: 'Read more',
@@ -140,6 +193,7 @@ export const ui = {
     footer: {
       rights: 'All rights reserved.',
       follow: 'Follow',
+      hours: '08:00 – 17:00',
     },
     langLabel: 'Language',
     menuOpen: 'Open menu',
@@ -147,7 +201,7 @@ export const ui = {
   },
   ja: {
     brand: 'ゴム・スー・ラグジュアリー',
-    tagline: '丁寧な暮らしのための手仕事の陶磁器',
+    tagline: 'ベトナムの誇りある陶磁器 — 伝統の形と現代の静けさ',
     nav: {
       home: 'ホーム',
       products: '作品',
@@ -161,20 +215,45 @@ export const ui = {
       viewAll: 'すべて見る',
       details: '詳細を見る',
       register: '参加申し込み',
-      contact: '相談する',
+      contact: 'Zaloで相談',
     },
     home: {
-      heroTitle: '手仕事の器が、\n空間の静けさになる',
-      heroBody: '青磁と炻器のコレクション。日常の所作に寄り添う、丁寧なフォルムを選んでいます。',
+      heroTitle: 'ベトナムの器を、\n誇りとともに',
+      heroBody:
+        'バットチャンの茶器、茶盤、霊獣。伝統の手仕事と現代の佇まいを重ねています。',
       hot: '注目の作品',
       featuredEvents: '注目のイベント',
-      craft: 'ロクロから食卓へ',
-      craftBody: '高温で焼き締め、年月とともに深まる釉の表情を大切にしています。',
+      craft: '土 · 水 · 火 · 手仕事',
+      craftBody: '一点一点が、土・水・火、そして職人の手の対話です。',
+      collections: 'コレクション',
+      collectionsTitle: '茶の席から選ぶ',
+      categories: {
+        amChen: 'バットチャン茶器',
+        phuKien: '茶席の道具',
+        tuong: '霊獣の陶像',
+        huTra: '茶入',
+      },
+      testimonials: 'お客様の声',
+      testimonialsTitle: '愛用者からの言葉',
+      reviews: [
+        {
+          quote: '品質が良く、形が美しく、相談も丁寧。配送も早いです。',
+          author: 'お客様',
+        },
+        {
+          quote: 'とても誠実でプロフェッショナル。選んだ器がどれも気に入りました。',
+          author: 'リピーター',
+        },
+        {
+          quote: '梱包が丁寧で対応も温かい。またお願いします。',
+          author: 'お客様',
+        },
+      ],
     },
     products: {
       title: '作品',
-      subtitle: '花器、碗、皿、装飾の器',
-      hot: 'HOT',
+      subtitle: 'バットチャン茶器、茶盤、茶入、霊獣の陶像',
+      hot: '注目',
       stock: '在庫あり',
       outOfStock: '売り切れ',
       sku: '品番',
@@ -183,13 +262,13 @@ export const ui = {
     },
     events: {
       title: 'イベント',
-      subtitle: 'ワークショップ、展示、陶芸体験',
+      subtitle: 'ワークショップ、展示、茶と陶の体験',
       when: '日時',
       where: '場所',
     },
     articles: {
       title: '読みもの',
-      subtitle: '釉薬、窯、暮らしと器の物語',
+      subtitle: 'バットチャンの器、釉薬、茶席の物語',
       by: '著者',
       related: 'その他の記事',
       readMore: '続きを読む',
@@ -199,6 +278,7 @@ export const ui = {
     footer: {
       rights: 'All rights reserved.',
       follow: 'フォロー',
+      hours: '08:00 – 17:00',
     },
     langLabel: '言語',
     menuOpen: 'メニューを開く',

@@ -38,16 +38,16 @@ function switchLocalePath(next: Locale) {
       href={`/${locale}`}
       class="header-brand flex min-w-0 items-center gap-2.5 font-display text-lg font-semibold tracking-tight sm:gap-3 sm:text-xl md:text-2xl"
     >
-      {logo?.url && (
+      {logo?.url ? (
         <img
           src={logo.url}
-          alt=""
-          width="36"
-          height="36"
-          class="h-8 w-8 shrink-0 object-cover sm:h-9 sm:w-9"
+          alt={brand}
+          width="40"
+          height="40"
+          class="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
           decoding="async"
         />
-      )}
+      ) : null}
       <span class="truncate">{brand}</span>
     </a>
 

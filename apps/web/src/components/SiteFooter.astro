@@ -39,6 +39,7 @@ const year = new Date().getFullYear();
           <a class="transition hover:text-sand" href={`tel:${settings.phone.replace(/\s+/g, '')}`}>{settings.phone}</a>
         </p>
       )}
+      <p class="mt-1 text-porcelain/45">{copy.footer.hours}</p>
       {settings.email && (
         <p class="mt-1">
           <a class="transition hover:text-sand" href={`mailto:${settings.email}`}>{settings.email}</a>
@@ -49,7 +50,7 @@ const year = new Date().getFullYear();
       <p class="eyebrow text-sand">{copy.footer.follow}</p>
       <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm sm:flex-col sm:gap-2">
         {settings.facebookUrl && <a class="transition hover:text-sand" href={settings.facebookUrl}>Facebook</a>}
-        {settings.instagramUrl && <a class="transition hover:text-sand" href={settings.instagramUrl}>Instagram</a>}
+        {settings.instagramUrl && <a class="transition hover:text-sand" href={settings.instagramUrl}>TikTok</a>}
         {settings.zaloUrl && <a class="transition hover:text-sand" href={settings.zaloUrl}>Zalo</a>}
       </div>
     </div>

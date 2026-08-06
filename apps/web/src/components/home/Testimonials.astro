@@ -1,0 +1,28 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { t } from '../../i18n/ui';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props;
+const copy = t(locale);
+---
+
+<section class="content-auto border-y border-ink/8 bg-mist/40">
+  <div class="mx-auto max-w-6xl section-pad py-14 sm:py-16 md:py-20">
+    <div class="js-reveal max-w-2xl">
+      <p class="eyebrow">{copy.home.testimonials}</p>
+      <h2 class="display-title mt-3 text-3xl sm:text-4xl">{copy.home.testimonialsTitle}</h2>
+    </div>
+    <div class="mt-10 grid gap-10 sm:mt-12 md:grid-cols-3 md:gap-8">
+      {copy.home.reviews.map((review, i) => (
+        <blockquote class={`js-reveal ${i === 1 ? 'js-reveal-delay-1' : i === 2 ? 'js-reveal-delay-2' : ''}`}>
+          <p class="font-display text-lg leading-snug text-ink/85 sm:text-xl">“{review.quote}”</p>
+          <footer class="mt-5 text-xs uppercase tracking-[0.16em] text-copper">{review.author}</footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
