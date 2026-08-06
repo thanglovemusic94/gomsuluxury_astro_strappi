@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Hero from '../../components/home/Hero.astro';
+import HeroSlider from '../../components/home/HeroSlider.astro';
 import CategoryStrip from '../../components/home/CategoryStrip.astro';
 import Testimonials from '../../components/home/Testimonials.astro';
 import ProductCard from '../../components/product/ProductCard.astro';
@@ -30,8 +30,8 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
 const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
 ---
 
-<BaseLayout locale={locale} settings={settings} menuItems={headerMenu} overlayHeader>
-  <Hero locale={locale} image={settings.heroImage} />
+<BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
+  <HeroSlider locale={locale} products={hotProducts} fallbackImage={settings.heroImage} />
 
   <CategoryStrip locale={locale} />
 

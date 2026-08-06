@@ -1,7 +1,7 @@
 ---
 import type { Locale } from '../i18n/ui';
 import { locales, localeLabels, t } from '../i18n/ui';
-import type { MenuItem, StrapiMedia } from '../lib/types';
+import type { MenuItem, SiteSetting, StrapiMedia } from '../lib/types';
 import type { LocalePathMap } from '../lib/strapi';
 
 type Props = {
@@ -10,12 +10,16 @@ type Props = {
   items: MenuItem[];
   logo?: StrapiMedia | null;
   localeLinks?: LocalePathMap;
+  settings?: SiteSetting;
   overlay?: boolean;
 };
 
-const { locale, brand, items, logo, localeLinks, overlay = false } = Astro.props;
+const { locale, brand, items, logo, localeLinks, settings } = Astro.props;
 const copy = t(locale);
 const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
+const phone = settings?.phone || '';
+const address = settings?.address || '';
+const wideLogo = '/brand/logo-wide.png';
 
 function switchLocalePath(next: Locale) {
   if (localeLinks?.[next]) return localeLinks[next]!;
@@ -28,34 +32,37 @@ function switchLocalePath(next: Locale) {
 }
 ---
 
-<header
-  id="site-header"
-  class:list={['site-header', overlay ? 'is-overlay' : 'is-solid']}
-  data-overlay={overlay ? 'true' : 'false'}
->
-  <div class="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-4 md:px-8">
-    <a
-      href={`/${locale}`}
-      class="header-brand flex min-w-0 items-center gap-2.5 font-display text-lg font-semibold tracking-tight sm:gap-3 sm:text-xl md:text-2xl"
-    >
-      {logo?.url ? (
-        <img
-          src={logo.url}
-          alt={brand}
-          width="40"
-          height="40"
-          class="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
-          decoding="async"
-        />
-      ) : null}
-      <span class="truncate">{brand}</span>
+<header id="site-header" class="site-header header-shine relative">
+  {(address || phone) && (
+    <div class="header-topbar">
+      <div class="mx-auto flex max-w-6xl items-center justify-center gap-6 px-4 py-2 text-white/80 sm:px-5 md:px-8">
+        {address && <span class="truncate">{address}</span>}
+        {copy.footer.hours && <span class="shrink-0">{copy.footer.hours}</span>}
+        {phone && (
+          <a class="shrink-0 text-white hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+        )}
+      </div>
+    </div>
+  )}
+
+  <div class="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-3.5 md:px-8">
+    <a href={`/${locale}`} class="header-brand flex min-w-0 items-center gap-2.5">
+      <img
+        src={wideLogo}
+        alt={brand}
+        width="180"
+        height="50"
+        class="h-9 w-auto max-w-[150px] object-contain sm:h-11 sm:max-w-[200px] md:h-12 md:max-w-[230px]"
+        decoding="async"
+      />
+      <span class="sr-only">{brand}</span>
     </a>
 
     <nav class="hidden items-center gap-7 lg:flex" aria-label="Main">
       {sorted.map((item) => (
         <a
           href={item.url}
-          class="header-link text-sm font-medium text-ink/65 transition hover:text-celadon-deep"
+          class="header-link text-sm font-medium tracking-wide transition"
           target={item.openInNewTab ? '_blank' : undefined}
           rel={item.openInNewTab ? 'noreferrer' : undefined}
         >
@@ -65,16 +72,13 @@ function switchLocalePath(next: Locale) {
     </nav>
 
     <div class="flex shrink-0 items-center gap-2 sm:gap-3">
-      <nav class="header-locale hidden items-center gap-1 text-[11px] uppercase tracking-[0.14em] sm:flex" aria-label={copy.langLabel}>
+      <nav class="header-locale hidden items-center gap-1 border px-2 py-1 text-[11px] uppercase tracking-[0.14em] sm:flex" aria-label={copy.langLabel}>
         {locales.map((l, index) => (
           <>
-            {index > 0 && <span class="text-current/35" aria-hidden="true">·</span>}
+            {index > 0 && <span class="text-white/35" aria-hidden="true">·</span>}
             <a
               href={switchLocalePath(l)}
-              class:list={[
-                'px-1 transition hover:opacity-100',
-                l === locale ? 'font-semibold opacity-100' : 'opacity-55',
-              ]}
+              class:list={['px-1 transition', l === locale ? 'font-semibold text-white' : 'text-white/60 hover:text-white']}
               aria-current={l === locale ? 'true' : undefined}
             >
               {localeLabels[l]}
@@ -83,17 +87,14 @@ function switchLocalePath(next: Locale) {
         ))}
       </nav>
 
-      <a
-        href={`/${locale}/san-pham`}
-        class="header-cta hidden px-3 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] transition sm:inline-block sm:px-4 sm:text-xs sm:tracking-[0.14em] bg-ink text-porcelain hover:bg-celadon-deep"
-      >
+      <a href={`/${locale}/san-pham`} class="header-cta hidden px-3 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] transition sm:inline-block sm:px-4 sm:text-xs">
         {copy.cta.explore}
       </a>
 
       <button
         type="button"
         id="menu-toggle"
-        class="header-icon inline-flex h-10 w-10 items-center justify-center border border-ink/15 text-ink lg:hidden"
+        class="header-icon inline-flex h-10 w-10 items-center justify-center border lg:hidden"
         aria-controls="mobile-menu"
         aria-expanded="false"
         aria-label={copy.menuOpen}
@@ -111,12 +112,12 @@ function switchLocalePath(next: Locale) {
     </div>
   </div>
 
-  <div id="mobile-menu" class="hidden border-t border-ink/10 bg-porcelain text-ink lg:hidden" hidden>
+  <div id="mobile-menu" class="relative z-10 hidden border-t border-white/15 bg-brand-deep/95 text-white backdrop-blur-md lg:hidden" hidden>
     <nav class="mx-auto flex max-w-6xl flex-col px-4 py-3 sm:px-5" aria-label="Mobile">
       {sorted.map((item) => (
         <a
           href={item.url}
-          class="border-b border-ink/8 py-3.5 text-base font-medium text-ink/80 transition hover:text-celadon-deep"
+          class="border-b border-white/10 py-3.5 text-base font-medium text-white/85 transition hover:text-white"
           target={item.openInNewTab ? '_blank' : undefined}
           rel={item.openInNewTab ? 'noreferrer' : undefined}
         >
@@ -127,7 +128,7 @@ function switchLocalePath(next: Locale) {
         {locales.map((l) => (
           <a
             href={switchLocalePath(l)}
-            class:list={[l === locale ? 'font-semibold text-ink' : 'text-ink/45']}
+            class:list={[l === locale ? 'font-semibold text-white' : 'text-white/50']}
             aria-current={l === locale ? 'true' : undefined}
           >
             {localeLabels[l]}
@@ -136,7 +137,7 @@ function switchLocalePath(next: Locale) {
       </div>
       <a
         href={`/${locale}/san-pham`}
-        class="mt-4 mb-2 inline-flex items-center justify-center bg-ink px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain"
+        class="mt-4 mb-2 inline-flex items-center justify-center bg-white px-4 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-brand-deep"
       >
         {copy.cta.explore}
       </a>
@@ -149,7 +150,6 @@ function switchLocalePath(next: Locale) {
   const menu = document.getElementById('mobile-menu');
   const iconOpen = document.getElementById('icon-open');
   const iconClose = document.getElementById('icon-close');
-  const header = document.getElementById('site-header');
 
   if (toggle && menu) {
     const setOpen = (open) => {
@@ -161,9 +161,6 @@ function switchLocalePath(next: Locale) {
       document.body.classList.toggle('overflow-hidden', open);
       iconOpen?.classList.toggle('hidden', open);
       iconClose?.classList.toggle('hidden', !open);
-      if (open && header?.dataset.overlay === 'true') {
-        header.classList.add('is-scrolled');
-      }
     };
 
     toggle.addEventListener('click', () => {
@@ -182,13 +179,5 @@ function switchLocalePath(next: Locale) {
     window.addEventListener('resize', () => {
       if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false);
     });
-  }
-
-  if (header?.dataset.overlay === 'true') {
-    const onScroll = () => {
-      header.classList.toggle('is-scrolled', window.scrollY > 24);
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
   }
 </script>

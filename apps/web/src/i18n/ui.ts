@@ -54,6 +54,28 @@ export const ui = {
       craft: 'Đất · nước · lửa · tay nghề',
       craftBody:
         'Mỗi sản phẩm là bản giao hưởng giữa đất, nước, lửa và đôi bàn tay nghệ nhân Việt.',
+      slides: [
+        {
+          title: 'Tự hào gốm Việt',
+          body: 'Bộ sưu tập ấm chén Bát Tràng — tinh hoa men và tay nghề nghệ nhân.',
+        },
+        {
+          title: 'Ấm chén Bát Tràng',
+          body: 'Men hỏa biến, dáng siêu, tông — chọn lọc cho bàn trà đương đại.',
+        },
+        {
+          title: 'Linh vật & bàn trà',
+          body: 'Tượng gốm, khay trà và phụ kiện hoàn thiện không gian thưởng trà.',
+        },
+        {
+          title: 'Nghệ nhân Việt',
+          body: 'Từng món được tạo hình và nung với độ sâu men theo năm tháng.',
+        },
+        {
+          title: 'Câu chuyện nghề gốm',
+          body: 'Đọc nhật ký men, lò nung và làng nghề Bát Tràng.',
+        },
+      ],
       collections: 'Bộ sưu tập',
       collectionsTitle: 'Chọn theo không gian trà',
       categories: {
@@ -148,6 +170,28 @@ export const ui = {
       craft: 'Earth · water · fire · craft',
       craftBody:
         'Each piece is a quiet dialogue between clay, water, fire and the artisan’s hand.',
+      slides: [
+        {
+          title: 'Proudly Vietnamese clay',
+          body: 'Bat Trang tea sets — glaze depth and artisan craft for the modern table.',
+        },
+        {
+          title: 'Bat Trang tea ware',
+          body: 'Fire-change glazes and classic forms curated for contemporary tea rituals.',
+        },
+        {
+          title: 'Guardians & tea trays',
+          body: 'Figurines, trays and accessories that complete the tea space.',
+        },
+        {
+          title: 'Vietnamese artisans',
+          body: 'Thrown and fired for lasting glaze character, piece by piece.',
+        },
+        {
+          title: 'Stories of the kiln',
+          body: 'Journal notes on glaze, firing and Bat Trang heritage.',
+        },
+      ],
       collections: 'Collections',
       collectionsTitle: 'Shop the tea table',
       categories: {
@@ -241,6 +285,28 @@ export const ui = {
       featuredEvents: '注目のイベント',
       craft: '土 · 水 · 火 · 手仕事',
       craftBody: '一点一点が、土・水・火、そして職人の手の対話です。',
+      slides: [
+        {
+          title: 'ベトナムの誇りある器',
+          body: 'バットチャン茶器。釉の深みと職人の手仕事を現代の茶席へ。',
+        },
+        {
+          title: 'バットチャン茶器',
+          body: '火変釉と古典フォルム。現代の茶の時間のために。',
+        },
+        {
+          title: '霊獣と茶盤',
+          body: '陶像・茶盤・道具で茶の空間を整えます。',
+        },
+        {
+          title: 'ベトナムの職人',
+          body: '一つひとつ焼き上げ、釉の表情を育てます。',
+        },
+        {
+          title: '窯の物語',
+          body: '釉薬、焼成、バットチャンの伝統についての読みもの。',
+        },
+      ],
       collections: 'コレクション',
       collectionsTitle: '茶の席から選ぶ',
       categories: {
