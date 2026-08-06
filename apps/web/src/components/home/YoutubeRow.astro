@@ -1,0 +1,59 @@
+---
+type Props = {
+  locale?: string;
+};
+
+Astro.props;
+
+const videos = [
+  {
+    id: 'mQLhC0XaOW8',
+    title: 'Bộ ấm chén Tây Thi gấm vàng - Gốm Sứ Bát Tràng',
+  },
+  {
+    id: 'aymsvfB8HvI',
+    title: 'Bộ ấm chén Quả hồng cẩm lai xanh - Gốm sứ Bát Tràng',
+  },
+  {
+    id: 'lxuQanY7LwQ',
+    title: 'Bộ ấm chén Giang Tây LH mẫu 04 - NNƯT Tô Thanh Sơn',
+  },
+];
+---
+
+<section class="youtube-block">
+  <div class="youtube-banner">
+    <img
+      src="/brand/banner-gom-viet.jpg"
+      alt="Tự hào Gốm Việt - Gốm Sứ Luxury"
+      width="2500"
+      height="413"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="shine-beam shine-beam--banner" aria-hidden="true"></span>
+  </div>
+
+  <div class="youtube-grid">
+    {videos.map((video, i) => (
+      <article class:list={['youtube-card', i > 0 && 'youtube-card--desktop']}>
+        <div class="youtube-card__frame">
+          <iframe
+            src={`https://www.youtube.com/embed/${video.id}?rel=0`}
+            title={video.title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="youtube-card__meta">
+          <img src="/brand/logo-mark.png" alt="" width="28" height="28" loading="lazy" decoding="async" />
+          <div>
+            <p class="youtube-card__title">{video.title}</p>
+            <p class="youtube-card__brand">Gốm Sứ Luxury</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

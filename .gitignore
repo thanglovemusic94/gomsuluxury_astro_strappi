@@ -1,0 +1,17 @@
+node_modules
+dist
+.astro
+.vercel
+.env
+.env.local
+.DS_Store
+*.log
+apps/cms/.tmp
+apps/cms/public/uploads/*
+!apps/cms/public/uploads/.gitkeep
+apps/cms/dist
+apps/cms/build
+apps/cms/.cache
+apps/cms/types/generated
+.idea
+.vscode

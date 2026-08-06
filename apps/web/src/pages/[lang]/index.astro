@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSlider from '../../components/home/HeroSlider.astro';
+import CategoryProductRow from '../../components/home/CategoryProductRow.astro';
+import YoutubeRow from '../../components/home/YoutubeRow.astro';
+import TeaPromo from '../../components/home/TeaPromo.astro';
+import Testimonials from '../../components/home/Testimonials.astro';
+import { isLocale, localePaths, t, type Locale } from '../../i18n/ui';
+import { getMenus, getProducts, getSiteSettings } from '../../lib/strapi';
+import { buildSectionItems, homeSections } from '../../lib/home-sections';
+
+export function getStaticPaths() {
+  return localePaths();
+}
+
+const lang = Astro.params.lang || 'vi';
+if (!isLocale(lang)) {
+  return Astro.redirect('/vi');
+}
+const locale = lang as Locale;
+const copy = t(locale);
+
+const [settings, menus, products] = await Promise.all([
+  getSiteSettings(locale),
+  getMenus(locale),
+  getProducts(locale),
+]);
+
+const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
+const used = new Set<string>();
+const rows = homeSections
+  .map((section) => ({
+    section,
+    items: buildSectionItems(products, section, used),
+    title: locale === 'vi' ? section.titleVi : copy.home.sectionTitles[section.slug as keyof typeof copy.home.sectionTitles] || section.titleVi,
+  }))
+  .filter((row) => row.items.length > 0);
+
+/** On gomsuluxury.vn: banner + YouTube sit after Phụ Kiện, immediately above Khay Trà */
+const youtubeBeforeSlug = 'khay-tra';
+const hasKhay = rows.some((r) => r.section.slug === youtubeBeforeSlug);
+---
+
+<BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
+  <HeroSlider locale={locale} />
+
+  {rows.map((row) => (
+    <>
+      {hasKhay && row.section.slug === youtubeBeforeSlug && <YoutubeRow locale={locale} />}
+      <CategoryProductRow
+        locale={locale}
+        title={row.title}
+        items={row.items}
+        href={`/${locale}/san-pham?cat=${row.section.slug}`}
+        viewMore={copy.cta.viewMore}
+      />
+    </>
+  ))}
+  {!hasKhay && <YoutubeRow locale={locale} />}
+
+  <TeaPromo locale={locale} />
+
+  <Testimonials locale={locale} />
+</BaseLayout>

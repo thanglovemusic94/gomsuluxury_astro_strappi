@@ -1,0 +1,43 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { t } from '../../i18n/ui';
+import SectionTitleBar from './SectionTitleBar.astro';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const href = `/${locale}/san-pham?cat=tra-shan-tuyet`;
+const teas = [
+  { src: '/brand/tea/tea-1.jpg', alt: 'Trà Shan tuyết' },
+  { src: '/brand/tea/tea-2.jpg', alt: 'Trà thượng hạng' },
+  { src: '/brand/tea/tea-3.jpg', alt: 'Trà cổ thụ' },
+  { src: '/brand/tea/tea-4.jpg', alt: 'Trà Bạch' },
+];
+---
+
+<section class="content-auto">
+  <SectionTitleBar title={copy.home.sections.tra} actionLabel={copy.cta.viewMore} actionHref={href} />
+  <div class="mx-auto max-w-6xl section-pad py-8 sm:py-10">
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+      {teas.map((tea) => (
+        <a href={href} class="product-shine group relative block aspect-square overflow-hidden bg-mist">
+          <img
+            src={tea.src}
+            alt={tea.alt}
+            class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+            loading="lazy"
+            decoding="async"
+            width="768"
+            height="768"
+          />
+          <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent px-3 pb-3 pt-10 text-center text-[10px] font-semibold uppercase tracking-[0.16em] text-white sm:text-xs">
+            {copy.cta.viewMore}
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

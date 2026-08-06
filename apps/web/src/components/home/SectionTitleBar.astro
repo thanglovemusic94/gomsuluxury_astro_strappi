@@ -1,0 +1,20 @@
+---
+type Props = {
+  title: string;
+  /** Optional right-side action label */
+  actionLabel?: string;
+  actionHref?: string;
+};
+
+const { title, actionLabel, actionHref } = Astro.props;
+---
+
+<div class="section-titlebar">
+  <span class="shine-beam" aria-hidden="true"></span>
+  <div class="section-titlebar__inner">
+    <h2 class="section-titlebar__title">{title}</h2>
+    {actionLabel && actionHref && (
+      <a href={actionHref} class="section-titlebar__action">{actionLabel}</a>
+    )}
+  </div>
+</div>

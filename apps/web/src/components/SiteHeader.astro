@@ -1,0 +1,232 @@
+---
+import type { Locale } from '../i18n/ui';
+import { locales, localeLabels, t } from '../i18n/ui';
+import type { MenuItem, SiteSetting, StrapiMedia } from '../lib/types';
+import type { LocalePathMap } from '../lib/strapi';
+
+type Props = {
+  locale: Locale;
+  brand: string;
+  items: MenuItem[];
+  logo?: StrapiMedia | null;
+  localeLinks?: LocalePathMap;
+  settings?: SiteSetting;
+  overlay?: boolean;
+};
+
+const { locale, brand, items, localeLinks, settings } = Astro.props;
+const copy = t(locale);
+const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
+const phone = settings?.phone || '0837 571 758';
+const address = settings?.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam Từ Liêm, Hà Nội';
+const wideLogo = '/brand/logo-wide.png';
+
+/** Match gomsuluxury.vn category menu casing */
+const categoryMenu =
+  locale === 'vi'
+    ? [
+        { label: 'Bộ Ấm Chén', href: `/${locale}/san-pham?cat=am-chen-bat-trang` },
+        { label: 'Phụ Kiện bàn Trà', href: `/${locale}/san-pham?cat=phu-kien-ban-tra-gom-su-luxury` },
+        { label: 'Khay Trà', href: `/${locale}/san-pham?cat=khay-tra` },
+        { label: 'Lư Xông Trầm', href: `/${locale}/san-pham?cat=lu-xong-tram` },
+        { label: 'Tượng Gốm Linh Vật', href: `/${locale}/san-pham?cat=tuong-gom-linh-vat` },
+        { label: 'Hũ trà', href: `/${locale}/san-pham?cat=hu-tra` },
+      ]
+    : [
+        { label: copy.home.categories.amChen, href: `/${locale}/san-pham?cat=am-chen-bat-trang` },
+        { label: copy.home.categories.phuKien, href: `/${locale}/san-pham?cat=phu-kien-ban-tra-gom-su-luxury` },
+        { label: copy.home.sectionTitles['khay-tra'], href: `/${locale}/san-pham?cat=khay-tra` },
+        { label: copy.footer.products.luXong, href: `/${locale}/san-pham?cat=lu-xong-tram` },
+        { label: copy.home.categories.tuong, href: `/${locale}/san-pham?cat=tuong-gom-linh-vat` },
+        { label: copy.home.categories.huTra, href: `/${locale}/san-pham?cat=hu-tra` },
+      ];
+
+function switchLocalePath(next: Locale) {
+  if (localeLinks?.[next]) return localeLinks[next]!;
+  const parts = Astro.url.pathname.split('/');
+  if (parts[1] && locales.includes(parts[1] as Locale)) {
+    parts[1] = next;
+    return parts.join('/') || `/${next}`;
+  }
+  return `/${next}`;
+}
+
+function menuLabel(label: string) {
+  if (locale !== 'vi') return label;
+  // Title-case Vietnamese menu words for display parity with old site.
+  return label
+    .split(/\s+/)
+    .map((w) => (w ? w.charAt(0).toLocaleUpperCase('vi-VN') + w.slice(1) : w))
+    .join(' ');
+}
+---
+
+<header id="site-header" class="site-header relative">
+  <span class="shine-beam" aria-hidden="true"></span>
+  <div class="header-topbar">
+    <div class="mx-auto flex max-w-6xl items-center justify-center gap-6 px-4 py-2 text-white/85 sm:px-5 md:px-8">
+      {address && <span class="truncate">{address}</span>}
+      <span class="shrink-0">{copy.footer.hours}</span>
+      <a class="shrink-0 text-white hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>TEL: {phone}</a>
+    </div>
+  </div>
+
+  <div class="relative mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-5 sm:py-3.5 md:px-8">
+    <a href={`/${locale}`} class="header-brand flex min-w-0 items-center gap-2.5">
+      <img
+        src={wideLogo}
+        alt={brand}
+        width="180"
+        height="50"
+        class="h-9 w-auto max-w-[150px] object-contain sm:h-11 sm:max-w-[200px] md:h-12 md:max-w-[230px]"
+        decoding="async"
+      />
+      <span class="sr-only">{brand}</span>
+    </a>
+
+    <nav class="hidden items-center gap-6 xl:gap-7 lg:flex" aria-label="Main">
+      {sorted.map((item) => (
+        <a
+          href={item.url}
+          class="header-link text-[13px] font-medium tracking-[0.06em] uppercase transition"
+          target={item.openInNewTab ? '_blank' : undefined}
+          rel={item.openInNewTab ? 'noreferrer' : undefined}
+        >
+          {menuLabel(item.label)}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex shrink-0 items-center gap-2 sm:gap-3">
+      <nav class="header-locale hidden items-center gap-1 border px-2 py-1 text-[11px] uppercase tracking-[0.14em] sm:flex" aria-label={copy.langLabel}>
+        {locales.map((l, index) => (
+          <>
+            {index > 0 && <span class="text-white/35" aria-hidden="true">·</span>}
+            <a
+              href={switchLocalePath(l)}
+              class:list={['px-1 transition', l === locale ? 'font-semibold text-white' : 'text-white/60 hover:text-white']}
+              aria-current={l === locale ? 'true' : undefined}
+            >
+              {localeLabels[l]}
+            </a>
+          </>
+        ))}
+      </nav>
+
+      <a href={`/${locale}/san-pham`} class="header-cta hidden px-3 py-2.5 text-[10px] font-semibold uppercase tracking-[0.12em] transition sm:inline-block sm:px-4 sm:text-xs">
+        {copy.cta.explore}
+      </a>
+
+      <button
+        type="button"
+        id="menu-toggle"
+        class="header-icon inline-flex h-10 w-10 items-center justify-center border lg:hidden"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label={copy.menuOpen}
+        data-label-open={copy.menuOpen}
+        data-label-close={copy.menuClose}
+      >
+        <span class="sr-only">{copy.menuOpen}</span>
+        <svg id="icon-open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+        <svg id="icon-close" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="header-catbar">
+    <div class="relative mx-auto flex max-w-6xl items-stretch px-4 sm:px-5 md:px-8">
+      <div class="header-cat-dropdown relative">
+        <button type="button" class="header-cat-trigger" aria-expanded="true" aria-controls="cat-menu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+          </svg>
+          <span>{locale === 'vi' ? 'Danh Mục Sản Phẩm' : copy.home.collections}</span>
+        </button>
+        <ul id="cat-menu" class="header-cat-list">
+          {categoryMenu.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <nav class="header-cat-inline hidden min-w-0 flex-1 items-center gap-5 overflow-x-auto pl-6 lg:flex" aria-label="Categories">
+        {categoryMenu.map((item) => (
+          <a href={item.href} class="header-cat-link whitespace-nowrap">{item.label}</a>
+        ))}
+      </nav>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="relative z-10 hidden border-t border-white/15 bg-brand-deep/95 text-white backdrop-blur-md lg:hidden" hidden>
+    <nav class="mx-auto flex max-w-6xl flex-col px-4 py-3 sm:px-5" aria-label="Mobile">
+      {sorted.map((item) => (
+        <a
+          href={item.url}
+          class="border-b border-white/10 py-3.5 text-base font-medium uppercase tracking-[0.06em] text-white/85 transition hover:text-white"
+          target={item.openInNewTab ? '_blank' : undefined}
+          rel={item.openInNewTab ? 'noreferrer' : undefined}
+        >
+          {menuLabel(item.label)}
+        </a>
+      ))}
+      <p class="mt-4 text-[11px] uppercase tracking-[0.16em] text-white/45">{locale === 'vi' ? 'Danh Mục Sản Phẩm' : copy.home.collections}</p>
+      {categoryMenu.map((item) => (
+        <a href={item.href} class="border-b border-white/10 py-3 text-sm text-white/85">{item.label}</a>
+      ))}
+      <div class="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.16em]">
+        {locales.map((l) => (
+          <a
+            href={switchLocalePath(l)}
+            class:list={[l === locale ? 'font-semibold text-white' : 'text-white/50']}
+            aria-current={l === locale ? 'true' : undefined}
+          >
+            {localeLabels[l]}
+          </a>
+        ))}
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  if (toggle && menu) {
+    const setOpen = (open) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
+      if (label) toggle.setAttribute('aria-label', label);
+      menu.classList.toggle('hidden', !open);
+      menu.hidden = !open;
+      document.body.classList.toggle('overflow-hidden', open);
+      iconOpen?.classList.toggle('hidden', open);
+      iconClose?.classList.toggle('hidden', !open);
+    };
+
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      setOpen(open);
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false);
+    });
+  }
+</script>

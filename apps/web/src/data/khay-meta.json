@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Khay trà gỗ nguyên tấm KT19 Kích thước 50x32x3,5cm",
+    "slug": "khay-tra-go-nguyen-tam-kt19-kich-thuoc-50x32x35cm",
+    "price": "1500000",
+    "regular": "2000000",
+    "image": "/brand/catalog/khay-1.jpg"
+  },
+  {
+    "name": "Khay phíp dưỡng ấm cao cấp",
+    "slug": "khay-phip-duong-am-cao-cap",
+    "price": "299000",
+    "regular": "450000",
+    "image": "/brand/catalog/khay-2.jpg"
+  },
+  {
+    "name": "Khay trà gỗ nguyên tấm KT19 Kích thước 60x32x3,5cm",
+    "slug": "khay-tra-go-nguyen-tam-kt19-kich-thuoc-60x32x35cm",
+    "price": "1700000",
+    "regular": "2350000",
+    "image": "/brand/catalog/khay-3.jpg"
+  },
+  {
+    "name": "Khay trà tre tự nhiên KT01 (Thuận buồm xuôi gió) Kích Thước 48 x 28 x 4 cm",
+    "slug": "khay-tra-tre-tu-nhien-kt01-thuan-buom-xuoi-gio-kich-thuoc-48-x-28-x-4-cm",
+    "price": "550000",
+    "regular": "980000",
+    "image": "/brand/catalog/khay-4.jpg"
+  },
+  {
+    "name": "Khay trà gỗ nguyên tấm KT24 kích thước 70x32x3cm",
+    "slug": "khay-tra-go-nguyen-tam-kt24-kich-thuoc-70x32x3cm",
+    "price": "3200000",
+    "regular": "3600000",
+    "image": "/brand/catalog/khay-5.jpg"
+  },
+  {
+    "name": "Khay trà gỗ nguyên tấm KT18 kích thước 80x40x3,5cm",
+    "slug": "khay-tra-go-nguyen-tam-kt18-kich-thuoc-80x40x35cm",
+    "price": "2700000",
+    "regular": "3200000",
+    "image": "/brand/catalog/khay-6.jpg"
+  }
+]

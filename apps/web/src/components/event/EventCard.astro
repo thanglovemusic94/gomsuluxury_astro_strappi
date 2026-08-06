@@ -1,0 +1,50 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { t } from '../../i18n/ui';
+import type { EventItem } from '../../lib/types';
+import { formatDate } from '../../lib/format';
+
+type Props = {
+  event: EventItem;
+  locale: Locale;
+};
+
+const { event, locale } = Astro.props;
+const copy = t(locale);
+---
+
+<article class="group grid gap-0 md:grid-cols-[1.15fr_1fr] md:items-stretch">
+  <a href={`/${locale}/su-kien/${event.slug}`} class="relative min-h-52 overflow-hidden bg-ink sm:min-h-64">
+    {event.cover ? (
+      <img
+        src={event.cover.url}
+        alt={event.cover.alternativeText || event.title}
+        class="h-full w-full object-cover transition duration-[900ms] group-hover:scale-[1.03]"
+        loading="lazy"
+        decoding="async"
+        width={event.cover.width || 1200}
+        height={event.cover.height || 800}
+      />
+    ) : (
+      <div class="flex h-full min-h-52 items-end bg-gradient-to-tr from-ink via-ink-soft to-celadon-deep p-6 sm:min-h-64 sm:p-8">
+        <p class="font-display text-2xl text-porcelain/90 sm:text-3xl">{event.title}</p>
+      </div>
+    )}
+  </a>
+  <div class="flex flex-col justify-center py-7 md:px-10 md:py-8">
+    <p class="eyebrow">{formatDate(event.startDate, locale)}</p>
+    <h3 class="display-title mt-3 text-2xl text-ink sm:text-3xl">
+      <a href={`/${locale}/su-kien/${event.slug}`}>{event.title}</a>
+    </h3>
+    <p class="mt-4 text-sm leading-relaxed text-ink/60 sm:text-base">{event.excerpt}</p>
+    {event.location && (
+      <p class="mt-4 text-xs tracking-wide text-ink/45">{copy.events.where}: {event.location}</p>
+    )}
+    <a
+      href={`/${locale}/su-kien/${event.slug}`}
+      class="mt-6 inline-flex w-fit text-xs font-semibold uppercase tracking-[0.16em] text-celadon-deep underline-offset-4 hover:underline"
+    >
+      {copy.cta.details}
+    </a>
+  </div>
+</article>

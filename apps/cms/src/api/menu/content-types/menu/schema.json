@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "menus",
+  "info": {
+    "singularName": "menu",
+    "pluralName": "menus",
+    "displayName": "Menu",
+    "description": "Quản lý menu điều hướng — label/URL theo từng locale (vi/en/ja)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "location": {
+      "type": "enumeration",
+      "enum": ["header", "footer", "mobile"],
+      "default": "header",
+      "required": true,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "navigation.menu-item",
+      "pluginOptions": { "i18n": { "localized": true } }
+    }
+  }
+}

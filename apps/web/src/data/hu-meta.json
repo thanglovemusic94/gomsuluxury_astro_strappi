@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Cặp hũ đựng trà Nanmu bằng sứ kèm hộp quà tặng cao cấp",
+    "slug": "cap-hu-dung-tra-nanmu-bang-su-kem-hop-qua-tang-cao-cap",
+    "price": "990000",
+    "regular": "1200000",
+    "image": "/brand/catalog/hu-1.jpg"
+  },
+  {
+    "name": "Hũ đựng trà Nanmu bằng sứ kèm hộp quà tặng cao cấp",
+    "slug": "hu-dung-tra-nanmu-bang-su-kem-hop-qua-tang-cao-cap",
+    "price": "1200000",
+    "regular": "1500000",
+    "image": "/brand/catalog/hu-2.jpg"
+  },
+  {
+    "name": "Cặp hũ đựng trà bằng sứ kèm hộp quà tặng cao cấp",
+    "slug": "cap-hu-dung-tra-bang-su-kem-hop-qua-tang-cao-cap",
+    "price": "1300000",
+    "regular": "1800000",
+    "image": "/brand/catalog/hu-3.jpg"
+  },
+  {
+    "name": "Hũ đựng trà bằng sứ kèm giỏ quà mây cao cấp",
+    "slug": "hu-dung-tra-bang-su-kem-gio-qua-may-cao-cap",
+    "price": "1100000",
+    "regular": "1580000",
+    "image": "/brand/catalog/hu-4.jpg"
+  },
+  {
+    "name": "Hũ đựng trà men ngọc Long Tuyền chạm nổi rồng phượng",
+    "slug": "hu-dung-tra-men-ngoc-long-tuyen-cham-noi-rong-phuong",
+    "price": "788000",
+    "regular": "880000",
+    "image": "/brand/catalog/hu-5.jpg"
+  },
+  {
+    "name": "Hũ trà men hoả biến 300g – Nguyễn Văn Hải",
+    "slug": "hu-tra-men-hoa-bien-200g-nguyen-van-hai",
+    "price": "550000",
+    "regular": "850000",
+    "image": "/brand/catalog/hu-6.jpg"
+  }
+]

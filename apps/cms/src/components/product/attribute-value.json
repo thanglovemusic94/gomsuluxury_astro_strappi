@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_product_attribute_values",
+  "info": {
+    "displayName": "Attribute Value",
+    "description": "Giá trị thuộc tính sản phẩm (màu, kích thước, chất liệu...)",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "string",
+      "required": true
+    },
+    "attribute": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::attribute.attribute"
+    }
+  }
+}

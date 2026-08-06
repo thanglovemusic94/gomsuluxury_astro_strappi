@@ -1,0 +1,121 @@
+---
+export const prerender = false;
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArticleCard from '../../../components/article/ArticleCard.astro';
+import { isLocale, t, type Locale } from '../../../i18n/ui';
+import { formatDate, richtextToHtml } from '../../../lib/format';
+import {
+  getArticleBySlug,
+  getArticleLocalePaths,
+  getArticles,
+  getMenus,
+  getSiteSettings,
+  STRAPI_URL,
+} from '../../../lib/strapi';
+
+const lang = Astro.params.lang || 'vi';
+const slug = Astro.params.slug || '';
+if (!isLocale(lang)) return Astro.redirect('/vi');
+const locale = lang as Locale;
+const copy = t(locale);
+
+const [settings, menus, article, articlesResult] = await Promise.all([
+  getSiteSettings(locale),
+  getMenus(locale),
+  getArticleBySlug(locale, slug),
+  getArticles(locale),
+]);
+
+if (!article) {
+  return Astro.redirect(`/${locale}/bai-viet`);
+}
+
+const localeLinks = await getArticleLocalePaths(article.documentId, locale, article.slug);
+const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
+const related = articlesResult.items.filter((a) => a.slug !== article.slug).slice(0, 2);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.excerpt || article.seo?.metaDescription,
+  image: article.cover?.url,
+  datePublished: article.displayDate || undefined,
+  author: article.authorName
+    ? { '@type': 'Person', name: article.authorName }
+    : { '@type': 'Organization', name: settings.siteName },
+  inLanguage: locale,
+};
+---
+
+<BaseLayout
+  locale={locale}
+  settings={settings}
+  menuItems={headerMenu}
+  seo={article.seo}
+  title={article.seo?.metaTitle || article.title}
+  description={article.seo?.metaDescription || article.excerpt}
+  localeLinks={localeLinks}
+  overlayHeader
+>
+  <article>
+    <header class="relative min-h-[58svh] overflow-hidden bg-ink text-porcelain grain sm:min-h-[64svh]">
+      {article.cover?.url ? (
+        <img
+          src={article.cover.url}
+          alt={article.cover.alternativeText || article.title}
+          class="absolute inset-0 h-full w-full object-cover"
+          fetchpriority="high"
+          decoding="async"
+          width={article.cover.width || 1600}
+          height={article.cover.height || 1067}
+        />
+      ) : (
+        <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink-soft to-celadon-deep"></div>
+      )}
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/20"></div>
+      <div class="relative mx-auto flex min-h-[58svh] max-w-3xl flex-col justify-end px-4 pb-12 pt-28 sm:min-h-[64svh] sm:px-5 sm:pb-16 md:px-8">
+        <p class="reveal text-[10px] uppercase tracking-[0.28em] text-sand sm:text-[11px]">{copy.articles.title}</p>
+        <h1 class="reveal reveal-delay-1 mt-4 display-title text-3xl text-porcelain sm:text-4xl md:text-5xl lg:text-6xl">
+          {article.title}
+        </h1>
+        <div class="reveal reveal-delay-2 mt-5 flex flex-wrap gap-x-4 gap-y-1 text-sm text-porcelain/65">
+          {article.displayDate && <span>{formatDate(article.displayDate, locale)}</span>}
+          {article.authorName && (
+            <span>
+              {copy.articles.by}: {article.authorName}
+            </span>
+          )}
+        </div>
+      </div>
+    </header>
+
+    <section class="mx-auto max-w-[42rem] px-4 py-12 sm:px-5 sm:py-16 md:px-8">
+      {article.excerpt && (
+        <p class="js-reveal text-xl leading-relaxed text-ink/65 sm:text-2xl">{article.excerpt}</p>
+      )}
+      {article.content && (
+        <div
+          class="js-reveal prose-article mt-10"
+          set:html={richtextToHtml(article.content, STRAPI_URL)}
+        />
+      )}
+    </section>
+  </article>
+
+  {related.length > 0 && (
+    <section class="content-auto mx-auto max-w-6xl section-pad border-t border-ink/8 pb-20 pt-14 sm:pb-24 sm:pt-16">
+      <h2 class="js-reveal display-title text-2xl sm:text-3xl">{copy.articles.related}</h2>
+      <div class="mt-8 space-y-10 sm:mt-10">
+        {related.map((item) => (
+          <div class="js-reveal">
+            <ArticleCard article={item} locale={locale} />
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</BaseLayout>
