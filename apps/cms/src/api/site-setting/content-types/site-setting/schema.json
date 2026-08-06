@@ -31,6 +31,18 @@
       "allowedTypes": ["images"],
       "pluginOptions": { "i18n": { "localized": false } }
     },
+    "heroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "craftImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
     "phone": {
       "type": "string",
       "pluginOptions": { "i18n": { "localized": false } }

@@ -125,14 +125,23 @@ function mapEvent(item: any): EventItem {
 export async function getProducts(locale: Locale, opts?: { hot?: boolean }): Promise<Product[]> {
   const filters = opts?.hot ? '&filters[isHot][$eq]=true' : '';
   const data = await strapiFetch<StrapiListResponse<any>>(
-    `/products?populate=*&sort=updatedAt:desc${filters}`,
+    `/products?status=published&populate=*&sort=updatedAt:desc&pagination[pageSize]=100${filters}`,
     locale
   );
   if (!data?.data?.length) {
     const list = demoProducts(locale);
     return opts?.hot ? list.filter((p) => p.isHot) : list;
   }
-  return data.data.map(mapProduct);
+  // Dedupe by documentId
+  const seen = new Set<string>();
+  return data.data
+    .map(mapProduct)
+    .filter((p) => {
+      const key = p.documentId || String(p.id);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 }
 
 export async function getProductBySlug(locale: Locale, slug: string): Promise<Product | null> {
@@ -146,7 +155,7 @@ export async function getProductBySlug(locale: Locale, slug: string): Promise<Pr
 
 export async function getEvents(locale: Locale): Promise<EventItem[]> {
   const data = await strapiFetch<StrapiListResponse<any>>(
-    `/events?populate=*&sort=startDate:asc`,
+    `/events?status=published&populate=*&sort=startDate:asc`,
     locale
   );
   if (!data?.data?.length) return demoEvents(locale);
@@ -217,7 +226,7 @@ type CmsListResult<T> = {
 
 export async function getArticles(locale: Locale): Promise<CmsListResult<Article>> {
   const data = await strapiFetch<StrapiListResponse<any>>(
-    `/articles?status=published&populate=*&sort=displayDate:desc`,
+    `/articles?status=published&populate=*&sort=displayDate:desc&pagination[pageSize]=50`,
     locale
   );
   // Chỉ hiển thị bài từ CMS admin (đã Publish). Không dùng demo.
@@ -284,6 +293,25 @@ export async function getMenus(locale: Locale): Promise<Menu[]> {
       slug: m.slug,
       location: m.location,
       items: m.items || [],
+    };
+  });
+}
+
+export async function getCategories(locale: Locale) {
+  const data = await strapiFetch<StrapiListResponse<any>>(
+    `/categories?status=published&populate=*&sort=name:asc`,
+    locale
+  );
+  if (!data?.data?.length) return [];
+  return data.data.map((item: any) => {
+    const c = item.attributes ? { id: item.id, ...item.attributes } : item;
+    return {
+      id: c.id,
+      documentId: c.documentId,
+      name: c.name,
+      slug: c.slug,
+      description: c.description,
+      image: normalizeMedia(c.image),
     };
   });
 }

@@ -109,6 +109,14 @@ export const ui = {
       follow: 'Theo dõi',
       hours: '08:00 – 17:00',
     },
+    trust: {
+      title: 'Cam kết từ showroom',
+      items: [
+        { title: 'Tư vấn tận tâm', body: 'Chọn ấm chén và bàn trà phù hợp không gian của bạn.' },
+        { title: 'Đóng gói cẩn thận', body: 'Giao hàng nhanh, bảo vệ từng món gốm trên đường.' },
+        { title: 'Gốm Bát Tràng', body: 'Tinh hoa nghề Việt — từ nghệ nhân đến bàn trà.' },
+      ],
+    },
     langLabel: 'Ngôn ngữ',
     menuOpen: 'Mở menu',
     menuClose: 'Đóng menu',
@@ -195,6 +203,14 @@ export const ui = {
       follow: 'Follow',
       hours: '08:00 – 17:00',
     },
+    trust: {
+      title: 'From our showroom',
+      items: [
+        { title: 'Thoughtful advice', body: 'We help you choose tea ware that fits your space.' },
+        { title: 'Careful packing', body: 'Fast delivery with protected ceramics on the way.' },
+        { title: 'Bat Trang craft', body: 'Vietnamese kiln heritage — from artisan to tea table.' },
+      ],
+    },
     langLabel: 'Language',
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
@@ -279,6 +295,14 @@ export const ui = {
       rights: 'All rights reserved.',
       follow: 'フォロー',
       hours: '08:00 – 17:00',
+    },
+    trust: {
+      title: 'ショールームからのお約束',
+      items: [
+        { title: '丁寧な相談', body: '空間に合う茶器選びをお手伝いします。' },
+        { title: '安心の梱包', body: '丁寧に梱包し、迅速にお届けします。' },
+        { title: 'バットチャンの技', body: 'ベトナムの窯の伝統を茶席へ。' },
+      ],
     },
     langLabel: '言語',
     menuOpen: 'メニューを開く',

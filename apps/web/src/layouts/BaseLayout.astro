@@ -7,6 +7,7 @@ import type { LocalePathMap } from '../lib/strapi';
 import SeoHead from '../components/seo/SeoHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import ContactFloat from '../components/ContactFloat.astro';
 
 type Props = {
   locale: Locale;
@@ -70,6 +71,7 @@ const pageDescription =
       <slot />
     </main>
     <SiteFooter locale={locale} settings={settings} />
+    <ContactFloat locale={locale} settings={settings} />
 
     <script>
       const revealEls = document.querySelectorAll('.js-reveal');
