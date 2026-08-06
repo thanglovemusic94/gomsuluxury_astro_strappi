@@ -17,6 +17,7 @@ const CONTENT_TYPES = [
 const LOCALES = [
   { code: 'vi', name: 'Vietnamese (vi)' },
   { code: 'en', name: 'English (en)' },
+  { code: 'ja', name: 'Japanese (ja)' },
 ] as const;
 
 async function ensurePublicPermissions(strapi: Core.Strapi) {

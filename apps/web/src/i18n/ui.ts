@@ -1,6 +1,30 @@
-export const locales = ['vi', 'en'] as const;
+export const locales = ['vi', 'en', 'ja'] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'vi';
+
+export const localeLabels: Record<Locale, string> = {
+  vi: 'VI',
+  en: 'EN',
+  ja: 'JP',
+};
+
+export const localeHtmlLang: Record<Locale, string> = {
+  vi: 'vi',
+  en: 'en',
+  ja: 'ja',
+};
+
+export const localeOg: Record<Locale, string> = {
+  vi: 'vi_VN',
+  en: 'en_US',
+  ja: 'ja_JP',
+};
+
+export const localeIntl: Record<Locale, string> = {
+  vi: 'vi-VN',
+  en: 'en-US',
+  ja: 'ja-JP',
+};
 
 export const ui = {
   vi: {
@@ -117,6 +141,63 @@ export const ui = {
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
   },
+  ja: {
+    brand: 'ゴム・スー・ラグジュアリー',
+    tagline: '丁寧な暮らしのための手仕事の陶磁器',
+    nav: {
+      home: 'ホーム',
+      products: '作品',
+      events: 'イベント',
+      articles: '読みもの',
+      about: '私たちについて',
+      contact: 'お問い合わせ',
+    },
+    cta: {
+      explore: 'コレクションを見る',
+      viewAll: 'すべて見る',
+      details: '詳細を見る',
+      register: '参加申し込み',
+      contact: '相談する',
+    },
+    home: {
+      heroTitle: '手仕事の器が、\n空間の静けさになる',
+      heroBody: '青磁と炻器のコレクション。日常の所作に寄り添う、丁寧なフォルムを選んでいます。',
+      hot: '注目の作品',
+      featuredEvents: '注目のイベント',
+      craft: 'ロクロから食卓へ',
+      craftBody: '高温で焼き締め、年月とともに深まる釉の表情を大切にしています。',
+    },
+    products: {
+      title: '作品',
+      subtitle: '花器、碗、皿、装飾の器',
+      hot: 'HOT',
+      stock: '在庫あり',
+      outOfStock: '売り切れ',
+      sku: '品番',
+      attributes: '仕様',
+      related: 'こちらもおすすめ',
+    },
+    events: {
+      title: 'イベント',
+      subtitle: 'ワークショップ、展示、陶芸体験',
+      when: '日時',
+      where: '場所',
+    },
+    articles: {
+      title: '読みもの',
+      subtitle: '釉薬、窯、暮らしと器の物語',
+      by: '著者',
+      related: 'その他の記事',
+      readMore: '続きを読む',
+    },
+    footer: {
+      rights: 'All rights reserved.',
+      follow: 'フォロー',
+    },
+    langLabel: '言語',
+    menuOpen: 'メニューを開く',
+    menuClose: 'メニューを閉じる',
+  },
 } as const;
 
 export function t(locale: Locale) {
@@ -125,4 +206,8 @@ export function t(locale: Locale) {
 
 export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
+}
+
+export function localePaths() {
+  return locales.map((lang) => ({ params: { lang } }));
 }

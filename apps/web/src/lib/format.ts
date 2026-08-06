@@ -1,7 +1,8 @@
 import type { Locale } from '../i18n/ui';
+import { localeIntl } from '../i18n/ui';
 
 export function formatPrice(value: number, locale: Locale) {
-  return new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'vi-VN', {
+  return new Intl.NumberFormat(localeIntl[locale], {
     style: 'currency',
     currency: 'VND',
     maximumFractionDigits: 0,
@@ -9,7 +10,7 @@ export function formatPrice(value: number, locale: Locale) {
 }
 
 export function formatDate(value: string, locale: Locale) {
-  return new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'vi-VN', {
+  return new Intl.DateTimeFormat(localeIntl[locale], {
     dateStyle: 'medium',
     timeStyle: 'short',
   }).format(new Date(value));

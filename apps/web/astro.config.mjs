@@ -18,6 +18,7 @@ export default defineConfig({
         locales: {
           vi: 'vi-VN',
           en: 'en-US',
+          ja: 'ja-JP',
         },
       },
     }),

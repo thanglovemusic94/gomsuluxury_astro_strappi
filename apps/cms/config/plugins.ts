@@ -39,7 +39,7 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
     enabled: true,
     config: {
       defaultLocale: 'vi',
-      locales: ['vi', 'en'],
+      locales: ['vi', 'en', 'ja'],
     },
   },
 });

@@ -5,7 +5,7 @@
     "singularName": "article",
     "pluralName": "articles",
     "displayName": "Article",
-    "description": "Bài viết / blog — nhập riêng từng ngôn ngữ (vi/en) qua locale switcher"
+    "description": "Bài viết / blog — nhập riêng từng ngôn ngữ (vi/en/ja) qua locale switcher"
   },
   "options": {
     "draftAndPublish": true

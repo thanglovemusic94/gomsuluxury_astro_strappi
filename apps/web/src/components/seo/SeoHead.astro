@@ -1,5 +1,6 @@
 ---
 import type { Locale } from '../../i18n/ui';
+import { locales, localeOg } from '../../i18n/ui';
 import type { SeoFields } from '../../lib/types';
 
 type Props = {
@@ -16,8 +17,7 @@ const { title, description, locale, siteName, seo, type = 'website', jsonLd } = 
 const canonical =
   seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).toString();
 const ogImage = seo?.ogImage?.url;
-const alternateLocale = locale === 'vi' ? 'en' : 'vi';
-const alternatePath = Astro.url.pathname.replace(`/${locale}`, `/${alternateLocale}`);
+const origin = Astro.site || Astro.url.origin;
 ---
 
 <title>{title}</title>
@@ -29,20 +29,32 @@ const alternatePath = Astro.url.pathname.replace(`/${locale}`, `/${alternateLoca
   <meta name="robots" content="index,follow,max-image-preview:large" />
 )}
 <link rel="canonical" href={canonical} />
-<link rel="alternate" hreflang={locale} href={canonical} />
+{
+  locales.map((l) => (
+    <link
+      rel="alternate"
+      hreflang={l}
+      href={new URL(Astro.url.pathname.replace(`/${locale}`, `/${l}`), origin).toString()}
+    />
+  ))
+}
 <link
   rel="alternate"
-  hreflang={alternateLocale}
-  href={new URL(alternatePath, Astro.site || Astro.url.origin).toString()}
+  hreflang="x-default"
+  href={new URL(Astro.url.pathname.replace(`/${locale}`, '/vi'), origin).toString()}
 />
-<link rel="alternate" hreflang="x-default" href={new URL(Astro.url.pathname.replace(`/${locale}`, '/vi'), Astro.site || Astro.url.origin).toString()} />
 
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={siteName} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
-<meta property="og:locale" content={locale === 'vi' ? 'vi_VN' : 'en_US'} />
+<meta property="og:locale" content={localeOg[locale]} />
+{
+  locales
+    .filter((l) => l !== locale)
+    .map((l) => <meta property="og:locale:alternate" content={localeOg[l]} />)
+}
 {ogImage && <meta property="og:image" content={ogImage} />}
 
 <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />

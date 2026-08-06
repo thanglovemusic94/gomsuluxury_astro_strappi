@@ -1,11 +1,11 @@
 ---
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import EventCard from '../../../components/event/EventCard.astro';
-import { isLocale, t, type Locale } from '../../../i18n/ui';
+import { isLocale, localePaths, t, type Locale } from '../../../i18n/ui';
 import { getEvents, getMenus, getSiteSettings } from '../../../lib/strapi';
 
 export function getStaticPaths() {
-  return [{ params: { lang: 'vi' } }, { params: { lang: 'en' } }];
+  return localePaths();
 }
 
 const lang = Astro.params.lang || 'vi';

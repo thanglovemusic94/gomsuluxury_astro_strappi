@@ -5,7 +5,7 @@
     "singularName": "page",
     "pluralName": "pages",
     "displayName": "Page",
-    "description": "Trang nội dung động — nhập bản vi rồi Fill in from another locale sang en"
+    "description": "Trang nội dung động — nhập bản vi rồi Fill in from another locale sang en/ja"
   },
   "options": {
     "draftAndPublish": true
