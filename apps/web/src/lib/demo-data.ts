@@ -1,5 +1,5 @@
 import type { Locale } from '../i18n/ui';
-import type { EventItem, Menu, PageItem, Product, SiteSetting } from './types';
+import type { Article, EventItem, Menu, PageItem, Product, SiteSetting } from './types';
 import { demoImages, media } from './demo-images';
 
 export function demoSettings(locale: Locale): SiteSetting {
@@ -52,7 +52,8 @@ export function demoMenus(locale: Locale): Menu[] {
         { label: isEn ? 'Home' : 'Trang chủ', url: `/${locale}`, order: 1 },
         { label: isEn ? 'Products' : 'Sản phẩm', url: `/${locale}/san-pham`, order: 2 },
         { label: isEn ? 'Events' : 'Sự kiện', url: `/${locale}/su-kien`, order: 3 },
-        { label: isEn ? 'About' : 'Giới thiệu', url: `/${locale}/gioi-thieu`, order: 4 },
+        { label: isEn ? 'Journal' : 'Bài viết', url: `/${locale}/bai-viet`, order: 4 },
+        { label: isEn ? 'About' : 'Giới thiệu', url: `/${locale}/gioi-thieu`, order: 5 },
       ],
     },
   ];
@@ -231,6 +232,59 @@ export function demoPages(locale: Locale): PageItem[] {
         metaDescription: isEn
           ? 'Learn about our ceramic studio and artisan partners.'
           : 'Tìm hiểu về xưởng gốm và đối tác nghệ nhân của chúng tôi.',
+      },
+    },
+  ];
+}
+
+export function demoArticles(locale: Locale): Article[] {
+  const isEn = locale === 'en';
+  return [
+    {
+      id: 1,
+      title: isEn ? 'How celadon finds its depth' : 'Men celadon tìm độ sâu thế nào',
+      slug: isEn ? 'how-celadon-finds-its-depth' : 'men-celadon-tim-do-sau',
+      excerpt: isEn
+        ? 'A short note on reduction firing and the quiet green of celadon.'
+        : 'Vài dòng về lửa khử và sắc xanh trầm của men celadon.',
+      content: isEn
+        ? '<p>Celadon is not only a color — it is atmosphere created by clay body, glaze recipe and kiln temperament.</p><p>Our studio keeps notes from every firing to chase that soft jade depth.</p>'
+        : '<p>Celadon không chỉ là một màu — đó là bầu không khí tạo nên từ đất, công thức men và tính khí của lò.</p><p>Xưởng chúng tôi ghi chép từng mẻ nung để đuổi theo sắc xanh ngọc dịu.</p>',
+      cover: media(demoImages.glazeNight, isEn ? 'Celadon glaze' : 'Men celadon', 1400, 900),
+      authorName: isEn ? 'Studio notes' : 'Ghi chép xưởng',
+      displayDate: '2026-07-18T08:00:00.000Z',
+      isFeatured: true,
+      tags: isEn ? ['glaze', 'kiln'] : ['men', 'lò nung'],
+      seo: {
+        metaTitle: isEn ? 'How celadon finds its depth' : 'Men celadon tìm độ sâu thế nào',
+        metaDescription: isEn
+          ? 'Notes on celadon glaze and reduction firing.'
+          : 'Ghi chép về men celadon và lửa khử.',
+        seoScore: 80,
+        ogImage: media(demoImages.glazeNight, 'Celadon', 1200, 630),
+      },
+    },
+    {
+      id: 2,
+      title: isEn ? 'Setting a quiet table' : 'Bày bàn ăn thật chậm',
+      slug: isEn ? 'setting-a-quiet-table' : 'bay-ban-an-that-cham',
+      excerpt: isEn
+        ? 'Bowls, plates and negative space for everyday ceremony.'
+        : 'Chén, đĩa và khoảng trống cho nghi thức mỗi ngày.',
+      content: isEn
+        ? '<p>A refined table does not need many objects — only honest forms that feel good in the hand.</p>'
+        : '<p>Bàn ăn tinh tế không cần nhiều món — chỉ cần form chân thật và cầm nắm dễ chịu.</p>',
+      cover: media(demoImages.bowls, isEn ? 'Tableware' : 'Bàn ăn gốm', 1400, 900),
+      authorName: isEn ? 'Editorial' : 'Biên tập',
+      displayDate: '2026-06-02T08:00:00.000Z',
+      isFeatured: false,
+      tags: isEn ? ['tableware'] : ['bàn ăn'],
+      seo: {
+        metaTitle: isEn ? 'Setting a quiet table' : 'Bày bàn ăn thật chậm',
+        metaDescription: isEn
+          ? 'Ideas for ceramic table settings.'
+          : 'Gợi ý bày bàn với gốm thủ công.',
+        seoScore: 76,
       },
     },
   ];

@@ -60,6 +60,21 @@ export type EventItem = {
   seo?: SeoFields;
 };
 
+export type Article = {
+  id: number;
+  documentId?: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  content?: string;
+  cover?: StrapiMedia | null;
+  authorName?: string;
+  displayDate?: string | null;
+  isFeatured?: boolean;
+  tags?: string[] | null;
+  seo?: SeoFields;
+};
+
 export type PageItem = {
   id: number;
   title: string;

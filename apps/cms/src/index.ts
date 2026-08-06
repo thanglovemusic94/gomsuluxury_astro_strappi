@@ -10,7 +10,13 @@ const CONTENT_TYPES = [
   'api::event.event',
   'api::page.page',
   'api::menu.menu',
+  'api::article.article',
   'api::site-setting.site-setting',
+] as const;
+
+const LOCALES = [
+  { code: 'vi', name: 'Vietnamese (vi)' },
+  { code: 'en', name: 'English (en)' },
 ] as const;
 
 async function ensurePublicPermissions(strapi: Core.Strapi) {
@@ -44,20 +50,24 @@ async function ensurePublicPermissions(strapi: Core.Strapi) {
 
 async function ensureLocales(strapi: Core.Strapi) {
   const localeService = strapi.plugin('i18n')?.service('locales');
-  if (!localeService) return;
+  if (!localeService) {
+    strapi.log.warn('[i18n] Locale service not available');
+    return;
+  }
 
   const existing = await localeService.find();
   const codes = new Set((existing || []).map((item: { code: string }) => item.code));
 
-  if (!codes.has('vi')) {
-    await localeService.create({ code: 'vi', name: 'Vietnamese (vi)' });
-  }
-  if (!codes.has('en')) {
-    await localeService.create({ code: 'en', name: 'English (en)' });
+  for (const locale of LOCALES) {
+    if (!codes.has(locale.code)) {
+      await localeService.create(locale);
+      strapi.log.info(`[i18n] Created locale: ${locale.code}`);
+    }
   }
 
   try {
     await localeService.setDefaultLocale({ code: 'vi' });
+    strapi.log.info('[i18n] Default locale set to vi');
   } catch {
     // Default locale may already be configured
   }

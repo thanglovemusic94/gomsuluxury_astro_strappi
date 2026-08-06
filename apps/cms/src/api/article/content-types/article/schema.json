@@ -1,11 +1,11 @@
 {
   "kind": "collectionType",
-  "collectionName": "pages",
+  "collectionName": "articles",
   "info": {
-    "singularName": "page",
-    "pluralName": "pages",
-    "displayName": "Page",
-    "description": "Trang nội dung động — nhập bản vi rồi Fill in from another locale sang en"
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article",
+    "description": "Bài viết / blog — nhập riêng từng ngôn ngữ (vi/en) qua locale switcher"
   },
   "options": {
     "draftAndPublish": true
@@ -33,19 +33,31 @@
     },
     "content": {
       "type": "richtext",
+      "required": true,
       "pluginOptions": { "i18n": { "localized": true } }
     },
-    "heroImage": {
+    "cover": {
       "type": "media",
       "multiple": false,
       "allowedTypes": ["images"],
       "pluginOptions": { "i18n": { "localized": false } }
     },
-    "template": {
-      "type": "enumeration",
-      "enum": ["default", "about", "contact", "landing"],
-      "default": "default",
+    "authorName": {
+      "type": "string",
+      "pluginOptions": { "i18n": { "localized": true } }
+    },
+    "displayDate": {
+      "type": "datetime",
       "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "isFeatured": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": { "i18n": { "localized": false } }
+    },
+    "tags": {
+      "type": "json",
+      "pluginOptions": { "i18n": { "localized": true } }
     },
     "seo": {
       "type": "component",

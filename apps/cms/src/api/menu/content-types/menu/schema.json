@@ -5,7 +5,7 @@
     "singularName": "menu",
     "pluralName": "menus",
     "displayName": "Menu",
-    "description": "Quản lý menu điều hướng"
+    "description": "Quản lý menu điều hướng — label/URL theo từng locale (vi/en)"
   },
   "options": {
     "draftAndPublish": false

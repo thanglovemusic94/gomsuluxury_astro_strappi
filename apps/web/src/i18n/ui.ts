@@ -10,6 +10,7 @@ export const ui = {
       home: 'Trang chủ',
       products: 'Sản phẩm',
       events: 'Sự kiện',
+      articles: 'Bài viết',
       about: 'Giới thiệu',
       contact: 'Liên hệ',
     },
@@ -44,6 +45,13 @@ export const ui = {
       when: 'Thời gian',
       where: 'Địa điểm',
     },
+    articles: {
+      title: 'Bài viết',
+      subtitle: 'Câu chuyện nghề gốm, men và không gian sống',
+      by: 'Tác giả',
+      related: 'Bài viết khác',
+      readMore: 'Đọc tiếp',
+    },
     footer: {
       rights: 'Tất cả quyền được bảo lưu.',
       follow: 'Theo dõi',
@@ -59,6 +67,7 @@ export const ui = {
       home: 'Home',
       products: 'Products',
       events: 'Events',
+      articles: 'Journal',
       about: 'About',
       contact: 'Contact',
     },
@@ -92,6 +101,13 @@ export const ui = {
       subtitle: 'Workshops, exhibitions and clay experiences',
       when: 'When',
       where: 'Where',
+    },
+    articles: {
+      title: 'Journal',
+      subtitle: 'Stories on craft, glaze and living with ceramics',
+      by: 'Author',
+      related: 'More stories',
+      readMore: 'Read more',
     },
     footer: {
       rights: 'All rights reserved.',

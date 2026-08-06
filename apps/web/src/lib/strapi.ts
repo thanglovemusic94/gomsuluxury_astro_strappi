@@ -1,6 +1,6 @@
 import type { Locale } from '../i18n/ui';
-import type { EventItem, Menu, PageItem, Product, SiteSetting, StrapiMedia } from './types';
-import { demoEvents, demoMenus, demoPages, demoProducts, demoSettings } from './demo-data';
+import type { Article, EventItem, Menu, PageItem, Product, SiteSetting, StrapiMedia } from './types';
+import { demoArticles, demoEvents, demoMenus, demoPages, demoProducts, demoSettings } from './demo-data';
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
 const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN || '';
@@ -181,6 +181,47 @@ export async function getPageBySlug(locale: Locale, slug: string): Promise<PageI
     };
   }
   return demoPages(locale).find((p) => p.slug === slug) || null;
+}
+
+function mapArticle(item: any): Article {
+  const a = item.attributes ? { id: item.id, ...item.attributes } : item;
+  return {
+    id: a.id,
+    documentId: a.documentId,
+    title: a.title,
+    slug: a.slug,
+    excerpt: a.excerpt,
+    content: a.content,
+    cover: normalizeMedia(a.cover),
+    authorName: a.authorName,
+    displayDate: a.displayDate,
+    isFeatured: a.isFeatured,
+    tags: a.tags || null,
+    seo: a.seo
+      ? {
+          ...a.seo,
+          ogImage: normalizeMedia(a.seo.ogImage),
+        }
+      : undefined,
+  };
+}
+
+export async function getArticles(locale: Locale): Promise<Article[]> {
+  const data = await strapiFetch<StrapiListResponse<any>>(
+    `/articles?populate=*&sort=displayDate:desc`,
+    locale
+  );
+  if (!data?.data?.length) return demoArticles(locale);
+  return data.data.map(mapArticle);
+}
+
+export async function getArticleBySlug(locale: Locale, slug: string): Promise<Article | null> {
+  const data = await strapiFetch<StrapiListResponse<any>>(
+    `/articles?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=*`,
+    locale
+  );
+  if (data?.data?.[0]) return mapArticle(data.data[0]);
+  return demoArticles(locale).find((a) => a.slug === slug) || null;
 }
 
 export async function getMenus(locale: Locale): Promise<Menu[]> {

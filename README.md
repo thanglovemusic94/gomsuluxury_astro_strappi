@@ -95,7 +95,13 @@ docker compose --profile full up -d --build
 
 ## SEO khi nhập liệu (CMS)
 
-Component **SEO** trên Product / Event / Page / Category / Promotion:
+Component **SEO** trên Product / Event / Page / Category / Promotion / Article:
+
+## Đa ngôn ngữ khi nhập liệu (Admin)
+
+Chi tiết: [`apps/cms/docs/I18N.md`](./apps/cms/docs/I18N.md)
+
+Trong Strapi, mỗi entry (Menu, Page, Article/bài viết, Product…) có locale switcher `vi`/`en`. Tạo bản Việt → **Fill in from another locale** → chỉnh bản Anh.
 
 - `metaTitle`, `metaDescription`, `focusKeyword`, `keywords`, `ogImage`, `canonicalUrl`, `noIndex`
 - Khi **Save**, lifecycle tính `seoScore` (0–100) và `seoNotes` (gợi ý độ dài title/description, từ khóa, OG, slug…)
