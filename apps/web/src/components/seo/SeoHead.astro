@@ -1,0 +1,67 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { locales, localeOg } from '../../i18n/ui';
+import type { SeoFields } from '../../lib/types';
+
+type Props = {
+  title: string;
+  description: string;
+  locale: Locale;
+  siteName: string;
+  seo?: SeoFields;
+  type?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+};
+
+const { title, description, locale, siteName, seo, type = 'website', jsonLd } = Astro.props;
+const canonical =
+  seo?.canonicalUrl || new URL(Astro.url.pathname, Astro.site || Astro.url.origin).toString();
+const ogImage = seo?.ogImage?.url;
+const origin = Astro.site || Astro.url.origin;
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+{seo?.keywords && <meta name="keywords" content={seo.keywords} />}
+{seo?.noIndex ? (
+  <meta name="robots" content="noindex,nofollow" />
+) : (
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+)}
+<link rel="canonical" href={canonical} />
+{
+  locales.map((l) => (
+    <link
+      rel="alternate"
+      hreflang={l}
+      href={new URL(Astro.url.pathname.replace(`/${locale}`, `/${l}`), origin).toString()}
+    />
+  ))
+}
+<link
+  rel="alternate"
+  hreflang="x-default"
+  href={new URL(Astro.url.pathname.replace(`/${locale}`, '/vi'), origin).toString()}
+/>
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:locale" content={localeOg[locale]} />
+{
+  locales
+    .filter((l) => l !== locale)
+    .map((l) => <meta property="og:locale:alternate" content={localeOg[l]} />)
+}
+{ogImage && <meta property="og:image" content={ogImage} />}
+
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+{jsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+)}

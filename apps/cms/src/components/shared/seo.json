@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_shared_seos",
+  "info": {
+    "displayName": "SEO",
+    "description": "Meta SEO + điểm số tự động khi lưu nội dung",
+    "icon": "search"
+  },
+  "options": {},
+  "attributes": {
+    "metaTitle": {
+      "type": "string",
+      "maxLength": 70,
+      "required": true
+    },
+    "metaDescription": {
+      "type": "text",
+      "maxLength": 180,
+      "required": true
+    },
+    "focusKeyword": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "keywords": {
+      "type": "string"
+    },
+    "canonicalUrl": {
+      "type": "string"
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "noIndex": {
+      "type": "boolean",
+      "default": false
+    },
+    "seoScore": {
+      "type": "integer",
+      "min": 0,
+      "max": 100,
+      "default": 0
+    },
+    "seoNotes": {
+      "type": "text"
+    }
+  }
+}
