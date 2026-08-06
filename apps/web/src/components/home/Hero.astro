@@ -1,0 +1,42 @@
+---
+import type { Locale } from '../../i18n/ui';
+import { t } from '../../i18n/ui';
+
+type Props = {
+  locale: Locale;
+};
+
+const { locale } = Astro.props;
+const copy = t(locale);
+---
+
+<section class="relative min-h-[88vh] overflow-hidden bg-ink text-porcelain grain">
+  <div class="absolute inset-0">
+    <div class="kenburns absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(95,133,116,0.45),transparent_55%),radial-gradient(circle_at_80%_20%,rgba(168,132,79,0.28),transparent_40%),linear-gradient(135deg,#101412_0%,#1c2420_45%,#3f5f52_100%)]"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/35 to-transparent"></div>
+  </div>
+
+  <div class="relative mx-auto flex min-h-[88vh] max-w-6xl flex-col justify-end px-5 pb-16 pt-28 md:justify-center md:px-8 md:pb-24">
+    <p class="reveal text-xs uppercase tracking-[0.28em] text-sand">{copy.brand}</p>
+    <h1 class="reveal reveal-delay-1 mt-5 max-w-3xl whitespace-pre-line font-display text-5xl font-bold leading-[1.05] text-balance md:text-7xl">
+      {copy.home.heroTitle}
+    </h1>
+    <p class="reveal reveal-delay-2 mt-6 max-w-xl text-base leading-relaxed text-porcelain/75 md:text-lg">
+      {copy.home.heroBody}
+    </p>
+    <div class="reveal reveal-delay-3 mt-10 flex flex-wrap gap-4">
+      <a
+        href={`/${locale}/san-pham`}
+        class="bg-porcelain px-6 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-ink transition hover:bg-sand"
+      >
+        {copy.cta.explore}
+      </a>
+      <a
+        href={`/${locale}/su-kien`}
+        class="border border-porcelain/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-porcelain transition hover:border-sand hover:text-sand"
+      >
+        {copy.nav.events}
+      </a>
+    </div>
+  </div>
+</section>

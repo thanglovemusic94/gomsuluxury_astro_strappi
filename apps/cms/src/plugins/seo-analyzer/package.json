@@ -1,0 +1,21 @@
+{
+  "name": "seo-analyzer",
+  "version": "0.0.0",
+  "description": "Live SEO score when editing content",
+  "strapi": {
+    "name": "seo-analyzer",
+    "description": "Phân tích SEO realtime khi nhập nội dung",
+    "kind": "plugin",
+    "displayName": "SEO Analyzer"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "@strapi/strapi": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

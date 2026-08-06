@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { isLocale, locales, t, type Locale } from '../../../i18n/ui';
+import { formatDate } from '../../../lib/format';
+import { getEventBySlug, getEvents, getMenus, getSiteSettings } from '../../../lib/strapi';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of locales) {
+    const events = await getEvents(lang);
+    for (const event of events) {
+      paths.push({ params: { lang, slug: event.slug } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang || 'vi';
+const slug = Astro.params.slug || '';
+if (!isLocale(lang)) return Astro.redirect('/vi');
+const locale = lang as Locale;
+const copy = t(locale);
+
+const [settings, menus, event] = await Promise.all([
+  getSiteSettings(locale),
+  getMenus(locale),
+  getEventBySlug(locale, slug),
+]);
+
+if (!event) return Astro.redirect(`/${locale}/su-kien`);
+const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: event.title,
+  description: event.excerpt || event.seo?.metaDescription,
+  startDate: event.startDate,
+  endDate: event.endDate || undefined,
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: event.location
+    ? {
+        '@type': 'Place',
+        name: event.location,
+        address: event.location,
+      }
+    : undefined,
+  image: event.cover?.url,
+  organizer: {
+    '@type': 'Organization',
+    name: settings.siteName,
+  },
+};
+---
+
+<BaseLayout
+  locale={locale}
+  settings={settings}
+  menuItems={headerMenu}
+  seo={event.seo}
+  title={event.seo?.metaTitle || event.title}
+  description={event.seo?.metaDescription || event.excerpt}
+>
+  <article>
+    <header class="relative min-h-[52vh] overflow-hidden bg-ink text-porcelain">
+      <div class="absolute inset-0 bg-gradient-to-br from-ink via-ink-soft to-celadon-deep"></div>
+      <div class="relative mx-auto flex min-h-[52vh] max-w-6xl flex-col justify-end px-5 pb-12 pt-24 md:px-8">
+        <p class="text-xs uppercase tracking-[0.2em] text-sand">{copy.events.title}</p>
+        <h1 class="mt-4 max-w-3xl font-display text-4xl font-semibold md:text-6xl">{event.title}</h1>
+        <p class="mt-4 max-w-2xl text-porcelain/75">{event.excerpt}</p>
+      </div>
+    </header>
+
+    <section class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_0.8fr] md:px-8">
+      <div>
+        {event.content ? (
+          <div class="prose prose-neutral max-w-none text-ink/80" set:html={event.content} />
+        ) : (
+          <p class="text-ink/70">{event.excerpt}</p>
+        )}
+      </div>
+      <aside class="h-fit bg-mist/70 p-6">
+        <p class="text-xs uppercase tracking-[0.16em] text-copper">{copy.events.when}</p>
+        <p class="mt-2 text-sm font-medium">{formatDate(event.startDate, locale)}</p>
+        {event.endDate && <p class="text-sm text-ink/60">→ {formatDate(event.endDate, locale)}</p>}
+        {event.location && (
+          <>
+            <p class="mt-6 text-xs uppercase tracking-[0.16em] text-copper">{copy.events.where}</p>
+            <p class="mt-2 text-sm">{event.location}</p>
+          </>
+        )}
+        {event.registrationUrl && (
+          <a
+            href={event.registrationUrl}
+            class="mt-8 inline-block bg-ink px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain hover:bg-celadon-deep"
+          >
+            {copy.cta.register}
+          </a>
+        )}
+      </aside>
+    </section>
+  </article>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</BaseLayout>

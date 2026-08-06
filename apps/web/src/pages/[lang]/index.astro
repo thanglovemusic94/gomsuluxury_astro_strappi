@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/home/Hero.astro';
+import ProductCard from '../../components/product/ProductCard.astro';
+import EventCard from '../../components/event/EventCard.astro';
+import { isLocale, t, type Locale } from '../../i18n/ui';
+import { getEvents, getMenus, getProducts, getSiteSettings } from '../../lib/strapi';
+
+export function getStaticPaths() {
+  return [{ params: { lang: 'vi' } }, { params: { lang: 'en' } }];
+}
+
+const lang = Astro.params.lang || 'vi';
+if (!isLocale(lang)) {
+  return Astro.redirect('/vi');
+}
+const locale = lang as Locale;
+const copy = t(locale);
+
+const [settings, menus, hotProducts, events] = await Promise.all([
+  getSiteSettings(locale),
+  getMenus(locale),
+  getProducts(locale, { hot: true }),
+  getEvents(locale),
+]);
+
+const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
+const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
+---
+
+<BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
+  <Hero locale={locale} />
+
+  <section class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-copper">{copy.home.hot}</p>
+        <h2 class="mt-2 font-display text-3xl font-semibold md:text-4xl">{copy.products.title}</h2>
+      </div>
+      <a href={`/${locale}/san-pham`} class="text-sm font-medium text-celadon-deep hover:underline">
+        {copy.cta.viewAll}
+      </a>
+    </div>
+    <div class="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {hotProducts.slice(0, 3).map((product) => (
+        <ProductCard product={product} locale={locale} />
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-ink py-20 text-porcelain">
+    <div class="mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-2 md:items-center md:px-8">
+      <div>
+        <h2 class="font-display text-3xl font-semibold md:text-5xl">{copy.home.craft}</h2>
+        <p class="mt-5 max-w-md text-porcelain/70">{copy.home.craftBody}</p>
+      </div>
+      <div class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-celadon-deep via-ink-soft to-copper/40">
+        <div class="absolute inset-0 opacity-40 mix-blend-screen bg-[radial-gradient(circle_at_70%_30%,rgba(243,246,244,0.35),transparent_45%)]"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-20 md:px-8">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="text-xs uppercase tracking-[0.2em] text-copper">{copy.home.featuredEvents}</p>
+        <h2 class="mt-2 font-display text-3xl font-semibold md:text-4xl">{copy.events.title}</h2>
+      </div>
+      <a href={`/${locale}/su-kien`} class="text-sm font-medium text-celadon-deep hover:underline">
+        {copy.cta.viewAll}
+      </a>
+    </div>
+    <div class="mt-10 space-y-8">
+      {featuredEvents.map((event) => (
+        <EventCard event={event} locale={locale} />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

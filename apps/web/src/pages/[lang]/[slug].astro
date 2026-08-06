@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { isLocale, locales, type Locale } from '../../i18n/ui';
+import { demoPages } from '../../lib/demo-data';
+import { getMenus, getPageBySlug, getSiteSettings } from '../../lib/strapi';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of locales) {
+    const pages = demoPages(lang);
+    // Always include known CMS pages for static build; live Strapi pages can be added via webhook rebuild
+    for (const page of pages) {
+      paths.push({ params: { lang, slug: page.slug } });
+    }
+  }
+  return paths;
+}
+
+const lang = Astro.params.lang || 'vi';
+const slug = Astro.params.slug || '';
+if (!isLocale(lang)) return Astro.redirect('/vi');
+const locale = lang as Locale;
+
+const [settings, menus, page] = await Promise.all([
+  getSiteSettings(locale),
+  getMenus(locale),
+  getPageBySlug(locale, slug),
+]);
+
+if (!page) return Astro.redirect(`/${locale}`);
+const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
+---
+
+<BaseLayout
+  locale={locale}
+  settings={settings}
+  menuItems={headerMenu}
+  seo={page.seo}
+  title={page.seo?.metaTitle || page.title}
+  description={page.seo?.metaDescription || page.excerpt}
+>
+  <section class="mx-auto max-w-3xl px-5 py-16 md:px-8">
+    <h1 class="font-display text-4xl font-semibold md:text-5xl">{page.title}</h1>
+    {page.excerpt && <p class="mt-4 text-lg text-ink/65">{page.excerpt}</p>}
+    {page.content && (
+      <div class="prose prose-neutral mt-10 max-w-none text-ink/80" set:html={page.content} />
+    )}
+  </section>
+</BaseLayout>

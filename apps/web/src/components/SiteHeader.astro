@@ -1,0 +1,66 @@
+---
+import type { Locale } from '../i18n/ui';
+import { locales, t } from '../i18n/ui';
+import type { MenuItem } from '../lib/types';
+
+type Props = {
+  locale: Locale;
+  brand: string;
+  items: MenuItem[];
+};
+
+const { locale, brand, items } = Astro.props;
+const copy = t(locale);
+const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
+
+function switchLocalePath(next: Locale) {
+  const parts = Astro.url.pathname.split('/');
+  if (parts[1] && locales.includes(parts[1] as Locale)) {
+    parts[1] = next;
+    return parts.join('/') || `/${next}`;
+  }
+  return `/${next}`;
+}
+---
+
+<header class="sticky top-0 z-40 border-b border-ink/10 bg-porcelain/80 backdrop-blur-md">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-4 md:px-8">
+    <a href={`/${locale}`} class="font-display text-xl font-700 tracking-tight text-ink md:text-2xl" style="font-weight:700">
+      {brand}
+    </a>
+
+    <nav class="hidden items-center gap-7 md:flex" aria-label="Main">
+      {sorted.map((item) => (
+        <a
+          href={item.url}
+          class="text-sm font-medium text-ink/70 transition hover:text-celadon-deep"
+          target={item.openInNewTab ? '_blank' : undefined}
+          rel={item.openInNewTab ? 'noreferrer' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <label class="sr-only" for="lang-switch">{copy.langLabel}</label>
+      <select
+        id="lang-switch"
+        class="rounded-none border border-ink/15 bg-transparent px-2 py-1 text-xs uppercase tracking-wider text-ink/80"
+        onchange="window.location.href=this.value"
+      >
+        {locales.map((l) => (
+          <option value={switchLocalePath(l)} selected={l === locale}>
+            {l}
+          </option>
+        ))}
+      </select>
+      <a
+        href={`/${locale}/san-pham`}
+        class="hidden bg-ink px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain transition hover:bg-celadon-deep sm:inline-block"
+      >
+        {copy.cta.explore}
+      </a>
+    </div>
+  </div>
+</header>

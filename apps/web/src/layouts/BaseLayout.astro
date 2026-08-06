@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import type { Locale } from '../i18n/ui';
+import { t } from '../i18n/ui';
+import type { MenuItem, SiteSetting, SeoFields } from '../lib/types';
+import SeoHead from '../components/seo/SeoHead.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+type Props = {
+  locale: Locale;
+  settings: SiteSetting;
+  menuItems: MenuItem[];
+  seo?: SeoFields;
+  title?: string;
+  description?: string;
+};
+
+const { locale, settings, menuItems, seo, title, description } = Astro.props;
+const copy = t(locale);
+const pageTitle = seo?.metaTitle || title || settings.defaultSeo?.metaTitle || settings.siteName;
+const pageDescription =
+  seo?.metaDescription || description || settings.defaultSeo?.metaDescription || settings.tagline || '';
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Syne:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <SeoHead
+      title={pageTitle}
+      description={pageDescription}
+      locale={locale}
+      seo={seo || settings.defaultSeo}
+      siteName={settings.siteName}
+    />
+  </head>
+  <body>
+    <SiteHeader locale={locale} brand={settings.siteName || copy.brand} items={menuItems} />
+    <main>
+      <slot />
+    </main>
+    <SiteFooter locale={locale} settings={settings} />
+  </body>
+</html>

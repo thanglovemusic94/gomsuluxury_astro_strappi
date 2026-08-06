@@ -1,0 +1,39 @@
+---
+import type { Locale } from '../i18n/ui';
+import { t } from '../i18n/ui';
+import type { SiteSetting } from '../lib/types';
+
+type Props = {
+  locale: Locale;
+  settings: SiteSetting;
+};
+
+const { locale, settings } = Astro.props;
+const copy = t(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-ink/10 bg-ink text-porcelain">
+  <div class="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:px-8">
+    <div>
+      <p class="font-display text-2xl font-semibold">{settings.siteName}</p>
+      <p class="mt-3 max-w-sm text-sm leading-relaxed text-porcelain/70">{settings.tagline}</p>
+    </div>
+    <div class="text-sm text-porcelain/75">
+      {settings.address && <p>{settings.address}</p>}
+      {settings.phone && <p class="mt-2">{settings.phone}</p>}
+      {settings.email && <p class="mt-1">{settings.email}</p>}
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-[0.18em] text-sand">{copy.footer.follow}</p>
+      <div class="mt-3 flex flex-col gap-2 text-sm">
+        {settings.facebookUrl && <a class="hover:text-sand" href={settings.facebookUrl}>Facebook</a>}
+        {settings.instagramUrl && <a class="hover:text-sand" href={settings.instagramUrl}>Instagram</a>}
+        {settings.zaloUrl && <a class="hover:text-sand" href={settings.zaloUrl}>Zalo</a>}
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-porcelain/10 px-5 py-4 text-center text-xs text-porcelain/50 md:px-8">
+    © {year} {settings.siteName}. {copy.footer.rights}
+  </div>
+</footer>
