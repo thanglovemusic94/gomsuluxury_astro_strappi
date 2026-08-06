@@ -1,6 +1,6 @@
 import type { Locale } from '../i18n/ui';
 import { t } from '../i18n/ui';
-import type { Article, EventItem, Menu, PageItem, Product, SiteSetting } from './types';
+import type { EventItem, Menu, PageItem, Product, SiteSetting } from './types';
 import { demoImages, media } from './demo-images';
 
 function L<T>(locale: Locale, map: Record<Locale, T>): T {

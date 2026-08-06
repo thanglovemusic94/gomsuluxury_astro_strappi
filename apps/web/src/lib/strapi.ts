@@ -1,7 +1,7 @@
 import type { Locale } from '../i18n/ui';
 import { locales } from '../i18n/ui';
 import type { Article, EventItem, Menu, PageItem, Product, SiteSetting, StrapiMedia } from './types';
-import { demoArticles, demoEvents, demoMenus, demoPages, demoProducts, demoSettings } from './demo-data';
+import { demoEvents, demoMenus, demoPages, demoProducts, demoSettings } from './demo-data';
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_URL || 'http://localhost:1337';
 const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN || '';
@@ -220,10 +220,11 @@ export async function getArticles(locale: Locale): Promise<CmsListResult<Article
     `/articles?populate=*&sort=displayDate:desc`,
     locale
   );
+  // Chỉ hiển thị bài từ CMS admin (đã Publish). Không dùng demo.
   if (data?.data) {
     return { items: data.data.map(mapArticle), fromCms: true };
   }
-  return { items: demoArticles(locale), fromCms: false };
+  return { items: [], fromCms: false };
 }
 
 export async function getArticleBySlug(locale: Locale, slug: string): Promise<Article | null> {
@@ -232,11 +233,7 @@ export async function getArticleBySlug(locale: Locale, slug: string): Promise<Ar
     locale
   );
   if (data?.data?.[0]) return mapArticle(data.data[0]);
-
-  // If CMS is online but slug missing for this locale, do not show unrelated demo
-  if (data && Array.isArray(data.data)) return null;
-
-  return demoArticles(locale).find((a) => a.slug === slug) || null;
+  return null;
 }
 
 /** Build language-switcher URLs for an article (correct slug per locale). */

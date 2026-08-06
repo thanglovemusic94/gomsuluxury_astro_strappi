@@ -75,8 +75,8 @@ export const ui = {
       by: 'Tác giả',
       related: 'Bài viết khác',
       readMore: 'Đọc tiếp',
-      empty: 'Chưa có bài viết đã xuất bản cho ngôn ngữ này.',
-      missingLocale: 'Bản dịch ngôn ngữ này chưa được Publish trong CMS. Hãy mở Article → chọn locale → Publish.',
+      empty: 'Chưa có bài viết. Thêm và Publish trong Strapi Admin → Content Manager → Article.',
+      missingLocale: 'Ngôn ngữ này chưa có bài đã Publish. Mở Article → chọn locale → Publish.',
     },
     footer: {
       rights: 'Tất cả quyền được bảo lưu.',
@@ -134,8 +134,8 @@ export const ui = {
       by: 'Author',
       related: 'More stories',
       readMore: 'Read more',
-      empty: 'No published articles for this language yet.',
-      missingLocale: 'This translation is not published yet. In CMS open Article → switch locale → Publish.',
+      empty: 'No articles yet. Add and Publish in Strapi Admin → Content Manager → Article.',
+      missingLocale: 'No published article for this language. Open Article → switch locale → Publish.',
     },
     footer: {
       rights: 'All rights reserved.',
@@ -193,8 +193,8 @@ export const ui = {
       by: '著者',
       related: 'その他の記事',
       readMore: '続きを読む',
-      empty: 'この言語の公開記事はまだありません。',
-      missingLocale: 'この言語の翻訳はまだ公開されていません。CMSで Article → 言語切替 → Publish してください。',
+      empty: '記事がありません。Strapi Admin → Content Manager → Article で追加・Publishしてください。',
+      missingLocale: 'この言語の公開記事がありません。Article → 言語切替 → Publish してください。',
     },
     footer: {
       rights: 'All rights reserved.',
