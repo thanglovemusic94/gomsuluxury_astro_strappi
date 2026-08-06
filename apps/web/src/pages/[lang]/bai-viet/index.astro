@@ -28,20 +28,22 @@ const fromCms = articlesResult.fromCms;
   title={`${copy.articles.title} | ${settings.siteName}`}
   description={copy.articles.subtitle}
 >
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-16 md:px-8">
-    <p class="text-[10px] uppercase tracking-[0.2em] text-copper sm:text-xs">{copy.brand}</p>
-    <h1 class="mt-3 font-display text-3xl font-semibold sm:text-4xl md:text-5xl">{copy.articles.title}</h1>
-    <p class="mt-4 max-w-2xl text-sm text-ink/65 sm:text-base">{copy.articles.subtitle}</p>
+  <section class="mx-auto max-w-6xl section-pad py-14 sm:py-16 md:py-20">
+    <p class="eyebrow">{copy.brand}</p>
+    <h1 class="display-title mt-4 text-4xl sm:text-5xl md:text-6xl">{copy.articles.title}</h1>
+    <p class="mt-5 max-w-xl text-sm leading-relaxed text-ink/60 sm:text-base">{copy.articles.subtitle}</p>
 
     {articles.length === 0 ? (
-      <div class="mt-10 border border-ink/10 bg-mist/50 px-5 py-8 text-sm text-ink/70">
+      <div class="mt-12 max-w-xl text-sm leading-relaxed text-ink/65">
         <p>{copy.articles.empty}</p>
-        {fromCms && <p class="mt-3 text-ink/55">{copy.articles.missingLocale}</p>}
+        {fromCms && <p class="mt-3 text-ink/45">{copy.articles.missingLocale}</p>}
       </div>
     ) : (
-      <div class="mt-8 space-y-6 sm:mt-12 sm:space-y-8">
+      <div class="mt-12 space-y-12 sm:mt-16">
         {articles.map((article) => (
-          <ArticleCard article={article} locale={locale} />
+          <div class="js-reveal">
+            <ArticleCard article={article} locale={locale} />
+          </div>
         ))}
       </div>
     )}

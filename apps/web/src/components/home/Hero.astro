@@ -12,39 +12,41 @@ const { locale, image } = Astro.props;
 const copy = t(locale);
 ---
 
-<section class="relative min-h-[100svh] overflow-hidden bg-ink text-porcelain grain sm:min-h-[88vh]">
+<section class="relative min-h-[100svh] overflow-hidden bg-ink text-porcelain grain">
   <div class="absolute inset-0">
     {image?.url ? (
       <img
         src={image.url}
         alt={image.alternativeText || copy.brand}
         class="kenburns absolute inset-0 h-full w-full object-cover"
+        width={image.width || 2000}
+        height={image.height || 1333}
         fetchpriority="high"
+        decoding="async"
       />
     ) : (
-      <div class="kenburns absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(95,133,116,0.45),transparent_55%),radial-gradient(circle_at_80%_20%,rgba(168,132,79,0.28),transparent_40%),linear-gradient(135deg,#101412_0%,#1c2420_45%,#3f5f52_100%)]"></div>
+      <div class="kenburns absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(90,125,109,0.45),transparent_55%),radial-gradient(circle_at_80%_20%,rgba(154,122,72,0.28),transparent_40%),linear-gradient(135deg,#121714_0%,#1e2823_45%,#3a574b_100%)]"></div>
     )}
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25 md:bg-gradient-to-r md:from-ink/85 md:via-ink/45 md:to-ink/10"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20 md:bg-gradient-to-r md:from-ink/80 md:via-ink/40 md:to-ink/10"></div>
   </div>
 
-  <div class="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-12 pt-28 sm:min-h-[88vh] sm:px-5 sm:pb-16 md:justify-center md:px-8 md:pb-24">
-    <p class="reveal text-[10px] uppercase tracking-[0.24em] text-sand sm:text-xs sm:tracking-[0.28em]">{copy.brand}</p>
-    <h1 class="reveal reveal-delay-1 mt-4 max-w-3xl whitespace-pre-line font-display text-[2.35rem] font-bold leading-[1.08] text-balance sm:mt-5 sm:text-5xl md:text-6xl lg:text-7xl">
+  <div class="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-end px-4 pb-14 pt-28 sm:px-5 sm:pb-16 md:justify-center md:px-8 md:pb-24">
+    <p class="reveal font-display text-3xl font-semibold tracking-[-0.02em] text-sand sm:text-4xl md:text-5xl lg:text-6xl">
+      {copy.brand}
+    </p>
+    <h1 class="reveal reveal-delay-1 mt-5 max-w-[14ch] whitespace-pre-line font-display text-[1.85rem] font-medium leading-[1.15] text-porcelain/95 sm:mt-6 sm:text-4xl md:text-5xl">
       {copy.home.heroTitle}
     </h1>
-    <p class="reveal reveal-delay-2 mt-5 max-w-xl text-sm leading-relaxed text-porcelain/75 sm:mt-6 sm:text-base md:text-lg">
+    <p class="reveal reveal-delay-2 mt-5 max-w-md text-sm leading-relaxed text-porcelain/70 sm:mt-6 sm:text-base">
       {copy.home.heroBody}
     </p>
-    <div class="reveal reveal-delay-3 mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:gap-4">
-      <a
-        href={`/${locale}/san-pham`}
-        class="inline-flex min-h-12 items-center justify-center bg-porcelain px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-ink transition hover:bg-sand sm:tracking-[0.16em]"
-      >
+    <div class="reveal reveal-delay-3 mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:items-center sm:gap-5">
+      <a href={`/${locale}/san-pham`} class="btn-primary bg-porcelain text-ink hover:bg-sand">
         {copy.cta.explore}
       </a>
       <a
         href={`/${locale}/su-kien`}
-        class="inline-flex min-h-12 items-center justify-center border border-porcelain/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-porcelain transition hover:border-sand hover:text-sand sm:tracking-[0.16em]"
+        class="inline-flex min-h-12 items-center justify-center text-xs font-semibold uppercase tracking-[0.16em] text-porcelain/75 underline-offset-4 transition hover:text-sand hover:underline"
       >
         {copy.nav.events}
       </a>

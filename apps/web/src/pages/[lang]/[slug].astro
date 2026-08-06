@@ -8,7 +8,6 @@ export async function getStaticPaths() {
   const paths = [];
   for (const lang of locales) {
     const pages = demoPages(lang);
-    // Always include known CMS pages for static build; live Strapi pages can be added via webhook rebuild
     for (const page of pages) {
       paths.push({ params: { lang, slug: page.slug } });
     }
@@ -39,21 +38,30 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
   title={page.seo?.metaTitle || page.title}
   description={page.seo?.metaDescription || page.excerpt}
 >
-  <section class="mx-auto max-w-3xl px-4 py-12 sm:px-5 sm:py-16 md:px-8">
-    {page.heroImage?.url && (
-      <div class="mb-8 overflow-hidden sm:mb-10">
-        <img
-          src={page.heroImage.url}
-          alt={page.heroImage.alternativeText || page.title}
-          class="aspect-[16/9] w-full object-cover"
-          loading="eager"
-        />
+  {page.heroImage?.url ? (
+    <header class="relative min-h-[42svh] overflow-hidden bg-ink text-porcelain sm:min-h-[48svh]">
+      <img
+        src={page.heroImage.url}
+        alt={page.heroImage.alternativeText || page.title}
+        class="absolute inset-0 h-full w-full object-cover"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/50 to-ink/20"></div>
+      <div class="relative mx-auto flex min-h-[42svh] max-w-3xl flex-col justify-end section-pad pb-10 pt-24 sm:min-h-[48svh] sm:pb-14">
+        <h1 class="display-title text-4xl text-porcelain sm:text-5xl">{page.title}</h1>
       </div>
-    )}
-    <h1 class="font-display text-3xl font-semibold sm:text-4xl md:text-5xl">{page.title}</h1>
-    {page.excerpt && <p class="mt-4 text-base text-ink/65 sm:text-lg">{page.excerpt}</p>}
+    </header>
+  ) : (
+    <div class="mx-auto max-w-3xl section-pad pt-14 sm:pt-16">
+      <h1 class="display-title text-4xl sm:text-5xl">{page.title}</h1>
+    </div>
+  )}
+
+  <section class="mx-auto max-w-[42rem] section-pad py-12 sm:py-16">
+    {page.excerpt && <p class="js-reveal text-xl leading-relaxed text-ink/60 sm:text-2xl">{page.excerpt}</p>}
     {page.content && (
-      <div class="prose prose-neutral mt-8 max-w-none text-sm text-ink/80 sm:mt-10 sm:text-base" set:html={page.content} />
+      <div class="js-reveal prose-article mt-8" set:html={page.content} />
     )}
   </section>
 </BaseLayout>

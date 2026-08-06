@@ -28,13 +28,15 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
   title={`${copy.products.title} | ${settings.siteName}`}
   description={copy.products.subtitle}
 >
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-5 sm:py-16 md:px-8">
-    <p class="text-[10px] uppercase tracking-[0.2em] text-copper sm:text-xs">{copy.brand}</p>
-    <h1 class="mt-3 font-display text-3xl font-semibold sm:text-4xl md:text-5xl">{copy.products.title}</h1>
-    <p class="mt-4 max-w-2xl text-sm text-ink/65 sm:text-base">{copy.products.subtitle}</p>
-    <div class="mt-8 grid gap-6 sm:mt-12 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-      {products.map((product) => (
-        <ProductCard product={product} locale={locale} />
+  <section class="mx-auto max-w-6xl section-pad py-14 sm:py-16 md:py-20">
+    <p class="eyebrow">{copy.brand}</p>
+    <h1 class="display-title mt-4 text-4xl sm:text-5xl md:text-6xl">{copy.products.title}</h1>
+    <p class="mt-5 max-w-xl text-sm leading-relaxed text-ink/60 sm:text-base">{copy.products.subtitle}</p>
+    <div class="mt-12 grid gap-8 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+      {products.map((product, i) => (
+        <div class={`js-reveal ${i % 3 === 1 ? 'js-reveal-delay-1' : i % 3 === 2 ? 'js-reveal-delay-2' : ''}`}>
+          <ProductCard product={product} locale={locale} />
+        </div>
       ))}
     </div>
   </section>

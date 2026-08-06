@@ -28,60 +28,66 @@ const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
 const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
 ---
 
-<BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
+<BaseLayout locale={locale} settings={settings} menuItems={headerMenu} overlayHeader>
   <Hero locale={locale} image={settings.heroImage} />
 
-  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-16 md:px-8 md:py-20">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+  <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
+    <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="text-[10px] uppercase tracking-[0.2em] text-copper sm:text-xs">{copy.home.hot}</p>
-        <h2 class="mt-2 font-display text-2xl font-semibold sm:text-3xl md:text-4xl">{copy.products.title}</h2>
+        <p class="eyebrow">{copy.home.hot}</p>
+        <h2 class="display-title mt-3 text-3xl sm:text-4xl md:text-5xl">{copy.products.title}</h2>
       </div>
-      <a href={`/${locale}/san-pham`} class="text-sm font-medium text-celadon-deep hover:underline">
+      <a href={`/${locale}/san-pham`} class="text-sm font-medium text-celadon-deep underline-offset-4 hover:underline">
         {copy.cta.viewAll}
       </a>
     </div>
-    <div class="mt-8 grid gap-6 sm:mt-10 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
-      {hotProducts.slice(0, 3).map((product) => (
-        <ProductCard product={product} locale={locale} />
+    <div class="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+      {hotProducts.slice(0, 3).map((product, i) => (
+        <div class={`js-reveal js-reveal-delay-${Math.min(i + 1, 2)}`}>
+          <ProductCard product={product} locale={locale} />
+        </div>
       ))}
     </div>
   </section>
 
-  <section class="bg-ink py-14 text-porcelain sm:py-16 md:py-20">
-    <div class="mx-auto grid max-w-6xl gap-8 px-4 sm:gap-10 sm:px-5 md:grid-cols-2 md:items-center md:px-8">
-      <div>
-        <h2 class="font-display text-2xl font-semibold sm:text-3xl md:text-5xl">{copy.home.craft}</h2>
-        <p class="mt-4 max-w-md text-sm leading-relaxed text-porcelain/70 sm:mt-5 sm:text-base">{copy.home.craftBody}</p>
-      </div>
-      <div class="relative aspect-[4/3] overflow-hidden bg-ink-soft">
-        {settings.craftImage?.url ? (
-          <img
-            src={settings.craftImage.url}
-            alt={settings.craftImage.alternativeText || copy.home.craft}
-            class="h-full w-full object-cover"
-            loading="lazy"
-          />
-        ) : (
-          <div class="h-full w-full bg-gradient-to-br from-celadon-deep via-ink-soft to-copper/40"></div>
-        )}
+  <section class="content-auto relative min-h-[70vh] overflow-hidden bg-ink text-porcelain sm:min-h-[75vh]">
+    {settings.craftImage?.url ? (
+      <img
+        src={settings.craftImage.url}
+        alt={settings.craftImage.alternativeText || copy.home.craft}
+        class="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+        width={settings.craftImage.width || 1600}
+        height={settings.craftImage.height || 1067}
+      />
+    ) : (
+      <div class="absolute inset-0 bg-gradient-to-br from-celadon-deep via-ink-soft to-copper/35"></div>
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25"></div>
+    <div class="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end section-pad py-16 sm:min-h-[75vh] sm:py-20 md:py-24">
+      <div class="js-reveal max-w-xl">
+        <h2 class="display-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{copy.home.craft}</h2>
+        <p class="mt-5 max-w-md text-sm leading-relaxed text-porcelain/70 sm:text-base">{copy.home.craftBody}</p>
       </div>
     </div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-5 sm:py-16 md:px-8 md:py-20">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+  <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
+    <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="text-[10px] uppercase tracking-[0.2em] text-copper sm:text-xs">{copy.home.featuredEvents}</p>
-        <h2 class="mt-2 font-display text-2xl font-semibold sm:text-3xl md:text-4xl">{copy.events.title}</h2>
+        <p class="eyebrow">{copy.home.featuredEvents}</p>
+        <h2 class="display-title mt-3 text-3xl sm:text-4xl md:text-5xl">{copy.events.title}</h2>
       </div>
-      <a href={`/${locale}/su-kien`} class="text-sm font-medium text-celadon-deep hover:underline">
+      <a href={`/${locale}/su-kien`} class="text-sm font-medium text-celadon-deep underline-offset-4 hover:underline">
         {copy.cta.viewAll}
       </a>
     </div>
-    <div class="mt-8 space-y-6 sm:mt-10 sm:space-y-8">
+    <div class="mt-10 space-y-10 sm:mt-12">
       {featuredEvents.map((event) => (
-        <EventCard event={event} locale={locale} />
+        <div class="js-reveal">
+          <EventCard event={event} locale={locale} />
+        </div>
       ))}
     </div>
   </section>
