@@ -1,20 +1,11 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ProductCard from '../../../components/product/ProductCard.astro';
-import { isLocale, locales, t, type Locale } from '../../../i18n/ui';
+import { isLocale, t, type Locale } from '../../../i18n/ui';
 import { discountedPrice, formatPrice } from '../../../lib/format';
 import { getMenus, getProductBySlug, getProducts, getSiteSettings } from '../../../lib/strapi';
-
-export async function getStaticPaths() {
-  const paths = [];
-  for (const lang of locales) {
-    const products = await getProducts(lang);
-    for (const product of products) {
-      paths.push({ params: { lang, slug: product.slug } });
-    }
-  }
-  return paths;
-}
 
 const lang = Astro.params.lang || 'vi';
 const slug = Astro.params.slug || '';

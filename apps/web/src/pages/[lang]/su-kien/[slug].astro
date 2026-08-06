@@ -1,19 +1,10 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { isLocale, locales, t, type Locale } from '../../../i18n/ui';
+import { isLocale, t, type Locale } from '../../../i18n/ui';
 import { formatDate } from '../../../lib/format';
 import { getEventBySlug, getEvents, getMenus, getSiteSettings } from '../../../lib/strapi';
-
-export async function getStaticPaths() {
-  const paths = [];
-  for (const lang of locales) {
-    const events = await getEvents(lang);
-    for (const event of events) {
-      paths.push({ params: { lang, slug: event.slug } });
-    }
-  }
-  return paths;
-}
 
 const lang = Astro.params.lang || 'vi';
 const slug = Astro.params.slug || '';

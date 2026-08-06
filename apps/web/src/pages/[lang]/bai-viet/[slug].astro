@@ -1,20 +1,11 @@
 ---
+export const prerender = false;
+
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/article/ArticleCard.astro';
-import { isLocale, locales, t, type Locale } from '../../../i18n/ui';
-import { formatDate } from '../../../lib/format';
-import { getArticleBySlug, getArticles, getMenus, getSiteSettings } from '../../../lib/strapi';
-
-export async function getStaticPaths() {
-  const paths = [];
-  for (const lang of locales) {
-    const articles = await getArticles(lang);
-    for (const article of articles) {
-      paths.push({ params: { lang, slug: article.slug } });
-    }
-  }
-  return paths;
-}
+import { isLocale, t, type Locale } from '../../../i18n/ui';
+import { formatDate, richtextToHtml } from '../../../lib/format';
+import { getArticleBySlug, getArticles, getMenus, getSiteSettings, STRAPI_URL } from '../../../lib/strapi';
 
 const lang = Astro.params.lang || 'vi';
 const slug = Astro.params.slug || '';
@@ -83,7 +74,10 @@ const jsonLd = {
     <section class="mx-auto max-w-3xl px-4 py-10 sm:px-5 sm:py-14 md:px-8">
       {article.excerpt && <p class="text-lg text-ink/70">{article.excerpt}</p>}
       {article.content && (
-        <div class="prose prose-neutral mt-8 max-w-none text-sm text-ink/80 sm:text-base" set:html={article.content} />
+        <div
+          class="prose prose-neutral mt-8 max-w-none text-sm text-ink/80 sm:text-base [&_img]:rounded-none [&_img]:w-full"
+          set:html={richtextToHtml(article.content, STRAPI_URL)}
+        />
       )}
     </section>
   </article>
