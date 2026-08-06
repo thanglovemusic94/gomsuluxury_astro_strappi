@@ -1,11 +1,9 @@
 ---
-import type { Locale } from '../../i18n/ui';
-
 type Props = {
-  locale: Locale;
+  locale?: string;
 };
 
-const { locale: _locale } = Astro.props;
+Astro.props;
 
 const videos = [
   {
@@ -23,22 +21,39 @@ const videos = [
 ];
 ---
 
-<section class="content-auto border-b border-ink/6">
-  <div class="mx-auto max-w-6xl section-pad py-8 sm:py-10">
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
-      {videos.map((video, i) => (
-        <div class:list={['youtube-card', i === 0 && 'max-lg:col-span-2 lg:block', i > 0 && 'max-sm:hidden']}>
-          <div class="youtube-card__frame">
-            <iframe
-              src={`https://www.youtube.com/embed/${video.id}?rel=0`}
-              title={video.title}
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+<section class="youtube-block">
+  <div class="youtube-banner">
+    <img
+      src="/brand/banner-gom-viet.jpg"
+      alt="Tự hào Gốm Việt - Gốm Sứ Luxury"
+      width="2500"
+      height="413"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="shine-beam shine-beam--banner" aria-hidden="true"></span>
+  </div>
+
+  <div class="youtube-grid">
+    {videos.map((video, i) => (
+      <article class:list={['youtube-card', i > 0 && 'youtube-card--desktop']}>
+        <div class="youtube-card__frame">
+          <iframe
+            src={`https://www.youtube.com/embed/${video.id}?rel=0`}
+            title={video.title}
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <div class="youtube-card__meta">
+          <img src="/brand/logo-mark.png" alt="" width="28" height="28" loading="lazy" decoding="async" />
+          <div>
+            <p class="youtube-card__title">{video.title}</p>
+            <p class="youtube-card__brand">Gốm Sứ Luxury</p>
           </div>
         </div>
-      ))}
-    </div>
+      </article>
+    ))}
   </div>
 </section>

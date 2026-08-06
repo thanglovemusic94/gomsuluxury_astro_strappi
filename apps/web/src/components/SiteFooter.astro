@@ -29,51 +29,62 @@ const policyLinks = [
   { label: copy.footer.policies.shipping, href: `/${locale}/gioi-thieu` },
 ];
 
+const quickLinks = [
+  { label: copy.nav.home, href: `/${locale}` },
+  { label: copy.nav.about, href: `/${locale}/gioi-thieu` },
+  { label: copy.nav.products, href: `/${locale}/san-pham` },
+  { label: copy.nav.articles, href: `/${locale}/bai-viet` },
+];
+
 const phone = settings.phone || '0837 571 758';
 const address = settings.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam Từ Liêm, Hà Nội';
+const facebook = settings.facebookUrl || 'https://www.facebook.com/gomsuluxury';
+const tiktok = settings.instagramUrl || 'https://www.tiktok.com/@gomluxury';
 ---
 
-<footer class="site-footer mt-0 text-white">
-  <div class="footer-waves" aria-hidden="true">
-    <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+<footer class="site-footer">
+  <div class="footer-wave-wrap" aria-hidden="true">
+    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
       <defs>
         <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
       </defs>
       <g class="parallax">
-        <use href="#gentle-wave" x="48" y="0" fill="#bc312a0f"></use>
-        <use href="#gentle-wave" x="48" y="3" fill="#bc312a24"></use>
-        <use href="#gentle-wave" x="48" y="5" fill="#bc312a3d"></use>
-        <use href="#gentle-wave" x="48" y="7" fill="#bc312a"></use>
+        <use xlink:href="#gentle-wave" href="#gentle-wave" x="48" y="0" fill="rgba(188,49,42,0.18)"></use>
+        <use xlink:href="#gentle-wave" href="#gentle-wave" x="48" y="3" fill="rgba(188,49,42,0.35)"></use>
+        <use xlink:href="#gentle-wave" href="#gentle-wave" x="48" y="5" fill="rgba(188,49,42,0.55)"></use>
+        <use xlink:href="#gentle-wave" href="#gentle-wave" x="48" y="7" fill="#bc312a"></use>
       </g>
     </svg>
   </div>
 
-  <div class="footer-main header-shine">
-    <div class="mx-auto grid max-w-6xl gap-10 section-pad py-12 sm:py-14 md:grid-cols-12 md:gap-8">
-      <div class="md:col-span-4">
+  <div class="footer-main">
+    <span class="shine-beam" aria-hidden="true"></span>
+    <div class="footer-divider" aria-hidden="true"></div>
+    <div class="mx-auto grid max-w-6xl gap-10 section-pad py-12 sm:py-14 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-3">
         <img
           src="/brand/footer-logo.png"
           alt={settings.siteName || copy.brand}
-          class="h-14 w-auto max-w-[240px] object-contain sm:h-[4.25rem]"
-          width="240"
+          class="mx-auto h-14 w-auto max-w-[220px] object-contain lg:mx-0 sm:h-16"
+          width="220"
           height="70"
           loading="lazy"
           decoding="async"
         />
-        <h4 class="mt-5 text-center text-sm font-semibold uppercase leading-relaxed tracking-[0.04em] text-white sm:text-[15px]">
+        <h4 class="mt-5 text-center text-[12px] font-semibold uppercase leading-snug tracking-[0.04em] text-[#f3d38a] sm:text-[13px]">
           {copy.footer.company}
         </h4>
-        <p class="mt-3 text-sm leading-relaxed text-white/85">{copy.footer.blurb}</p>
+        <p class="mt-3 text-sm leading-relaxed text-white/90">{copy.footer.blurb}</p>
         <ul class="mt-5 space-y-2 text-sm text-white/90">
           <li>{address}</li>
           <li>
-            <a class="hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>TEL: {phone}</a>
+            <a class="hover:text-[#f3d38a]" href={`tel:${phone.replace(/\s+/g, '')}`}>TEL: {phone}</a>
           </li>
         </ul>
         <img
           src="/brand/footer-seal.png"
           alt=""
-          class="mt-6 h-16 w-auto object-contain sm:h-20"
+          class="mt-6 h-14 w-auto object-contain sm:h-[4.5rem]"
           width="140"
           height="80"
           loading="lazy"
@@ -81,31 +92,40 @@ const address = settings.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam
         />
       </div>
 
-      <div class="md:col-span-4">
-        <p class="footer-col-title">{copy.footer.productsTitle}</p>
-        <ul class="footer-link-list mt-4">
-          {productLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
-          ))}
-        </ul>
+      <div class="grid gap-8 sm:grid-cols-2 lg:col-span-5">
+        <div>
+          <p class="footer-col-title">{copy.footer.productsTitle}</p>
+          <ul class="footer-link-list mt-4">
+            {productLinks.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p class="footer-col-title">{copy.footer.policiesTitle}</p>
+          <ul class="footer-link-list mt-4">
+            {policyLinks.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      <div class="md:col-span-4">
-        <p class="footer-col-title">{copy.footer.policiesTitle}</p>
-        <ul class="footer-link-list mt-4">
-          {policyLinks.map((link) => (
-            <li>
-              <a href={link.href}>{link.label}</a>
-            </li>
+      <div class="lg:col-span-4">
+        <a class="footer-tiktok" href={tiktok} target="_blank" rel="noreferrer">
+          <span class="footer-tiktok__handle">@gomluxury</span>
+          <span class="footer-tiktok__label">TikTok</span>
+        </a>
+        <ul class="footer-link-list mt-6">
+          {quickLinks.map((link) => (
+            <li><a href={link.href}>{link.label}</a></li>
           ))}
         </ul>
         <div class="mt-6 flex flex-wrap gap-4 text-sm">
-          <a class="hover:text-sand" href={settings.facebookUrl || 'https://www.facebook.com/gomsuluxury'} target="_blank" rel="noreferrer">Facebook</a>
-          <a class="hover:text-sand" href={settings.instagramUrl || 'https://www.tiktok.com/@gomluxury'} target="_blank" rel="noreferrer">@gomluxury</a>
+          <a class="hover:text-[#f3d38a]" href={facebook} target="_blank" rel="noreferrer">Facebook</a>
+          <a class="hover:text-[#f3d38a]" href={tiktok} target="_blank" rel="noreferrer">TikTok</a>
           {settings.zaloUrl && (
-            <a class="hover:text-sand" href={settings.zaloUrl} target="_blank" rel="noreferrer">Zalo</a>
+            <a class="hover:text-[#f3d38a]" href={settings.zaloUrl} target="_blank" rel="noreferrer">Zalo</a>
           )}
         </div>
       </div>
@@ -113,7 +133,7 @@ const address = settings.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam
   </div>
 
   <div class="footer-bar">
-    <div class="mx-auto px-4 py-3 text-center text-sm text-ink/80 sm:px-5 md:px-8">
+    <div class="mx-auto max-w-6xl px-4 py-3 text-center text-sm text-ink/75 sm:px-5 md:px-8 md:text-left">
       Copyright {year} © <strong>gomsuluxury.vn</strong>
     </div>
   </div>

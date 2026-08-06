@@ -36,7 +36,8 @@ const rows = homeSections
   }))
   .filter((row) => row.items.length > 0);
 
-const firstSlug = 'am-chen-bat-trang';
+/** On gomsuluxury.vn, YouTube sits after Phụ Kiện and right above Khay Trà */
+const youtubeAfterSlug = 'phu-kien-ban-tra-gom-su-luxury';
 ---
 
 <BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
@@ -51,7 +52,7 @@ const firstSlug = 'am-chen-bat-trang';
         href={`/${locale}/san-pham?cat=${row.section.slug}`}
         viewMore={copy.cta.viewMore}
       />
-      {row.section.slug === firstSlug && <YoutubeRow locale={locale} />}
+      {row.section.slug === youtubeAfterSlug && <YoutubeRow locale={locale} />}
     </>
   ))}
 

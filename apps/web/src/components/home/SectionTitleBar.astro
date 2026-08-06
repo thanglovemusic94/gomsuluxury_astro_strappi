@@ -9,7 +9,8 @@ type Props = {
 const { title, actionLabel, actionHref } = Astro.props;
 ---
 
-<div class="section-titlebar header-shine">
+<div class="section-titlebar">
+  <span class="shine-beam" aria-hidden="true"></span>
   <div class="section-titlebar__inner">
     <h2 class="section-titlebar__title">{title}</h2>
     {actionLabel && actionHref && (
