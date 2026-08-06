@@ -2,19 +2,22 @@
 import type { Locale } from '../i18n/ui';
 import { locales, localeLabels, t } from '../i18n/ui';
 import type { MenuItem, StrapiMedia } from '../lib/types';
+import type { LocalePathMap } from '../lib/strapi';
 
 type Props = {
   locale: Locale;
   brand: string;
   items: MenuItem[];
   logo?: StrapiMedia | null;
+  localeLinks?: LocalePathMap;
 };
 
-const { locale, brand, items, logo } = Astro.props;
+const { locale, brand, items, logo, localeLinks } = Astro.props;
 const copy = t(locale);
 const sorted = [...items].sort((a, b) => (a.order || 0) - (b.order || 0));
 
 function switchLocalePath(next: Locale) {
+  if (localeLinks?.[next]) return localeLinks[next]!;
   const parts = Astro.url.pathname.split('/');
   if (parts[1] && locales.includes(parts[1] as Locale)) {
     parts[1] = next;

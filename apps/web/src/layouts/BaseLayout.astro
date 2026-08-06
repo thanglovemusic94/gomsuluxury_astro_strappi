@@ -3,6 +3,7 @@ import '../styles/global.css';
 import type { Locale } from '../i18n/ui';
 import { t } from '../i18n/ui';
 import type { MenuItem, SiteSetting, SeoFields } from '../lib/types';
+import type { LocalePathMap } from '../lib/strapi';
 import SeoHead from '../components/seo/SeoHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -14,9 +15,10 @@ type Props = {
   seo?: SeoFields;
   title?: string;
   description?: string;
+  localeLinks?: LocalePathMap;
 };
 
-const { locale, settings, menuItems, seo, title, description } = Astro.props;
+const { locale, settings, menuItems, seo, title, description, localeLinks } = Astro.props;
 const copy = t(locale);
 const pageTitle = seo?.metaTitle || title || settings.defaultSeo?.metaTitle || settings.siteName;
 const pageDescription =
@@ -49,6 +51,7 @@ const pageDescription =
       brand={settings.siteName || copy.brand}
       items={menuItems}
       logo={settings.logo}
+      localeLinks={localeLinks}
     />
     <main>
       <slot />

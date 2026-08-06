@@ -1,4 +1,5 @@
 import type { Locale } from '../i18n/ui';
+import { locales } from '../i18n/ui';
 import type { Article, EventItem, Menu, PageItem, Product, SiteSetting, StrapiMedia } from './types';
 import { demoArticles, demoEvents, demoMenus, demoPages, demoProducts, demoSettings } from './demo-data';
 
@@ -206,13 +207,23 @@ function mapArticle(item: any): Article {
   };
 }
 
-export async function getArticles(locale: Locale): Promise<Article[]> {
+export type LocalePathMap = Partial<Record<Locale, string>>;
+
+type CmsListResult<T> = {
+  items: T[];
+  /** true when Strapi responded (even if empty). false when offline/error → may use demo. */
+  fromCms: boolean;
+};
+
+export async function getArticles(locale: Locale): Promise<CmsListResult<Article>> {
   const data = await strapiFetch<StrapiListResponse<any>>(
     `/articles?populate=*&sort=displayDate:desc`,
     locale
   );
-  if (!data?.data?.length) return demoArticles(locale);
-  return data.data.map(mapArticle);
+  if (data?.data) {
+    return { items: data.data.map(mapArticle), fromCms: true };
+  }
+  return { items: demoArticles(locale), fromCms: false };
 }
 
 export async function getArticleBySlug(locale: Locale, slug: string): Promise<Article | null> {
@@ -221,7 +232,39 @@ export async function getArticleBySlug(locale: Locale, slug: string): Promise<Ar
     locale
   );
   if (data?.data?.[0]) return mapArticle(data.data[0]);
+
+  // If CMS is online but slug missing for this locale, do not show unrelated demo
+  if (data && Array.isArray(data.data)) return null;
+
   return demoArticles(locale).find((a) => a.slug === slug) || null;
+}
+
+/** Build language-switcher URLs for an article (correct slug per locale). */
+export async function getArticleLocalePaths(
+  documentId: string | undefined,
+  currentLocale: Locale,
+  currentSlug: string
+): Promise<LocalePathMap> {
+  const paths: LocalePathMap = {};
+  for (const locale of locales) {
+    if (!documentId) {
+      paths[locale] = `/${locale}/bai-viet`;
+      continue;
+    }
+    const data = await strapiFetch<{ data: any }>(`/articles/${documentId}`, locale);
+    const raw = data?.data;
+    const publishedAt = raw?.publishedAt ?? raw?.attributes?.publishedAt;
+    const slug = raw?.slug ?? raw?.attributes?.slug;
+    if (publishedAt && slug) {
+      paths[locale] = `/${locale}/bai-viet/${slug}`;
+    } else {
+      // Unpublished / missing translation → listing for that language
+      paths[locale] = `/${locale}/bai-viet`;
+    }
+  }
+  // Always keep current page as-is
+  paths[currentLocale] = `/${currentLocale}/bai-viet/${currentSlug}`;
+  return paths;
 }
 
 export async function getMenus(locale: Locale): Promise<Menu[]> {

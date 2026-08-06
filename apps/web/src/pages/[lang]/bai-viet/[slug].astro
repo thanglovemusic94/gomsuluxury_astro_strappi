@@ -5,7 +5,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleCard from '../../../components/article/ArticleCard.astro';
 import { isLocale, t, type Locale } from '../../../i18n/ui';
 import { formatDate, richtextToHtml } from '../../../lib/format';
-import { getArticleBySlug, getArticles, getMenus, getSiteSettings, STRAPI_URL } from '../../../lib/strapi';
+import {
+  getArticleBySlug,
+  getArticleLocalePaths,
+  getArticles,
+  getMenus,
+  getSiteSettings,
+  STRAPI_URL,
+} from '../../../lib/strapi';
 
 const lang = Astro.params.lang || 'vi';
 const slug = Astro.params.slug || '';
@@ -13,16 +20,21 @@ if (!isLocale(lang)) return Astro.redirect('/vi');
 const locale = lang as Locale;
 const copy = t(locale);
 
-const [settings, menus, article, allArticles] = await Promise.all([
+const [settings, menus, article, articlesResult] = await Promise.all([
   getSiteSettings(locale),
   getMenus(locale),
   getArticleBySlug(locale, slug),
   getArticles(locale),
 ]);
 
-if (!article) return Astro.redirect(`/${locale}/bai-viet`);
+if (!article) {
+  // Wrong locale slug (e.g. /en/bai-viet/viet-nam) → listing with guidance
+  return Astro.redirect(`/${locale}/bai-viet`);
+}
+
+const localeLinks = await getArticleLocalePaths(article.documentId, locale, article.slug);
 const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
-const related = allArticles.filter((a) => a.slug !== article.slug).slice(0, 2);
+const related = articlesResult.items.filter((a) => a.slug !== article.slug).slice(0, 2);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -34,6 +46,7 @@ const jsonLd = {
   author: article.authorName
     ? { '@type': 'Person', name: article.authorName }
     : { '@type': 'Organization', name: settings.siteName },
+  inLanguage: locale,
 };
 ---
 
@@ -44,6 +57,7 @@ const jsonLd = {
   seo={article.seo}
   title={article.seo?.metaTitle || article.title}
   description={article.seo?.metaDescription || article.excerpt}
+  localeLinks={localeLinks}
 >
   <article>
     <header class="relative min-h-[42vh] overflow-hidden bg-ink text-porcelain sm:min-h-[48vh]">
