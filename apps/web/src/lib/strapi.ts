@@ -217,12 +217,22 @@ type CmsListResult<T> = {
 
 export async function getArticles(locale: Locale): Promise<CmsListResult<Article>> {
   const data = await strapiFetch<StrapiListResponse<any>>(
-    `/articles?populate=*&sort=displayDate:desc`,
+    `/articles?status=published&populate=*&sort=displayDate:desc`,
     locale
   );
   // Chỉ hiển thị bài từ CMS admin (đã Publish). Không dùng demo.
   if (data?.data) {
-    return { items: data.data.map(mapArticle), fromCms: true };
+    // Tránh trùng khi DB có cả draft/published lệch (cùng documentId).
+    const seen = new Set<string>();
+    const items = data.data
+      .map(mapArticle)
+      .filter((article) => {
+        const key = article.documentId || String(article.id);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    return { items, fromCms: true };
   }
   return { items: [], fromCms: false };
 }
