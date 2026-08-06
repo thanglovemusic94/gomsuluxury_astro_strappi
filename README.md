@@ -12,7 +12,7 @@ Vercel (Astro SSG)  <── webhook rebuild ──  VPS Docker
 ```
 
 - **Astro trên Vercel**: static generation → nhanh, SEO mạnh, CDN toàn cầu.
-- **Strapi trên VPS (Docker)**: admin nhập liệu, i18n `vi`/`en`, media, webhook khi publish.
+- **Strapi trên VPS (Docker)**: admin nhập liệu (UI mặc định tiếng Việt), i18n nội dung `vi`/`en`/`ja`, media, webhook khi publish.
 - Không bắt buộc chạy Astro trên VPS; `docker compose --profile full` chỉ để preview local/VPS nếu cần.
 
 ## Yêu cầu đã phủ
@@ -47,7 +47,7 @@ npm install
 npm run develop
 ```
 
-Mở `http://localhost:1337/admin` → tạo admin → Settings → Internationalization (vi/en).
+Mở `http://localhost:1337/admin` → tạo admin (giao diện mặc định tiếng Việt) → Settings → Internationalization (`vi`/`en`/`ja`).
 
 Content-Types đã có sẵn: Product, Category, Attribute, Promotion, Event, Page, Menu, Site Setting.
 
@@ -97,11 +97,14 @@ docker compose --profile full up -d --build
 
 Component **SEO** trên Product / Event / Page / Category / Promotion / Article:
 
-## Đa ngôn ngữ khi nhập liệu (Admin)
+## Đa ngôn ngữ (Admin + nội dung)
 
 Chi tiết: [`apps/cms/docs/I18N.md`](./apps/cms/docs/I18N.md)
 
-Trong Strapi, mỗi entry (Menu, Page, Article/bài viết, Product…) có locale switcher `vi` / `en` / `ja`. Tạo bản Việt → **Fill in from another locale** → chỉnh bản Anh hoặc Nhật.
+- **Giao diện Admin** mặc định **tiếng Việt** (`vi` / `en` / `ja`). Đổi tại Profile → Interface language.
+- **Nội dung**: mỗi entry (Menu, Page, Article, Product…) có locale switcher `vi` / `en` / `ja`. Tạo bản Việt → **Fill in from another locale** → chỉnh EN/JA → **Publish từng locale**.
+
+Component **SEO** trên Product / Event / Page / Category / Promotion / Article:
 
 - `metaTitle`, `metaDescription`, `focusKeyword`, `keywords`, `ogImage`, `canonicalUrl`, `noIndex`
 - Khi **Save**, lifecycle tính `seoScore` (0–100) và `seoNotes` (gợi ý độ dài title/description, từ khóa, OG, slug…)
