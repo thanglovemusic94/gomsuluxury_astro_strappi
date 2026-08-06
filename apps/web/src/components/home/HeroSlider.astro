@@ -1,117 +1,50 @@
 ---
 import type { Locale } from '../../i18n/ui';
 import { t } from '../../i18n/ui';
-import type { Product, StrapiMedia } from '../../lib/types';
 
 type Slide = {
   image: string;
-  title: string;
-  body?: string;
   href?: string;
-  alt?: string;
+  alt: string;
 };
 
 type Props = {
   locale: Locale;
-  products?: Product[];
-  fallbackImage?: StrapiMedia | null;
 };
 
-const { locale, products = [], fallbackImage } = Astro.props;
+const { locale } = Astro.props;
 const copy = t(locale);
 
-const brandSlides: Slide[] = [
+/** Exact hero slides from gomsuluxury.vn */
+const slides: Slide[] = [
+  {
+    image: '/brand/slide-2.png',
+    href: `/${locale}/san-pham/nhat-ma-thien-ha-thuy`,
+    alt: 'Nhất Mã Thiên Hà Thủy',
+  },
   {
     image: '/brand/slide-1.jpg',
-    title: copy.home.slides[0].title,
-    body: copy.home.slides[0].body,
     href: `/${locale}/san-pham`,
     alt: copy.brand,
   },
-  {
-    image: '/brand/slide-2.jpg',
-    title: copy.home.slides[1].title,
-    body: copy.home.slides[1].body,
-    href: `/${locale}/san-pham`,
-    alt: copy.home.categories.amChen,
-  },
-  {
-    image: '/brand/slide-3.jpg',
-    title: copy.home.slides[2].title,
-    body: copy.home.slides[2].body,
-    href: `/${locale}/san-pham`,
-    alt: copy.home.categories.tuong,
-  },
-  {
-    image: '/brand/slide-4.jpg',
-    title: copy.home.slides[3].title,
-    body: copy.home.slides[3].body,
-    href: `/${locale}/san-pham`,
-    alt: copy.products.title,
-  },
-  {
-    image: '/brand/slide-5.jpg',
-    title: copy.home.slides[4].title,
-    body: copy.home.slides[4].body,
-    href: `/${locale}/bai-viet`,
-    alt: copy.articles.title,
-  },
 ];
-
-const productSlides: Slide[] = products
-  .filter((p) => p.images?.[0]?.url)
-  .slice(0, 3)
-  .map((p) => ({
-    image: p.images![0].url,
-    title: p.name,
-    body: p.shortDescription || copy.home.heroBody,
-    href: `/${locale}/san-pham/${p.slug}`,
-    alt: p.images![0].alternativeText || p.name,
-  }));
-
-const slides: Slide[] =
-  productSlides.length >= 3 ? [...productSlides, ...brandSlides.slice(0, 2)] : [...brandSlides];
-
-if (fallbackImage?.url && slides.length === 0) {
-  slides.push({
-    image: fallbackImage.url,
-    title: copy.brand,
-    body: copy.home.heroBody,
-    href: `/${locale}/san-pham`,
-  });
-}
 ---
 
-<section class="hero-slider grain" aria-roledescription="carousel" aria-label={copy.brand}>
+<section class="hero-slider" aria-roledescription="carousel" aria-label={copy.brand}>
   <div class="hero-slider__viewport" id="hero-slider">
     {slides.map((slide, index) => (
       <article class:list={['hero-slider__slide', index === 0 && 'is-active']} data-slide={index} aria-hidden={index === 0 ? 'false' : 'true'}>
-        <div class="hero-slider__media">
+        <a href={slide.href || `/${locale}/san-pham`} class="hero-slider__media">
           <img
             src={slide.image}
-            alt={slide.alt || slide.title}
-            width="2000"
-            height="1200"
+            alt={slide.alt}
+            width="1920"
+            height="1080"
             loading={index === 0 ? 'eager' : 'lazy'}
             fetchpriority={index === 0 ? 'high' : undefined}
             decoding="async"
           />
-        </div>
-        <div class="hero-slider__veil"></div>
-        <div class="relative z-[1] mx-auto flex h-full min-h-[inherit] max-w-6xl flex-col justify-end section-pad pb-16 pt-20 sm:pb-20 md:justify-center md:pb-24">
-          <p class="text-[10px] uppercase tracking-[0.28em] text-sand/90 sm:text-[11px]">{copy.brand}</p>
-          <h2 class="mt-4 max-w-[16ch] font-display text-3xl font-semibold leading-[1.12] text-white sm:text-5xl md:text-6xl">
-            {slide.title}
-          </h2>
-          {slide.body && <p class="mt-4 max-w-md text-sm leading-relaxed text-white/75 sm:text-base">{slide.body}</p>}
-          {slide.href && (
-            <div class="mt-8">
-              <a href={slide.href} class="btn-primary bg-white text-brand-deep hover:bg-sand">
-                {copy.cta.explore}
-              </a>
-            </div>
-          )}
-        </div>
+        </a>
       </article>
     ))}
 
@@ -164,7 +97,7 @@ if (fallbackImage?.url && slides.length === 0) {
 
     const play = () => {
       clearInterval(timer);
-      timer = setInterval(() => show(index + 1), 5200);
+      timer = setInterval(() => show(index + 1), 3000);
     };
 
     root.querySelector('[data-nav="prev"]')?.addEventListener('click', () => {

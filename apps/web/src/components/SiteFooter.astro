@@ -11,51 +11,110 @@ type Props = {
 const { locale, settings } = Astro.props;
 const copy = t(locale);
 const year = new Date().getFullYear();
+
+const productLinks = [
+  { label: copy.footer.products.amChen, href: `/${locale}/san-pham?cat=am-chen-bat-trang` },
+  { label: copy.footer.products.phuKien, href: `/${locale}/san-pham?cat=phu-kien-ban-tra-gom-su-luxury` },
+  { label: copy.footer.products.khayTra, href: `/${locale}/san-pham?cat=khay-tra` },
+  { label: copy.footer.products.luXong, href: `/${locale}/san-pham?cat=lu-xong-tram` },
+  { label: copy.footer.products.vongTay, href: `/${locale}/san-pham?cat=vong-tay` },
+  { label: copy.footer.products.tuong, href: `/${locale}/san-pham?cat=tuong-gom-linh-vat` },
+];
+
+const policyLinks = [
+  { label: copy.footer.policies.privacy, href: `/${locale}/gioi-thieu` },
+  { label: copy.footer.policies.sales, href: `/${locale}/gioi-thieu` },
+  { label: copy.footer.policies.return, href: `/${locale}/gioi-thieu` },
+  { label: copy.footer.policies.payment, href: `/${locale}/gioi-thieu` },
+  { label: copy.footer.policies.shipping, href: `/${locale}/gioi-thieu` },
+];
+
+const phone = settings.phone || '0837 571 758';
+const address = settings.address || 'Số 04 TT2 Foressa 5A, Xuân Phương, Nam Từ Liêm, Hà Nội';
 ---
 
-<footer class="mt-20 border-t border-ink/10 bg-ink text-porcelain sm:mt-24">
-  <div class="mx-auto grid max-w-6xl gap-10 section-pad py-14 sm:py-16 md:grid-cols-[1.5fr_1fr_1fr]">
-    <div>
-      <div class="flex items-center gap-3">
-        {settings.logo?.url && (
-          <img
-            src={settings.logo.url}
-            alt=""
-            width="40"
-            height="40"
-            class="h-10 w-10 object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+<footer class="site-footer mt-0 text-porcelain">
+  <div class="footer-main">
+    <div class="mx-auto grid max-w-6xl gap-10 section-pad py-12 sm:py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
+      <div>
+        <img
+          src="/brand/footer-logo.png"
+          alt={settings.siteName || copy.brand}
+          class="h-14 w-auto max-w-[220px] object-contain sm:h-16"
+          width="220"
+          height="70"
+          loading="lazy"
+          decoding="async"
+        />
+        <p class="mt-5 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.06em] text-white/90 sm:text-xs">
+          {copy.footer.company}
+        </p>
+        <p class="mt-3 max-w-sm text-sm leading-relaxed text-white/70">{copy.footer.blurb}</p>
+        <div class="mt-5 space-y-1.5 text-sm text-white/75">
+          <p>{address}</p>
+          <p>
+            TEL:{' '}
+            <a class="text-white hover:text-sand" href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+          </p>
+          <p class="text-white/55">{copy.footer.hours}</p>
+        </div>
+        {settings.facebookUrl || settings.instagramUrl || settings.zaloUrl ? (
+          <div class="mt-5 flex flex-wrap gap-4 text-sm">
+            {settings.facebookUrl && (
+              <a class="hover:text-sand" href={settings.facebookUrl} target="_blank" rel="noreferrer">Facebook</a>
+            )}
+            {settings.instagramUrl && (
+              <a class="hover:text-sand" href={settings.instagramUrl} target="_blank" rel="noreferrer">TikTok</a>
+            )}
+            {settings.zaloUrl && (
+              <a class="hover:text-sand" href={settings.zaloUrl} target="_blank" rel="noreferrer">Zalo</a>
+            )}
+          </div>
+        ) : (
+          <div class="mt-5 flex flex-wrap gap-4 text-sm">
+            <a class="hover:text-sand" href="https://www.facebook.com/gomsuluxury" target="_blank" rel="noreferrer">Facebook</a>
+            <a class="hover:text-sand" href="https://www.tiktok.com/@gomluxury" target="_blank" rel="noreferrer">@gomluxury</a>
+          </div>
         )}
-        <p class="font-display text-2xl font-semibold tracking-tight">{settings.siteName}</p>
       </div>
-      <p class="mt-4 max-w-sm text-sm leading-relaxed text-porcelain/60">{settings.tagline}</p>
-    </div>
-    <div class="text-sm leading-relaxed text-porcelain/65">
-      {settings.address && <p>{settings.address}</p>}
-      {settings.phone && (
-        <p class="mt-3">
-          <a class="transition hover:text-sand" href={`tel:${settings.phone.replace(/\s+/g, '')}`}>{settings.phone}</a>
-        </p>
-      )}
-      <p class="mt-1 text-porcelain/45">{copy.footer.hours}</p>
-      {settings.email && (
-        <p class="mt-1">
-          <a class="transition hover:text-sand" href={`mailto:${settings.email}`}>{settings.email}</a>
-        </p>
-      )}
-    </div>
-    <div>
-      <p class="eyebrow text-sand">{copy.footer.follow}</p>
-      <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm sm:flex-col sm:gap-2">
-        {settings.facebookUrl && <a class="transition hover:text-sand" href={settings.facebookUrl}>Facebook</a>}
-        {settings.instagramUrl && <a class="transition hover:text-sand" href={settings.instagramUrl}>TikTok</a>}
-        {settings.zaloUrl && <a class="transition hover:text-sand" href={settings.zaloUrl}>Zalo</a>}
+
+      <div>
+        <p class="footer-col-title">{copy.footer.productsTitle}</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/75">
+          {productLinks.map((link) => (
+            <li>
+              <a class="transition hover:text-white" href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">{copy.footer.policiesTitle}</p>
+        <ul class="mt-4 space-y-2.5 text-sm text-white/75">
+          {policyLinks.map((link) => (
+            <li>
+              <a class="transition hover:text-white" href={link.href}>{link.label}</a>
+            </li>
+          ))}
+        </ul>
+        <img
+          src="/brand/footer-seal.png"
+          alt=""
+          class="mt-8 h-20 w-auto object-contain opacity-90"
+          width="120"
+          height="120"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
     </div>
   </div>
-  <div class="border-t border-porcelain/10 px-4 py-4 text-center text-xs text-porcelain/40 sm:px-5 md:px-8">
-    © {year} {settings.siteName}. {copy.footer.rights}
+
+  <div class="footer-bar">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-3 text-center text-xs text-white/85 sm:flex-row sm:px-5 md:px-8">
+      <p>Copyright {year} © <a class="hover:text-white" href={`/${locale}`}>gomsuluxury.vn</a></p>
+      <p class="text-white/60">{copy.footer.rights}</p>
+    </div>
   </div>
 </footer>

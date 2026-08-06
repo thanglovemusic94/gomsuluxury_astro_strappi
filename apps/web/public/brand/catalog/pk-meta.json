@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Báo vàng linh vật đổi màu-Phụ kiện trà đạo",
+    "slug": "bao-vang-linh-vat-doi-mau",
+    "price": "299000",
+    "regular": "399000",
+    "image": "/brand/catalog/pk-1.jpg"
+  },
+  {
+    "name": "Tề Thiên Đại Thánh đổi màu – Đồ chơi bàn trà",
+    "slug": "te-thien-dai-thanh-doi-mau-do-choi-ban-tra",
+    "price": "259000",
+    "regular": "329000",
+    "image": "/brand/catalog/pk-2.jpg"
+  },
+  {
+    "name": "Linh vật rồng đổi màu – phụ kiện bàn trà",
+    "slug": "linh-vat-rong-doi-mau-phu-kien-ban-tra",
+    "price": "429000",
+    "regular": "680000",
+    "image": "/brand/catalog/pk-3.jpg"
+  },
+  {
+    "name": "Linh vật Hổ đổi màu – Phụ kiện bàn trà",
+    "slug": "linh-vat-ho-doi-mau-phu-kien-ban-tra",
+    "price": "360000",
+    "regular": "560000",
+    "image": "/brand/catalog/pk-4.jpg"
+  },
+  {
+    "name": "Cua biển đổi màu – Đồ chơi bàn trà ( Cua đổi màu phụ kiện bàn trà)",
+    "slug": "cua-bien-doi-mau-do-choi-ban-tra-cua-doi-mau-phu-kien-ban-tra",
+    "price": "199000",
+    "regular": "279000",
+    "image": "/brand/catalog/pk-5.jpg"
+  },
+  {
+    "name": "Bộ dụng cụ trà đạo gỗ mun – Phụ kiện trà đạo ( dụng cụ pha trà 5 món)",
+    "slug": "bo-dung-cu-tra-dao-go-mun-phu-kien-tra-dao-dung-cu-pha-tra-5-mon",
+    "price": "159000",
+    "regular": "289000",
+    "image": "/brand/catalog/pk-6.jpg"
+  }
+]

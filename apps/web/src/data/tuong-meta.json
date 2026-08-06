@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Nhất Mã Thiên Hà Thủy",
+    "slug": "nhat-ma-thien-ha-thuy",
+    "price": "12900000",
+    "regular": "19999000",
+    "image": "/brand/catalog/tuong-1.jpg"
+  },
+  {
+    "name": "Tượng Gốm Rồng",
+    "slug": "tuong-gom-rong",
+    "price": "1000000",
+    "regular": "1580000",
+    "image": "/brand/catalog/tuong-2.jpg"
+  },
+  {
+    "name": "Tượng Gốm Cậu Vàng",
+    "slug": "tuong-gom-cau-vang",
+    "price": "600000",
+    "regular": "850000",
+    "image": "/brand/catalog/tuong-3.jpg"
+  },
+  {
+    "name": "Tượng Gốm mèo",
+    "slug": "tuong-gom-meo-trong-12-con-giap",
+    "price": "990000",
+    "regular": "1250000",
+    "image": "/brand/catalog/tuong-4.jpg"
+  },
+  {
+    "name": "Tượng Gốm Ngựa",
+    "slug": "tuong-gom-ngua",
+    "price": "1000000",
+    "regular": "1350000",
+    "image": "/brand/catalog/tuong-5.jpg"
+  }
+]

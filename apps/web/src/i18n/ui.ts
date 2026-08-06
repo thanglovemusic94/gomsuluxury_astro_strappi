@@ -41,6 +41,7 @@ export const ui = {
     cta: {
       explore: 'Khám phá bộ sưu tập',
       viewAll: 'Xem tất cả',
+      viewMore: 'XEM THÊM',
       details: 'Xem chi tiết',
       register: 'Đăng ký tham dự',
       contact: 'Tư vấn Zalo',
@@ -56,48 +57,49 @@ export const ui = {
         'Mỗi sản phẩm là bản giao hưởng giữa đất, nước, lửa và đôi bàn tay nghệ nhân Việt.',
       slides: [
         {
+          title: 'Nhất Mã Thiên Hà Thủy',
+          body: 'Tượng gốm linh vật — tinh hoa nghề Việt.',
+        },
+        {
           title: 'Tự hào gốm Việt',
           body: 'Bộ sưu tập ấm chén Bát Tràng — tinh hoa men và tay nghề nghệ nhân.',
-        },
-        {
-          title: 'Ấm chén Bát Tràng',
-          body: 'Men hỏa biến, dáng siêu, tông — chọn lọc cho bàn trà đương đại.',
-        },
-        {
-          title: 'Linh vật & bàn trà',
-          body: 'Tượng gốm, khay trà và phụ kiện hoàn thiện không gian thưởng trà.',
-        },
-        {
-          title: 'Nghệ nhân Việt',
-          body: 'Từng món được tạo hình và nung với độ sâu men theo năm tháng.',
-        },
-        {
-          title: 'Câu chuyện nghề gốm',
-          body: 'Đọc nhật ký men, lò nung và làng nghề Bát Tràng.',
         },
       ],
       collections: 'Bộ sưu tập',
       collectionsTitle: 'Chọn theo không gian trà',
       categories: {
         amChen: 'Ấm chén Bát Tràng',
-        phuKien: 'Phụ kiện bàn trà',
-        tuong: 'Tượng gốm linh vật',
-        huTra: 'Hũ trà',
+        phuKien: 'Phụ Kiện Bàn Trà',
+        tuong: 'Tượng Gốm linh vật',
+        huTra: 'HŨ TRÀ',
       },
-      testimonials: 'Khách hàng nói gì',
-      testimonialsTitle: 'Đánh giá từ người yêu gốm',
+      sections: {
+        tra: 'TRÀ',
+      },
+      sectionTitles: {
+        'am-chen-bat-trang': 'Ấm chén Bát Tràng',
+        'phu-kien-ban-tra-gom-su-luxury': 'Phụ Kiện Bàn Trà',
+        'khay-tra': 'Khay Trà',
+        'tuong-gom-linh-vat': 'Tượng Gốm linh vật',
+        'hu-tra': 'HŨ TRÀ',
+      },
+      testimonials: 'Đánh giá',
+      testimonialsTitle: 'ĐÁNH GIÁ CỦA KHÁCH HÀNG',
       reviews: [
         {
-          quote: 'Hàng ok, chất lượng tốt, mẫu mã đẹp, tư vấn nhiệt tình, giao hàng nhanh.',
-          author: 'Khách hàng',
+          quote:
+            'Hàng ok, chất lượng tốt, mẫu mã đẹp, tư vấn nhiệt tình, giao hàng nhanh. Lần sau ủng hộ shop nữa.',
+          author: 'Anh Kiên',
         },
         {
-          quote: 'Shop rất tận tâm, chuyên nghiệp. Sản phẩm cái nào mình cũng ưng bụng.',
-          author: 'Khách hàng thân thiết',
+          quote:
+            'Cũng mua nhiều món rồi, shop rất tận tâm, chuyên nghiệp, Sản phẩm thì cái nào mình cũng ưng bụng.',
+          author: 'Như Mai',
         },
         {
-          quote: 'Đóng gói cẩn thận, giao nhanh, rất ưng cách phục vụ — sẽ ủng hộ tiếp.',
-          author: 'Khách hàng',
+          quote:
+            'Sản phẩm đẹp, đóng gói cẩn thận, giao nhanh, rất ưng về cách phục vụ bên shop, sẽ ủng hộ shop tiếp.',
+          author: 'Anh Ước',
         },
       ],
     },
@@ -130,6 +132,25 @@ export const ui = {
       rights: 'Tất cả quyền được bảo lưu.',
       follow: 'Theo dõi',
       hours: '08:00 – 17:00',
+      company: 'CÔNG TY TNHH ĐẦU TƯ CÔNG NGHỆ VÀ PHÁT TRIỂN THƯƠNG MẠI TRETECH',
+      blurb: 'Gốm Sứ Luxury chuyên cung cấp các sản phẩm gốm sứ và phụ kiện bàn trà cao cấp.',
+      productsTitle: 'SẢN PHẨM',
+      policiesTitle: 'CHÍNH SÁCH',
+      products: {
+        amChen: 'Bộ ấm chén',
+        phuKien: 'Phụ kiện bàn trà',
+        khayTra: 'Khay trà',
+        luXong: 'Lư xông trầm',
+        vongTay: 'Vòng Tay',
+        tuong: 'Tượng gốm linh vật',
+      },
+      policies: {
+        privacy: 'Chính sách bảo mật',
+        sales: 'Chính sách bán hàng',
+        return: 'Chính sách đổi trả',
+        payment: 'Chính sách thanh toán',
+        shipping: 'Chính sách giao hàng',
+      },
     },
     trust: {
       title: 'Cam kết từ showroom',
@@ -157,6 +178,7 @@ export const ui = {
     cta: {
       explore: 'Explore the collection',
       viewAll: 'View all',
+      viewMore: 'SEE MORE',
       details: 'View details',
       register: 'Register',
       contact: 'Chat on Zalo',
@@ -172,24 +194,12 @@ export const ui = {
         'Each piece is a quiet dialogue between clay, water, fire and the artisan’s hand.',
       slides: [
         {
+          title: 'Nhat Ma Thien Ha Thuy',
+          body: 'Ceramic guardian figurine — Vietnamese craft.',
+        },
+        {
           title: 'Proudly Vietnamese clay',
           body: 'Bat Trang tea sets — glaze depth and artisan craft for the modern table.',
-        },
-        {
-          title: 'Bat Trang tea ware',
-          body: 'Fire-change glazes and classic forms curated for contemporary tea rituals.',
-        },
-        {
-          title: 'Guardians & tea trays',
-          body: 'Figurines, trays and accessories that complete the tea space.',
-        },
-        {
-          title: 'Vietnamese artisans',
-          body: 'Thrown and fired for lasting glaze character, piece by piece.',
-        },
-        {
-          title: 'Stories of the kiln',
-          body: 'Journal notes on glaze, firing and Bat Trang heritage.',
         },
       ],
       collections: 'Collections',
@@ -200,20 +210,31 @@ export const ui = {
         tuong: 'Guardian figurines',
         huTra: 'Tea jars',
       },
-      testimonials: 'From our guests',
-      testimonialsTitle: 'What collectors say',
+      sections: {
+        tra: 'TEA',
+      },
+      sectionTitles: {
+        'am-chen-bat-trang': 'Bat Trang tea sets',
+        'phu-kien-ban-tra-gom-su-luxury': 'Tea accessories',
+        'khay-tra': 'Tea trays',
+        'tuong-gom-linh-vat': 'Guardian figurines',
+        'hu-tra': 'Tea jars',
+      },
+      testimonials: 'Reviews',
+      testimonialsTitle: 'CUSTOMER REVIEWS',
       reviews: [
         {
-          quote: 'Great quality, beautiful forms, thoughtful advice and fast delivery.',
-          author: 'Customer',
+          quote:
+            'Great quality, beautiful forms, thoughtful advice and fast delivery. Will support the shop again.',
+          author: 'Anh Kien',
         },
         {
           quote: 'Attentive and professional. Every piece I chose felt right.',
-          author: 'Returning guest',
+          author: 'Nhu Mai',
         },
         {
           quote: 'Careful packaging and warm service — I’ll be back.',
-          author: 'Customer',
+          author: 'Anh Uoc',
         },
       ],
     },
@@ -246,6 +267,25 @@ export const ui = {
       rights: 'All rights reserved.',
       follow: 'Follow',
       hours: '08:00 – 17:00',
+      company: 'TRETECH TECHNOLOGY INVESTMENT AND TRADE DEVELOPMENT CO., LTD',
+      blurb: 'Gom Su Luxury offers premium ceramics and tea-table accessories.',
+      productsTitle: 'PRODUCTS',
+      policiesTitle: 'POLICIES',
+      products: {
+        amChen: 'Tea sets',
+        phuKien: 'Tea accessories',
+        khayTra: 'Tea trays',
+        luXong: 'Incense burners',
+        vongTay: 'Bracelets',
+        tuong: 'Guardian figurines',
+      },
+      policies: {
+        privacy: 'Privacy policy',
+        sales: 'Sales policy',
+        return: 'Return policy',
+        payment: 'Payment policy',
+        shipping: 'Shipping policy',
+      },
     },
     trust: {
       title: 'From our showroom',
@@ -273,6 +313,7 @@ export const ui = {
     cta: {
       explore: 'コレクションを見る',
       viewAll: 'すべて見る',
+      viewMore: 'もっと見る',
       details: '詳細を見る',
       register: '参加申し込み',
       contact: 'Zaloで相談',
@@ -287,24 +328,12 @@ export const ui = {
       craftBody: '一点一点が、土・水・火、そして職人の手の対話です。',
       slides: [
         {
+          title: '一馬天下水',
+          body: '霊獣の陶像 — ベトナムの手仕事。',
+        },
+        {
           title: 'ベトナムの誇りある器',
           body: 'バットチャン茶器。釉の深みと職人の手仕事を現代の茶席へ。',
-        },
-        {
-          title: 'バットチャン茶器',
-          body: '火変釉と古典フォルム。現代の茶の時間のために。',
-        },
-        {
-          title: '霊獣と茶盤',
-          body: '陶像・茶盤・道具で茶の空間を整えます。',
-        },
-        {
-          title: 'ベトナムの職人',
-          body: '一つひとつ焼き上げ、釉の表情を育てます。',
-        },
-        {
-          title: '窯の物語',
-          body: '釉薬、焼成、バットチャンの伝統についての読みもの。',
         },
       ],
       collections: 'コレクション',
@@ -315,20 +344,30 @@ export const ui = {
         tuong: '霊獣の陶像',
         huTra: '茶入',
       },
+      sections: {
+        tra: 'お茶',
+      },
+      sectionTitles: {
+        'am-chen-bat-trang': 'バットチャン茶器',
+        'phu-kien-ban-tra-gom-su-luxury': '茶席の道具',
+        'khay-tra': '茶盤',
+        'tuong-gom-linh-vat': '霊獣の陶像',
+        'hu-tra': '茶入',
+      },
       testimonials: 'お客様の声',
-      testimonialsTitle: '愛用者からの言葉',
+      testimonialsTitle: 'お客様の評価',
       reviews: [
         {
-          quote: '品質が良く、形が美しく、相談も丁寧。配送も早いです。',
-          author: 'お客様',
+          quote: '品質が良く、形が美しく、相談も丁寧。配送も早いです。またお願いします。',
+          author: 'Anh Kien',
         },
         {
           quote: 'とても誠実でプロフェッショナル。選んだ器がどれも気に入りました。',
-          author: 'リピーター',
+          author: 'Nhu Mai',
         },
         {
           quote: '梱包が丁寧で対応も温かい。またお願いします。',
-          author: 'お客様',
+          author: 'Anh Uoc',
         },
       ],
     },
@@ -361,6 +400,25 @@ export const ui = {
       rights: 'All rights reserved.',
       follow: 'フォロー',
       hours: '08:00 – 17:00',
+      company: 'TRETECH TECHNOLOGY INVESTMENT AND TRADE DEVELOPMENT CO., LTD',
+      blurb: 'Gom Su Luxuryは高級陶磁器と茶席の道具を取り扱っています。',
+      productsTitle: '作品',
+      policiesTitle: 'ポリシー',
+      products: {
+        amChen: '茶器セット',
+        phuKien: '茶席の道具',
+        khayTra: '茶盤',
+        luXong: '香炉',
+        vongTay: 'ブレスレット',
+        tuong: '霊獣の陶像',
+      },
+      policies: {
+        privacy: 'プライバシーポリシー',
+        sales: '販売ポリシー',
+        return: '返品ポリシー',
+        payment: 'お支払いポリシー',
+        shipping: '配送ポリシー',
+      },
     },
     trust: {
       title: 'ショールームからのお約束',

@@ -1,12 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeroSlider from '../../components/home/HeroSlider.astro';
-import CategoryStrip from '../../components/home/CategoryStrip.astro';
+import CategoryProductRow from '../../components/home/CategoryProductRow.astro';
+import TeaPromo from '../../components/home/TeaPromo.astro';
 import Testimonials from '../../components/home/Testimonials.astro';
-import ProductCard from '../../components/product/ProductCard.astro';
-import EventCard from '../../components/event/EventCard.astro';
 import { isLocale, localePaths, t, type Locale } from '../../i18n/ui';
-import { getEvents, getMenus, getProducts, getSiteSettings } from '../../lib/strapi';
+import { getMenus, getProducts, getSiteSettings } from '../../lib/strapi';
+import { buildSectionItems, homeSections } from '../../lib/home-sections';
 
 export function getStaticPaths() {
   return localePaths();
@@ -19,96 +19,37 @@ if (!isLocale(lang)) {
 const locale = lang as Locale;
 const copy = t(locale);
 
-const [settings, menus, hotProducts, events] = await Promise.all([
+const [settings, menus, products] = await Promise.all([
   getSiteSettings(locale),
   getMenus(locale),
-  getProducts(locale, { hot: true }),
-  getEvents(locale),
+  getProducts(locale),
 ]);
 
 const headerMenu = menus.find((m) => m.location === 'header')?.items || [];
-const featuredEvents = events.filter((e) => e.isFeatured).slice(0, 2);
+const used = new Set<string>();
+const rows = homeSections
+  .map((section) => ({
+    section,
+    items: buildSectionItems(products, section, used),
+    title: locale === 'vi' ? section.titleVi : copy.home.sectionTitles[section.slug as keyof typeof copy.home.sectionTitles] || section.titleVi,
+  }))
+  .filter((row) => row.items.length > 0);
 ---
 
 <BaseLayout locale={locale} settings={settings} menuItems={headerMenu}>
-  <HeroSlider locale={locale} products={hotProducts} fallbackImage={settings.heroImage} />
+  <HeroSlider locale={locale} />
 
-  <CategoryStrip locale={locale} />
+  {rows.map((row) => (
+    <CategoryProductRow
+      locale={locale}
+      title={row.title}
+      items={row.items}
+      href={`/${locale}/san-pham?cat=${row.section.slug}`}
+      viewMore={copy.cta.viewMore}
+    />
+  ))}
 
-  <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
-    <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <p class="eyebrow">{copy.home.hot}</p>
-        <h2 class="display-title mt-3 text-3xl sm:text-4xl md:text-5xl">{copy.products.title}</h2>
-      </div>
-      <a href={`/${locale}/san-pham`} class="text-sm font-medium text-celadon-deep underline-offset-4 hover:underline">
-        {copy.cta.viewAll}
-      </a>
-    </div>
-    <div class="mt-10 grid gap-8 sm:mt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
-      {hotProducts.slice(0, 3).map((product, i) => (
-        <div class={`js-reveal ${i === 1 ? 'js-reveal-delay-1' : i === 2 ? 'js-reveal-delay-2' : ''}`}>
-          <ProductCard product={product} locale={locale} />
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="content-auto relative min-h-[70vh] overflow-hidden bg-ink text-porcelain sm:min-h-[75vh]">
-    {settings.craftImage?.url ? (
-      <img
-        src={settings.craftImage.url}
-        alt={settings.craftImage.alternativeText || copy.home.craft}
-        class="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
-        decoding="async"
-        width={settings.craftImage.width || 1600}
-        height={settings.craftImage.height || 1067}
-      />
-    ) : (
-      <div class="absolute inset-0 bg-gradient-to-br from-celadon-deep via-ink-soft to-copper/35"></div>
-    )}
-    <div class="absolute inset-0 bg-gradient-to-t from-ink via-ink/55 to-ink/25"></div>
-    <div class="relative mx-auto flex min-h-[70vh] max-w-6xl flex-col justify-end section-pad py-16 sm:min-h-[75vh] sm:py-20 md:py-24">
-      <div class="js-reveal max-w-xl">
-        <h2 class="display-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl">{copy.home.craft}</h2>
-        <p class="mt-5 max-w-md text-sm leading-relaxed text-porcelain/70 sm:text-base">{copy.home.craftBody}</p>
-      </div>
-    </div>
-  </section>
+  <TeaPromo locale={locale} />
 
   <Testimonials locale={locale} />
-
-  <section class="content-auto mx-auto max-w-6xl section-pad py-14 sm:py-16">
-    <div class="js-reveal">
-      <p class="eyebrow">{copy.trust.title}</p>
-    </div>
-    <div class="trust-strip js-reveal js-reveal-delay-1 mt-8">
-      {copy.trust.items.map((item) => (
-        <div>
-          <h3 class="font-display text-xl text-ink sm:text-2xl">{item.title}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-ink/60">{item.body}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="content-auto mx-auto max-w-6xl section-pad py-16 sm:py-20 md:py-24">
-    <div class="js-reveal flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <p class="eyebrow">{copy.home.featuredEvents}</p>
-        <h2 class="display-title mt-3 text-3xl sm:text-4xl md:text-5xl">{copy.events.title}</h2>
-      </div>
-      <a href={`/${locale}/su-kien`} class="text-sm font-medium text-celadon-deep underline-offset-4 hover:underline">
-        {copy.cta.viewAll}
-      </a>
-    </div>
-    <div class="mt-10 space-y-10 sm:mt-12">
-      {featuredEvents.map((event) => (
-        <div class="js-reveal">
-          <EventCard event={event} locale={locale} />
-        </div>
-      ))}
-    </div>
-  </section>
 </BaseLayout>
